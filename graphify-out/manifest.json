@@ -3,31 +3,36 @@
     "mtime": 1795164056.0,
     "seen": 1795185511.1833432,
     "ast_hash": "f3dfc7676b6880470634b86189ee9e4e",
-    "semantic_hash": "f3dfc7676b6880470634b86189ee9e4e"
+    "semantic_hash": "f3dfc7676b6880470634b86189ee9e4e",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/portal_map.example.json": {
     "mtime": 1795164056.0,
     "seen": 1795185511.183347,
     "ast_hash": "3214d2c0a8ac8a5d3412cac67bd5692e",
-    "semantic_hash": "3214d2c0a8ac8a5d3412cac67bd5692e"
+    "semantic_hash": "3214d2c0a8ac8a5d3412cac67bd5692e",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/state.template.json": {
     "mtime": 1795164056.0,
     "seen": 1795185511.183348,
     "ast_hash": "6510c6cd73e237147b92f5d48fd40713",
-    "semantic_hash": "6510c6cd73e237147b92f5d48fd40713"
+    "semantic_hash": "6510c6cd73e237147b92f5d48fd40713",
+    "ast_empty": true
   },
   "redtape-navigator-unified/examples/bakery_kolkata/input.json": {
     "mtime": 1795164056.0,
     "seen": 1795185511.183349,
     "ast_hash": "ac9fb7149b23095d2e2bb822b782d6fa",
-    "semantic_hash": "ac9fb7149b23095d2e2bb822b782d6fa"
+    "semantic_hash": "ac9fb7149b23095d2e2bb822b782d6fa",
+    "ast_empty": true
   },
   "redtape-navigator-unified/examples/bakery_kolkata/state_snapshot.json": {
     "mtime": 1795200071.1023328,
-    "seen": 1795200392.569081,
+    "seen": 1795207683.5467231,
     "ast_hash": "b7abfe022cee07047f551764239b724c",
-    "semantic_hash": ""
+    "semantic_hash": "b7abfe022cee07047f551764239b724c",
+    "ast_empty": true
   },
   "redtape-navigator-unified/schemas/compliance_matrix.json": {
     "mtime": 1795164056.0,
@@ -73,9 +78,9 @@
   },
   "redtape-navigator-unified/scripts/init_state.py": {
     "mtime": 1795185911.4881086,
-    "seen": 1795187789.877378,
+    "seen": 1795207683.5469198,
     "ast_hash": "a0bacc1b43ac9dbbe15df7d834f375dd",
-    "semantic_hash": ""
+    "semantic_hash": "a0bacc1b43ac9dbbe15df7d834f375dd"
   },
   "redtape-navigator-unified/scripts/inspect_pdf.py": {
     "mtime": 1795164056.0,
@@ -259,165 +264,181 @@
   },
   "redtape-navigator-unified/scripts/orchestrator_parser.py": {
     "mtime": 1795205738.8417313,
-    "seen": 1795206599.1243038,
+    "seen": 1795207683.546965,
     "ast_hash": "893c87aa652fa0a52cf9af8dd4936e79",
-    "semantic_hash": ""
+    "semantic_hash": "893c87aa652fa0a52cf9af8dd4936e79"
   },
   "redtape-navigator-unified/scripts/research_engine.py": {
     "mtime": 1795194048.6109886,
-    "seen": 1795195630.656188,
+    "seen": 1795207683.546999,
     "ast_hash": "23f36e85322682ebbbe961ba0574114e",
-    "semantic_hash": ""
+    "semantic_hash": "23f36e85322682ebbbe961ba0574114e"
   },
   "redtape-navigator-unified/cache/research_cache.json": {
-    "mtime": 1795205639.990982,
-    "seen": 1795206599.1242828,
-    "ast_hash": "3f454bbb390bfc8b8b3535027d5b00ac",
-    "semantic_hash": ""
+    "mtime": 1795206885.4248464,
+    "seen": 1795207683.54669,
+    "ast_hash": "51fa54501efd9d0c6ddfd7d014f0efe0",
+    "semantic_hash": "51fa54501efd9d0c6ddfd7d014f0efe0",
+    "ast_empty": true
   },
   "redtape-navigator-unified/scripts/compliance_engine.py": {
     "mtime": 1795200049.260541,
-    "seen": 1795200392.569085,
+    "seen": 1795207683.54684,
     "ast_hash": "1eeec360befd8e0ad02a4960c76a0ab2",
-    "semantic_hash": ""
+    "semantic_hash": "1eeec360befd8e0ad02a4960c76a0ab2"
   },
   "redtape-navigator-unified/scripts/interview_engine.py": {
     "mtime": 1795194911.8968594,
-    "seen": 1795195630.656186,
+    "seen": 1795207683.546954,
     "ast_hash": "653ab951f06203ebcac0a237c383ba42",
-    "semantic_hash": ""
+    "semantic_hash": "653ab951f06203ebcac0a237c383ba42"
   },
   "demo_server.py": {
-    "mtime": 1795206537.0171795,
-    "seen": 1795206599.12427,
-    "ast_hash": "9cc4fdb3ddcd88e0517255e3ec315517",
-    "semantic_hash": ""
+    "mtime": 1795207634.0778425,
+    "seen": 1795207683.546595,
+    "ast_hash": "f077cd993d9135da38e0d2cba835a75e",
+    "semantic_hash": "f077cd993d9135da38e0d2cba835a75e"
   },
   "redtape-navigator-unified/assets/forms/fssai_form_a_map.json": {
     "mtime": 1795192057.443008,
-    "seen": 1795195630.656168,
+    "seen": 1795207683.5466502,
     "ast_hash": "a7f680f1683bd1aeb156a6613ab7284b",
-    "semantic_hash": ""
+    "semantic_hash": "a7f680f1683bd1aeb156a6613ab7284b",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/forms/wb_shops_form_b_map.json": {
     "mtime": 1795192065.309584,
-    "seen": 1795195630.656169,
+    "seen": 1795207683.546653,
     "ast_hash": "ac7e6e5f921b5df48b042d0626be3e83",
-    "semantic_hash": ""
+    "semantic_hash": "ac7e6e5f921b5df48b042d0626be3e83",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/portals/foscos_portal_map.json": {
     "mtime": 1795192078.94441,
-    "seen": 1795195630.656171,
+    "seen": 1795207683.5466728,
     "ast_hash": "0f116935458e2660686a7f3bf711fcf7",
-    "semantic_hash": ""
+    "semantic_hash": "0f116935458e2660686a7f3bf711fcf7",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/portals/kmc_trade_license_portal_map.json": {
     "mtime": 1795192088.952793,
-    "seen": 1795195630.656171,
+    "seen": 1795207683.546674,
     "ast_hash": "0577801845e469015046f0d4fc57c160",
-    "semantic_hash": ""
+    "semantic_hash": "0577801845e469015046f0d4fc57c160",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/portals/silpasathi_portal_map.json": {
     "mtime": 1795192105.2720935,
-    "seen": 1795195630.656172,
+    "seen": 1795207683.546675,
     "ast_hash": "19c3ac55baeda5d65b5ba13c15a42df9",
-    "semantic_hash": ""
+    "semantic_hash": "19c3ac55baeda5d65b5ba13c15a42df9",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/draft_FSSAI_Registration_Form_A.pdf.report.json": {
     "mtime": 1795192395.9723308,
-    "seen": 1795195630.6561742,
+    "seen": 1795207683.546698,
     "ast_hash": "5ba8d5e21fda7c2f7b5849e3411ba281",
-    "semantic_hash": ""
+    "semantic_hash": "5ba8d5e21fda7c2f7b5849e3411ba281",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/draft_WB_Shops_Establishment_Form_B.pdf.report.json": {
     "mtime": 1795192395.9682744,
-    "seen": 1795195630.6561742,
+    "seen": 1795207683.546699,
     "ast_hash": "84d666c5b2a6debb521878b828d2128b",
-    "semantic_hash": ""
+    "semantic_hash": "84d666c5b2a6debb521878b828d2128b",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/foscos_manifest.json": {
     "mtime": 1795192395.972736,
-    "seen": 1795195630.6561751,
+    "seen": 1795207683.5467,
     "ast_hash": "1d0edd319687b8894a2c1dfcf8dada0d",
-    "semantic_hash": ""
+    "semantic_hash": "1d0edd319687b8894a2c1dfcf8dada0d",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/kmc_trade_license_manifest.json": {
     "mtime": 1795192395.9480536,
-    "seen": 1795195630.6561751,
+    "seen": 1795207683.5467,
     "ast_hash": "25ae50f33350d1c9e1e56ff3981c4e11",
-    "semantic_hash": ""
+    "semantic_hash": "25ae50f33350d1c9e1e56ff3981c4e11",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/silpasathi_manifest.json": {
     "mtime": 1795192395.9686763,
-    "seen": 1795195630.656176,
+    "seen": 1795207683.546701,
     "ast_hash": "41cf031dfeb02f37da54fc28f99cbf80",
-    "semantic_hash": ""
+    "semantic_hash": "41cf031dfeb02f37da54fc28f99cbf80",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/test_thread_bakery_hitl/draft_FSSAI_Registration_Form_A.pdf.report.json": {
     "mtime": 1795197931.039262,
-    "seen": 1795197989.136019,
+    "seen": 1795207683.5467021,
     "ast_hash": "7c3d936468d468d1f5c28d728cd6bca7",
-    "semantic_hash": ""
+    "semantic_hash": "7c3d936468d468d1f5c28d728cd6bca7",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/test_thread_bakery_hitl/draft_WB_Shops_Establishment_Form_B.pdf.report.json": {
     "mtime": 1795197931.0299706,
-    "seen": 1795197989.136019,
+    "seen": 1795207683.5467038,
     "ast_hash": "b470ffb7f79e9a300810cb121551e0c3",
-    "semantic_hash": ""
+    "semantic_hash": "b470ffb7f79e9a300810cb121551e0c3",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/test_thread_bakery_hitl/foscos_manifest.json": {
     "mtime": 1795197931.0398862,
-    "seen": 1795197989.13602,
+    "seen": 1795207683.5467038,
     "ast_hash": "1d0edd319687b8894a2c1dfcf8dada0d",
-    "semantic_hash": ""
+    "semantic_hash": "1d0edd319687b8894a2c1dfcf8dada0d",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/test_thread_bakery_hitl/kmc_trade_license_manifest.json": {
     "mtime": 1795197931.0192401,
-    "seen": 1795197989.13602,
+    "seen": 1795207683.546705,
     "ast_hash": "25ae50f33350d1c9e1e56ff3981c4e11",
-    "semantic_hash": ""
+    "semantic_hash": "25ae50f33350d1c9e1e56ff3981c4e11",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/test_thread_bakery_hitl/silpasathi_manifest.json": {
     "mtime": 1795197931.0330644,
-    "seen": 1795197989.136021,
+    "seen": 1795207683.546705,
     "ast_hash": "41cf031dfeb02f37da54fc28f99cbf80",
-    "semantic_hash": ""
+    "semantic_hash": "41cf031dfeb02f37da54fc28f99cbf80",
+    "ast_empty": true
   },
   "redtape-navigator-unified/scripts/document_engine.py": {
     "mtime": 1795197360.3418756,
-    "seen": 1795197989.1360269,
+    "seen": 1795207683.546852,
     "ast_hash": "0d46ccd78036ad2b00ad6adb1577806d",
-    "semantic_hash": ""
+    "semantic_hash": "0d46ccd78036ad2b00ad6adb1577806d"
   },
   "redtape-navigator-unified/scripts/generate_form_templates.py": {
     "mtime": 1795196693.5845094,
-    "seen": 1795197989.1360278,
+    "seen": 1795207683.546886,
     "ast_hash": "5a303cad517fad4b4cde0049ac001e5e",
-    "semantic_hash": ""
+    "semantic_hash": "5a303cad517fad4b4cde0049ac001e5e"
   },
   "redtape-navigator-unified/scripts/test_langgraph_hitl.py": {
     "mtime": 1795194851.1455069,
-    "seen": 1795195630.656188,
+    "seen": 1795207683.54701,
     "ast_hash": "f9c0327bceec6456629acc2d9cb96720",
-    "semantic_hash": ""
+    "semantic_hash": "f9c0327bceec6456629acc2d9cb96720"
   },
   "redtape-navigator-unified/workflow.py": {
     "mtime": 1795197877.1009254,
-    "seen": 1795197989.136034,
+    "seen": 1795207683.5470889,
     "ast_hash": "146474148d474de6eb6de22e48479cbe",
-    "semantic_hash": ""
+    "semantic_hash": "146474148d474de6eb6de22e48479cbe"
   },
   "redtape-navigator-unified/assets/templates/food_safety_hygiene_declaration.md": {
     "mtime": 1795192126.1092281,
-    "seen": 1795195630.6561952,
+    "seen": 1795207683.5470989,
     "ast_hash": "51ce61f3c38364169f888633994a81b0",
-    "semantic_hash": ""
+    "semantic_hash": "51ce61f3c38364169f888633994a81b0"
   },
   "redtape-navigator-unified/assets/templates/landlord_noc_template.md": {
     "mtime": 1795192116.7724671,
-    "seen": 1795195630.656196,
+    "seen": 1795207683.547128,
     "ast_hash": "bc78e728ec22bf16106d3c1fe0f78e5a",
-    "semantic_hash": ""
+    "semantic_hash": "bc78e728ec22bf16106d3c1fe0f78e5a"
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/draft_food_hygiene_declaration.md": {
     "mtime": 1795192395.9730248,
@@ -445,9 +466,9 @@
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/review.md": {
     "mtime": 1795192395.9744837,
-    "seen": 1795195630.6561978,
+    "seen": 1795207683.547232,
     "ast_hash": "795ace3e2ab59a58c057dccbdc729aca",
-    "semantic_hash": ""
+    "semantic_hash": "795ace3e2ab59a58c057dccbdc729aca"
   },
   "redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/silpasathi_pack.md": {
     "mtime": 1795192395.9685478,
@@ -529,51 +550,57 @@
   },
   "redtape-navigator-unified/assets/forms/building_plan_form_map.json": {
     "mtime": 1795196749.306406,
-    "seen": 1795197989.1360068,
+    "seen": 1795207683.546649,
     "ast_hash": "d844f04e4222065ad19920819a215638",
-    "semantic_hash": ""
+    "semantic_hash": "d844f04e4222065ad19920819a215638",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/forms/pmksy_grant_form_map.json": {
     "mtime": 1795196769.419893,
-    "seen": 1795197989.136009,
+    "seen": 1795207683.546651,
     "ast_hash": "8734db4fe27954223a97cc05aae6bf0b",
-    "semantic_hash": ""
+    "semantic_hash": "8734db4fe27954223a97cc05aae6bf0b",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/portals/banglar_krishi_portal_map.json": {
     "mtime": 1795196822.933767,
-    "seen": 1795197989.1360111,
+    "seen": 1795207683.5466712,
     "ast_hash": "6349901c368d657fd50241fbbe0620c0",
-    "semantic_hash": ""
+    "semantic_hash": "6349901c368d657fd50241fbbe0620c0",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/portals/bmc_building_plan_portal_map.json": {
     "mtime": 1795196797.6317954,
-    "seen": 1795197989.136012,
+    "seen": 1795207683.546672,
     "ast_hash": "24e0e70585f8db222dffb10551943ae1",
-    "semantic_hash": ""
+    "semantic_hash": "24e0e70585f8db222dffb10551943ae1",
+    "ast_empty": true
   },
   "redtape-navigator-unified/examples/agriculture_nadia/state_snapshot.json": {
     "mtime": 1795197247.5752258,
-    "seen": 1795197989.136021,
+    "seen": 1795207683.546706,
     "ast_hash": "216006ecd4c47744c478e4d6f42dd1d0",
-    "semantic_hash": ""
+    "semantic_hash": "216006ecd4c47744c478e4d6f42dd1d0",
+    "ast_empty": true
   },
   "redtape-navigator-unified/examples/zoning_extension/state_snapshot.json": {
     "mtime": 1795197218.9074364,
-    "seen": 1795197989.136023,
+    "seen": 1795207683.546724,
     "ast_hash": "d8d43fad9d7b1a1b8935bce6d5427b5d",
-    "semantic_hash": ""
+    "semantic_hash": "d8d43fad9d7b1a1b8935bce6d5427b5d",
+    "ast_empty": true
   },
   "redtape-navigator-unified/assets/templates/land_possession_self_declaration.md": {
     "mtime": 1795196854.4749324,
-    "seen": 1795197989.13604,
+    "seen": 1795207683.547114,
     "ast_hash": "090a00fc6782aa3cc00f96b235df35ce",
-    "semantic_hash": ""
+    "semantic_hash": "090a00fc6782aa3cc00f96b235df35ce"
   },
   "redtape-navigator-unified/assets/templates/structural_stability_declaration.md": {
     "mtime": 1795196837.9875982,
-    "seen": 1795197989.136041,
+    "seen": 1795207683.547141,
     "ast_hash": "bff55dc2738c81548e25ebad4777837e",
-    "semantic_hash": ""
+    "semantic_hash": "bff55dc2738c81548e25ebad4777837e"
   },
   "redtape-navigator-unified/assets/forms/Building_Plan_Sanction_Application.pdf": {
     "mtime": 1795196724.1727183,
@@ -589,69 +616,74 @@
   },
   "redtape-navigator-unified/scripts/test_phase6_review_overrides.py": {
     "mtime": 1795200020.9509726,
-    "seen": 1795200392.569092,
+    "seen": 1795207683.547022,
     "ast_hash": "26edc44c3ba39a132d7f1a61109eced4",
-    "semantic_hash": ""
+    "semantic_hash": "26edc44c3ba39a132d7f1a61109eced4"
   },
   "redtape-navigator-unified/scripts/test_phase7_server_orchestration.py": {
     "mtime": 1795202892.290898,
-    "seen": 1795203006.167841,
+    "seen": 1795207683.547033,
     "ast_hash": "2ed8d77a5362b00a1712eca302d295f7",
-    "semantic_hash": ""
+    "semantic_hash": "2ed8d77a5362b00a1712eca302d295f7"
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/draft_FSSAI_Registration_Form_A.pdf.report.json": {
     "mtime": 1795203729.2276495,
-    "seen": 1795204454.000475,
+    "seen": 1795207683.5466912,
     "ast_hash": "a4edd5373764ca327a47df505856d265",
-    "semantic_hash": ""
+    "semantic_hash": "a4edd5373764ca327a47df505856d265",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/draft_WB_Shops_Establishment_Form_B.pdf.report.json": {
     "mtime": 1795203729.2197714,
-    "seen": 1795204454.000476,
+    "seen": 1795207683.5466921,
     "ast_hash": "f2e6b8db4b495673568881c45f3f986d",
-    "semantic_hash": ""
+    "semantic_hash": "f2e6b8db4b495673568881c45f3f986d",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/foscos_manifest.json": {
     "mtime": 1795203729.2283583,
-    "seen": 1795204454.000476,
+    "seen": 1795207683.546693,
     "ast_hash": "a9cc4b897c4617abc0232b2f993c5d05",
-    "semantic_hash": ""
+    "semantic_hash": "a9cc4b897c4617abc0232b2f993c5d05",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/kmc_trade_license_manifest.json": {
     "mtime": 1795203729.2115514,
-    "seen": 1795204454.0004768,
+    "seen": 1795207683.5466938,
     "ast_hash": "ef03c6293b1296eb4a57f5dc602c4af5",
-    "semantic_hash": ""
+    "semantic_hash": "ef03c6293b1296eb4a57f5dc602c4af5",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/silpasathi_manifest.json": {
     "mtime": 1795203729.220394,
-    "seen": 1795204454.000478,
+    "seen": 1795207683.546695,
     "ast_hash": "bc78aa56a984bdcae273aebb10a2c36a",
-    "semantic_hash": ""
+    "semantic_hash": "bc78aa56a984bdcae273aebb10a2c36a",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/draft_landlord_noc.md": {
     "mtime": 1795203729.2286675,
-    "seen": 1795204454.0005078,
+    "seen": 1795207683.547154,
     "ast_hash": "dd7a0e8fe016995a977478f9cd12ed34",
-    "semantic_hash": ""
+    "semantic_hash": "dd7a0e8fe016995a977478f9cd12ed34"
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/foscos_pack.md": {
     "mtime": 1795203729.2281754,
-    "seen": 1795204454.000509,
+    "seen": 1795207683.547167,
     "ast_hash": "e9395ab2a5555b3e0097d9a8ac5e7f10",
-    "semantic_hash": ""
+    "semantic_hash": "e9395ab2a5555b3e0097d9a8ac5e7f10"
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/kmc_trade_license_pack.md": {
     "mtime": 1795203729.2111566,
-    "seen": 1795204454.000509,
+    "seen": 1795207683.54718,
     "ast_hash": "c552fc4af12455d7ca84687f3819f5f8",
-    "semantic_hash": ""
+    "semantic_hash": "c552fc4af12455d7ca84687f3819f5f8"
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/silpasathi_pack.md": {
     "mtime": 1795203729.2202387,
-    "seen": 1795204454.00051,
+    "seen": 1795207683.547193,
     "ast_hash": "a5f8079e946cbbd462efc8313307b6e1",
-    "semantic_hash": ""
+    "semantic_hash": "a5f8079e946cbbd462efc8313307b6e1"
   },
   "redtape-navigator-unified/drafts/demo_bakery_kolkata/draft_FSSAI_Registration_Form_A.pdf": {
     "mtime": 1795203729.2272763,
@@ -667,32 +699,112 @@
   },
   "redtape-navigator-unified/drafts/demo_zoning_extension/bmc_building_plan_manifest.json": {
     "mtime": 1795203625.626647,
-    "seen": 1795204454.000478,
+    "seen": 1795207683.546696,
     "ast_hash": "bac3873d25d9f3484aa29a4f9c6ba3b6",
-    "semantic_hash": ""
+    "semantic_hash": "bac3873d25d9f3484aa29a4f9c6ba3b6",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_zoning_extension/draft_Building_Plan_Sanction_Application.pdf.report.json": {
     "mtime": 1795203625.6262689,
-    "seen": 1795204454.000479,
+    "seen": 1795207683.546697,
     "ast_hash": "4735084980d92a8ea421db5463b8e38b",
-    "semantic_hash": ""
+    "semantic_hash": "4735084980d92a8ea421db5463b8e38b",
+    "ast_empty": true
   },
   "redtape-navigator-unified/drafts/demo_zoning_extension/bmc_building_plan_pack.md": {
     "mtime": 1795203625.6265593,
-    "seen": 1795204454.00051,
+    "seen": 1795207683.547206,
     "ast_hash": "8d7bf7bf7221e7f389bcbf7a0b79e2bc",
-    "semantic_hash": ""
+    "semantic_hash": "8d7bf7bf7221e7f389bcbf7a0b79e2bc"
   },
   "redtape-navigator-unified/drafts/demo_zoning_extension/draft_structural_stability.md": {
     "mtime": 1795203625.626814,
-    "seen": 1795204454.000511,
+    "seen": 1795207683.54722,
     "ast_hash": "8ab870b00dce364743be1594cb4d2e92",
-    "semantic_hash": ""
+    "semantic_hash": "8ab870b00dce364743be1594cb4d2e92"
   },
   "redtape-navigator-unified/drafts/demo_zoning_extension/draft_Building_Plan_Sanction_Application.pdf": {
     "mtime": 1795203625.6260302,
     "seen": 1795204454.000532,
     "ast_hash": "4a73cac6351cdf7374704e4297e156bd",
+    "semantic_hash": ""
+  },
+  "emblem_test.png": {
+    "mtime": 1795207366.362359,
+    "seen": 1795207683.5472472,
+    "ast_hash": "c7125cf4cdaa9af765e036875ad319ab",
+    "semantic_hash": "c7125cf4cdaa9af765e036875ad319ab"
+  },
+  "full_test.png": {
+    "mtime": 1795207366.3702004,
+    "seen": 1795207683.547256,
+    "ast_hash": "a2c3698bbecab953776de6f8c238d217",
+    "semantic_hash": "a2c3698bbecab953776de6f8c238d217"
+  },
+  "logo-circle.png": {
+    "mtime": 1795207417.7152753,
+    "seen": 1795207669.976207,
+    "ast_hash": "0a579d7a6db2dfccb49ee390c1c24514",
+    "semantic_hash": ""
+  },
+  "logo-icon-transparent.png": {
+    "mtime": 1795207398.7643754,
+    "seen": 1795207669.976208,
+    "ast_hash": "8481458c9bc4ee84d1f48cdae2d3b4b3",
+    "semantic_hash": ""
+  },
+  "logo-on-dark.png": {
+    "mtime": 1795207398.7694294,
+    "seen": 1795207669.976208,
+    "ast_hash": "752e74eb902c16e51477b0b54b943094",
+    "semantic_hash": ""
+  },
+  "logo-pure-on-dark.png": {
+    "mtime": 1795207418.057465,
+    "seen": 1795207669.976209,
+    "ast_hash": "746b312311ef44cca7ba5f530d72803c",
+    "semantic_hash": ""
+  },
+  "logo-pure.png": {
+    "mtime": 1795207418.0547338,
+    "seen": 1795207669.976209,
+    "ast_hash": "e3e60dd18d2bf991697394505061f385",
+    "semantic_hash": ""
+  },
+  "logo.jpeg": {
+    "mtime": 1795206950.204212,
+    "seen": 1795207669.9762099,
+    "ast_hash": "0b80966ddffad216f93026f6ac1fba55",
+    "semantic_hash": ""
+  },
+  "static/favicon.png": {
+    "mtime": 1795207494.7749014,
+    "seen": 1795207669.9762099,
+    "ast_hash": "82b30c597e1ebd09e31b3f8e827d2168",
+    "semantic_hash": ""
+  },
+  "static/logo-full.png": {
+    "mtime": 1795207494.890563,
+    "seen": 1795207683.547266,
+    "ast_hash": "308931c05ff4b2b5b0b4e8ce8a779efa",
+    "semantic_hash": "308931c05ff4b2b5b0b4e8ce8a779efa"
+  },
+  "static/logo-horizontal.png": {
+    "mtime": 1795207494.8963094,
+    "seen": 1795207669.9762108,
+    "ast_hash": "4137f0424b4f428e77fa26bf25891ba4",
+    "semantic_hash": ""
+  },
+  "static/logo-icon.png": {
+    "mtime": 1795207494.7742531,
+    "seen": 1795207669.9762108,
+    "ast_hash": "2154945559896b5894cb4b97c8b7b7f8",
+    "semantic_hash": ""
+  },
+  "static/logo-squircle.png": {
+    "mtime": 1795207494.871739,
+    "seen": 1795207669.976212,
+    "ast_hash": "f00bcd5cd6088dd7a70e9794088e0413",
     "semantic_hash": ""
   }
 }

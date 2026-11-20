@@ -1,0 +1,911 @@
+{
+  "communities": {
+    "0": [
+      "ddgs",
+      "demo_server",
+      "demo_server_main",
+      "demo_server_rationale_2",
+      "duckduckgo_search",
+      "hashlib",
+      "http_server",
+      "json",
+      "re",
+      "redtape_navigator_unified_scripts_compliance_engine",
+      "redtape_navigator_unified_scripts_compliance_engine_catalog_supporting_documents",
+      "redtape_navigator_unified_scripts_compliance_engine_compliance",
+      "redtape_navigator_unified_scripts_compliance_engine_evaluate_deterministic",
+      "redtape_navigator_unified_scripts_compliance_engine_evaluate_with_gemini",
+      "redtape_navigator_unified_scripts_compliance_engine_rationale_136",
+      "redtape_navigator_unified_scripts_compliance_engine_rationale_2",
+      "redtape_navigator_unified_scripts_compliance_engine_rationale_216",
+      "redtape_navigator_unified_scripts_compliance_engine_rationale_257",
+      "redtape_navigator_unified_scripts_compliance_engine_rationale_75",
+      "redtape_navigator_unified_scripts_interview_engine",
+      "redtape_navigator_unified_scripts_interview_engine_call_gemini_interview",
+      "redtape_navigator_unified_scripts_interview_engine_generate_fallback_question",
+      "redtape_navigator_unified_scripts_interview_engine_generate_question_batch",
+      "redtape_navigator_unified_scripts_interview_engine_interview_turn",
+      "redtape_navigator_unified_scripts_interview_engine_is_pii_field",
+      "redtape_navigator_unified_scripts_interview_engine_main",
+      "redtape_navigator_unified_scripts_interview_engine_parse_fallback_answer",
+      "redtape_navigator_unified_scripts_interview_engine_process_user_answer",
+      "redtape_navigator_unified_scripts_interview_engine_rank_open_questions",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_132",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_169",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_188",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_2",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_275",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_313",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_405",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_82",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_93",
+      "redtape_navigator_unified_scripts_interview_engine_rationale_99",
+      "redtape_navigator_unified_scripts_interview_engine_set_path",
+      "redtape_navigator_unified_scripts_orchestrator_parser",
+      "redtape_navigator_unified_scripts_orchestrator_parser_find_api_key",
+      "redtape_navigator_unified_scripts_orchestrator_parser_main",
+      "redtape_navigator_unified_scripts_orchestrator_parser_parse_intent",
+      "redtape_navigator_unified_scripts_orchestrator_parser_rationale_108",
+      "redtape_navigator_unified_scripts_orchestrator_parser_rationale_2",
+      "redtape_navigator_unified_scripts_orchestrator_parser_rationale_24",
+      "redtape_navigator_unified_scripts_research_engine",
+      "redtape_navigator_unified_scripts_research_engine_build_search_queries",
+      "redtape_navigator_unified_scripts_research_engine_call_gemini_research",
+      "redtape_navigator_unified_scripts_research_engine_find_serpapi_key",
+      "redtape_navigator_unified_scripts_research_engine_get_cache",
+      "redtape_navigator_unified_scripts_research_engine_get_jurisdiction_baseline_findings",
+      "redtape_navigator_unified_scripts_research_engine_load_jurisdiction_fallback",
+      "redtape_navigator_unified_scripts_research_engine_rationale_122",
+      "redtape_navigator_unified_scripts_research_engine_rationale_155",
+      "redtape_navigator_unified_scripts_research_engine_rationale_2",
+      "redtape_navigator_unified_scripts_research_engine_rationale_211",
+      "redtape_navigator_unified_scripts_research_engine_rationale_225",
+      "redtape_navigator_unified_scripts_research_engine_rationale_283",
+      "redtape_navigator_unified_scripts_research_engine_rationale_369",
+      "redtape_navigator_unified_scripts_research_engine_rationale_43",
+      "redtape_navigator_unified_scripts_research_engine_rationale_64",
+      "redtape_navigator_unified_scripts_research_engine_rationale_74",
+      "redtape_navigator_unified_scripts_research_engine_research",
+      "redtape_navigator_unified_scripts_research_engine_save_to_cache",
+      "redtape_navigator_unified_scripts_research_engine_search_serpapi_with_circuit_breaker",
+      "redtape_navigator_unified_workflow_node_interview",
+      "redtape_navigator_unified_workflow_rationale_121",
+      "time",
+      "urllib_error",
+      "urllib_parse",
+      "urllib_request"
+    ],
+    "1": [
+      "argparse",
+      "copy",
+      "datetime",
+      "fitz",
+      "io",
+      "langgraph_checkpoint_memory",
+      "os",
+      "path",
+      "pypdf",
+      "redtape_navigator_unified_scripts_common",
+      "redtape_navigator_unified_scripts_common_apply_transform",
+      "redtape_navigator_unified_scripts_common_effective_value",
+      "redtape_navigator_unified_scripts_common_get_path",
+      "redtape_navigator_unified_scripts_common_inr_to_indian_words",
+      "redtape_navigator_unified_scripts_common_is_blank",
+      "redtape_navigator_unified_scripts_common_load_json",
+      "redtape_navigator_unified_scripts_common_mask",
+      "redtape_navigator_unified_scripts_common_need",
+      "redtape_navigator_unified_scripts_common_rationale_1",
+      "redtape_navigator_unified_scripts_common_rationale_59",
+      "redtape_navigator_unified_scripts_common_rationale_76",
+      "redtape_navigator_unified_scripts_common_save_json",
+      "redtape_navigator_unified_scripts_compliance_engine_main",
+      "redtape_navigator_unified_scripts_document_engine",
+      "redtape_navigator_unified_scripts_document_engine_generate_documents",
+      "redtape_navigator_unified_scripts_document_engine_main",
+      "redtape_navigator_unified_scripts_document_engine_precheck_supporting_documents",
+      "redtape_navigator_unified_scripts_document_engine_rationale_146",
+      "redtape_navigator_unified_scripts_document_engine_rationale_2",
+      "redtape_navigator_unified_scripts_document_engine_rationale_31",
+      "redtape_navigator_unified_scripts_document_engine_resolve_permit_target",
+      "redtape_navigator_unified_scripts_fill_pdf",
+      "redtape_navigator_unified_scripts_fill_pdf_fill",
+      "redtape_navigator_unified_scripts_fill_pdf_fill_pymupdf",
+      "redtape_navigator_unified_scripts_fill_pdf_fill_pypdf",
+      "redtape_navigator_unified_scripts_fill_pdf_main",
+      "redtape_navigator_unified_scripts_fill_pdf_rationale_2",
+      "redtape_navigator_unified_scripts_generate_portal_pack",
+      "redtape_navigator_unified_scripts_generate_portal_pack_build_portal_pack",
+      "redtape_navigator_unified_scripts_generate_portal_pack_main",
+      "redtape_navigator_unified_scripts_generate_portal_pack_rationale_2",
+      "redtape_navigator_unified_scripts_init_state",
+      "redtape_navigator_unified_scripts_init_state_main",
+      "redtape_navigator_unified_scripts_init_state_make_state",
+      "redtape_navigator_unified_scripts_init_state_rationale_2",
+      "redtape_navigator_unified_scripts_inspect_pdf",
+      "redtape_navigator_unified_scripts_inspect_pdf_inspect",
+      "redtape_navigator_unified_scripts_inspect_pdf_main",
+      "redtape_navigator_unified_scripts_inspect_pdf_rationale_2",
+      "redtape_navigator_unified_scripts_inspect_pdf_render_page",
+      "redtape_navigator_unified_scripts_render_review",
+      "redtape_navigator_unified_scripts_render_review_main",
+      "redtape_navigator_unified_scripts_render_review_rationale_2",
+      "redtape_navigator_unified_scripts_render_review_render",
+      "redtape_navigator_unified_scripts_research_engine_main",
+      "redtape_navigator_unified_scripts_test_langgraph_hitl",
+      "redtape_navigator_unified_scripts_test_langgraph_hitl_main",
+      "redtape_navigator_unified_scripts_test_langgraph_hitl_rationale_2",
+      "redtape_navigator_unified_scripts_test_phase6_review_overrides",
+      "redtape_navigator_unified_scripts_test_phase6_review_overrides_main",
+      "redtape_navigator_unified_scripts_test_phase6_review_overrides_rationale_2",
+      "redtape_navigator_unified_scripts_test_phase6_review_overrides_test_dynamic_overrides_and_audit_trail",
+      "redtape_navigator_unified_scripts_test_phase6_review_overrides_test_review_markdown_rendering",
+      "redtape_navigator_unified_scripts_test_phase6_review_overrides_test_validator_rules",
+      "redtape_navigator_unified_scripts_validate_state",
+      "redtape_navigator_unified_scripts_validate_state_days_old",
+      "redtape_navigator_unified_scripts_validate_state_main",
+      "redtape_navigator_unified_scripts_validate_state_rationale_2",
+      "redtape_navigator_unified_scripts_validate_state_validate",
+      "redtape_navigator_unified_workflow_main",
+      "sys"
+    ],
+    "2": [
+      "redtape_navigator_unified_schemas_project_state_aadhaar_last4_type",
+      "redtape_navigator_unified_schemas_project_state_activity_type_description",
+      "redtape_navigator_unified_schemas_project_state_activity_type_type",
+      "redtape_navigator_unified_schemas_project_state_address_type",
+      "redtape_navigator_unified_schemas_project_state_applicant_profile_properties",
+      "redtape_navigator_unified_schemas_project_state_applicant_profile_type",
+      "redtape_navigator_unified_schemas_project_state_applicant_properties",
+      "redtape_navigator_unified_schemas_project_state_applicant_type",
+      "redtape_navigator_unified_schemas_project_state_city_or_village_type",
+      "redtape_navigator_unified_schemas_project_state_district_type",
+      "redtape_navigator_unified_schemas_project_state_dob_type",
+      "redtape_navigator_unified_schemas_project_state_domain_attributes_additionalproperties",
+      "redtape_navigator_unified_schemas_project_state_domain_attributes_description",
+      "redtape_navigator_unified_schemas_project_state_domain_attributes_type",
+      "redtape_navigator_unified_schemas_project_state_email_type",
+      "redtape_navigator_unified_schemas_project_state_entity_name_description",
+      "redtape_navigator_unified_schemas_project_state_entity_name_type",
+      "redtape_navigator_unified_schemas_project_state_location_properties",
+      "redtape_navigator_unified_schemas_project_state_location_type",
+      "redtape_navigator_unified_schemas_project_state_municipal_ward_or_block_type",
+      "redtape_navigator_unified_schemas_project_state_name_type",
+      "redtape_navigator_unified_schemas_project_state_pan_type",
+      "redtape_navigator_unified_schemas_project_state_phone_type",
+      "redtape_navigator_unified_schemas_project_state_pin_type",
+      "redtape_navigator_unified_schemas_project_state_premises_type_enum",
+      "redtape_navigator_unified_schemas_project_state_premises_type_type",
+      "redtape_navigator_unified_schemas_project_state_properties_aadhaar_last4",
+      "redtape_navigator_unified_schemas_project_state_properties_activity_type",
+      "redtape_navigator_unified_schemas_project_state_properties_address",
+      "redtape_navigator_unified_schemas_project_state_properties_applicant",
+      "redtape_navigator_unified_schemas_project_state_properties_applicant_profile",
+      "redtape_navigator_unified_schemas_project_state_properties_city_or_village",
+      "redtape_navigator_unified_schemas_project_state_properties_district",
+      "redtape_navigator_unified_schemas_project_state_properties_dob",
+      "redtape_navigator_unified_schemas_project_state_properties_domain_attributes",
+      "redtape_navigator_unified_schemas_project_state_properties_email",
+      "redtape_navigator_unified_schemas_project_state_properties_entity_name",
+      "redtape_navigator_unified_schemas_project_state_properties_location",
+      "redtape_navigator_unified_schemas_project_state_properties_municipal_ward_or_block",
+      "redtape_navigator_unified_schemas_project_state_properties_name",
+      "redtape_navigator_unified_schemas_project_state_properties_pan",
+      "redtape_navigator_unified_schemas_project_state_properties_phone",
+      "redtape_navigator_unified_schemas_project_state_properties_pin",
+      "redtape_navigator_unified_schemas_project_state_properties_premises_type",
+      "redtape_navigator_unified_schemas_project_state_properties_state",
+      "redtape_navigator_unified_schemas_project_state_state_type"
+    ],
+    "3": [
+      "redtape_navigator_unified_schemas_compliance_matrix",
+      "redtape_navigator_unified_schemas_compliance_matrix_authority_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_conflicts_items",
+      "redtape_navigator_unified_schemas_compliance_matrix_conflicts_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_depends_on_items",
+      "redtape_navigator_unified_schemas_compliance_matrix_depends_on_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_form_version_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_history_items",
+      "redtape_navigator_unified_schemas_compliance_matrix_history_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_id_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_items",
+      "redtape_navigator_unified_schemas_compliance_matrix_items_properties",
+      "redtape_navigator_unified_schemas_compliance_matrix_items_required",
+      "redtape_navigator_unified_schemas_compliance_matrix_items_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_name_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_official_source_url_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_authority",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_conflicts",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_depends_on",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_form_version",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_history",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_id",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_name",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_official_source_url",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_rationale",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_renewal_period",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_source_verified_at",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_status",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_statutory_fee",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_submission_channel",
+      "redtape_navigator_unified_schemas_compliance_matrix_properties_tier",
+      "redtape_navigator_unified_schemas_compliance_matrix_rationale_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_renewal_period_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_schema",
+      "redtape_navigator_unified_schemas_compliance_matrix_source_verified_at_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_status_enum",
+      "redtape_navigator_unified_schemas_compliance_matrix_status_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_statutory_fee_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_submission_channel_enum",
+      "redtape_navigator_unified_schemas_compliance_matrix_submission_channel_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_tier_enum",
+      "redtape_navigator_unified_schemas_compliance_matrix_tier_type",
+      "redtape_navigator_unified_schemas_compliance_matrix_title",
+      "redtape_navigator_unified_schemas_compliance_matrix_type"
+    ],
+    "4": [
+      "any",
+      "langgraph_graph",
+      "pathlib",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_http_get",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_http_post",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_main",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_rationale_2",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_start_test_server",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_test_langgraph_routing_and_structure",
+      "redtape_navigator_unified_scripts_test_phase7_server_orchestration_test_server_endpoints",
+      "redtape_navigator_unified_workflow",
+      "redtape_navigator_unified_workflow_build_workflow",
+      "redtape_navigator_unified_workflow_node_compliance",
+      "redtape_navigator_unified_workflow_node_documents",
+      "redtape_navigator_unified_workflow_node_orchestrator",
+      "redtape_navigator_unified_workflow_node_research",
+      "redtape_navigator_unified_workflow_node_review",
+      "redtape_navigator_unified_workflow_node_validate",
+      "redtape_navigator_unified_workflow_rationale_109",
+      "redtape_navigator_unified_workflow_rationale_150",
+      "redtape_navigator_unified_workflow_rationale_162",
+      "redtape_navigator_unified_workflow_rationale_169",
+      "redtape_navigator_unified_workflow_rationale_187",
+      "redtape_navigator_unified_workflow_rationale_198",
+      "redtape_navigator_unified_workflow_rationale_2",
+      "redtape_navigator_unified_workflow_rationale_209",
+      "redtape_navigator_unified_workflow_rationale_72",
+      "redtape_navigator_unified_workflow_rationale_94",
+      "redtape_navigator_unified_workflow_redtapestate",
+      "redtape_navigator_unified_workflow_route_after_compliance",
+      "redtape_navigator_unified_workflow_route_after_interview",
+      "threading",
+      "typeddict",
+      "typing"
+    ],
+    "5": [
+      "redtape_navigator_unified_schemas_portal_artifact",
+      "redtape_navigator_unified_schemas_portal_artifact_completion_percentage_maximum",
+      "redtape_navigator_unified_schemas_portal_artifact_completion_percentage_minimum",
+      "redtape_navigator_unified_schemas_portal_artifact_completion_percentage_type",
+      "redtape_navigator_unified_schemas_portal_artifact_copy_sheet_path_type",
+      "redtape_navigator_unified_schemas_portal_artifact_description",
+      "redtape_navigator_unified_schemas_portal_artifact_human_gates_items",
+      "redtape_navigator_unified_schemas_portal_artifact_human_gates_type",
+      "redtape_navigator_unified_schemas_portal_artifact_items_type",
+      "redtape_navigator_unified_schemas_portal_artifact_licence_id_type",
+      "redtape_navigator_unified_schemas_portal_artifact_manifest_path_type",
+      "redtape_navigator_unified_schemas_portal_artifact_missing_fields_items",
+      "redtape_navigator_unified_schemas_portal_artifact_missing_fields_type",
+      "redtape_navigator_unified_schemas_portal_artifact_portal_name_type",
+      "redtape_navigator_unified_schemas_portal_artifact_portal_url_format",
+      "redtape_navigator_unified_schemas_portal_artifact_portal_url_type",
+      "redtape_navigator_unified_schemas_portal_artifact_properties",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_completion_percentage",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_copy_sheet_path",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_human_gates",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_licence_id",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_manifest_path",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_missing_fields",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_portal_name",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_portal_url",
+      "redtape_navigator_unified_schemas_portal_artifact_properties_status",
+      "redtape_navigator_unified_schemas_portal_artifact_required",
+      "redtape_navigator_unified_schemas_portal_artifact_schema",
+      "redtape_navigator_unified_schemas_portal_artifact_status_enum",
+      "redtape_navigator_unified_schemas_portal_artifact_status_type",
+      "redtape_navigator_unified_schemas_portal_artifact_title",
+      "redtape_navigator_unified_schemas_portal_artifact_type"
+    ],
+    "6": [
+      "basehttprequesthandler",
+      "demo_server_demoserverhandler",
+      "demo_server_demoserverhandler_do_get",
+      "demo_server_demoserverhandler_do_options",
+      "demo_server_demoserverhandler_do_post",
+      "demo_server_demoserverhandler_log_message",
+      "demo_server_demoserverhandler_send_json",
+      "demo_server_livedemostate",
+      "demo_server_livedemostate_apply_override",
+      "demo_server_livedemostate_evaluate_compliance",
+      "demo_server_livedemostate_generate_docs",
+      "demo_server_livedemostate_get_effective",
+      "demo_server_livedemostate_get_interview_turn",
+      "demo_server_livedemostate_handle_chat",
+      "demo_server_livedemostate_init",
+      "demo_server_livedemostate_initial_agent_reply",
+      "demo_server_livedemostate_initial_thoughts",
+      "demo_server_livedemostate_load_preset",
+      "demo_server_livedemostate_process_answer",
+      "demo_server_livedemostate_to_dict",
+      "demo_server_livedemostate_to_full_state",
+      "demo_server_rationale_262",
+      "demo_server_rationale_400",
+      "demo_server_rationale_645",
+      "demo_server_rationale_688",
+      "demo_server_rationale_774",
+      "demo_server_render_ui_html"
+    ],
+    "7": [
+      "redtape_navigator_unified_schemas_form_artifact",
+      "redtape_navigator_unified_schemas_form_artifact_completion_percentage_maximum",
+      "redtape_navigator_unified_schemas_form_artifact_completion_percentage_minimum",
+      "redtape_navigator_unified_schemas_form_artifact_completion_percentage_type",
+      "redtape_navigator_unified_schemas_form_artifact_file_path_type",
+      "redtape_navigator_unified_schemas_form_artifact_form_name_type",
+      "redtape_navigator_unified_schemas_form_artifact_items_type",
+      "redtape_navigator_unified_schemas_form_artifact_licence_id_type",
+      "redtape_navigator_unified_schemas_form_artifact_missing_fields_items",
+      "redtape_navigator_unified_schemas_form_artifact_missing_fields_type",
+      "redtape_navigator_unified_schemas_form_artifact_properties",
+      "redtape_navigator_unified_schemas_form_artifact_properties_completion_percentage",
+      "redtape_navigator_unified_schemas_form_artifact_properties_file_path",
+      "redtape_navigator_unified_schemas_form_artifact_properties_form_name",
+      "redtape_navigator_unified_schemas_form_artifact_properties_licence_id",
+      "redtape_navigator_unified_schemas_form_artifact_properties_missing_fields",
+      "redtape_navigator_unified_schemas_form_artifact_properties_report_path",
+      "redtape_navigator_unified_schemas_form_artifact_properties_status",
+      "redtape_navigator_unified_schemas_form_artifact_report_path_type",
+      "redtape_navigator_unified_schemas_form_artifact_required",
+      "redtape_navigator_unified_schemas_form_artifact_schema",
+      "redtape_navigator_unified_schemas_form_artifact_status_enum",
+      "redtape_navigator_unified_schemas_form_artifact_status_type",
+      "redtape_navigator_unified_schemas_form_artifact_title",
+      "redtape_navigator_unified_schemas_form_artifact_type"
+    ],
+    "8": [
+      "redtape_navigator_unified_agents_compliance_skill",
+      "redtape_navigator_unified_agents_document_skill",
+      "redtape_navigator_unified_agents_interview_skill",
+      "redtape_navigator_unified_agents_orchestrator_skill",
+      "redtape_navigator_unified_agents_research_skill",
+      "redtape_navigator_unified_agents_validation_skill",
+      "redtape_navigator_unified_prompts_compliance_system",
+      "redtape_navigator_unified_prompts_document_system",
+      "redtape_navigator_unified_prompts_interview_system",
+      "redtape_navigator_unified_prompts_orchestrator_system",
+      "redtape_navigator_unified_prompts_research_system",
+      "redtape_navigator_unified_prompts_validation_system",
+      "redtape_navigator_unified_references_compliance_taxonomy",
+      "redtape_navigator_unified_references_demo_scenario",
+      "redtape_navigator_unified_references_document_precheck",
+      "redtape_navigator_unified_references_interview_protocol",
+      "redtape_navigator_unified_references_langgraph_mapping",
+      "redtape_navigator_unified_references_pdf_form_filling",
+      "redtape_navigator_unified_references_research_playbook",
+      "redtape_navigator_unified_references_review_package",
+      "redtape_navigator_unified_references_web_portal_automation",
+      "redtape_navigator_unified_skilli"
+    ],
+    "9": [
+      "redtape_navigator_unified_schemas_project_state_compliance_complete_type",
+      "redtape_navigator_unified_schemas_project_state_compliance_needs_reeval_type",
+      "redtape_navigator_unified_schemas_project_state_documents_generated_type",
+      "redtape_navigator_unified_schemas_project_state_interview_complete_type",
+      "redtape_navigator_unified_schemas_project_state_interview_rounds_minimum",
+      "redtape_navigator_unified_schemas_project_state_interview_rounds_type",
+      "redtape_navigator_unified_schemas_project_state_properties_compliance_complete",
+      "redtape_navigator_unified_schemas_project_state_properties_compliance_needs_reeval",
+      "redtape_navigator_unified_schemas_project_state_properties_documents_generated",
+      "redtape_navigator_unified_schemas_project_state_properties_interview_complete",
+      "redtape_navigator_unified_schemas_project_state_properties_interview_rounds",
+      "redtape_navigator_unified_schemas_project_state_properties_research_complete",
+      "redtape_navigator_unified_schemas_project_state_properties_source_fallback",
+      "redtape_navigator_unified_schemas_project_state_properties_validation_passed",
+      "redtape_navigator_unified_schemas_project_state_properties_workflow_flags",
+      "redtape_navigator_unified_schemas_project_state_research_complete_type",
+      "redtape_navigator_unified_schemas_project_state_source_fallback_type",
+      "redtape_navigator_unified_schemas_project_state_validation_passed_type",
+      "redtape_navigator_unified_schemas_project_state_workflow_flags_properties",
+      "redtape_navigator_unified_schemas_project_state_workflow_flags_type"
+    ],
+    "10": [
+      "redtape_navigator_unified_schemas_project_state_compliance_matrix_items",
+      "redtape_navigator_unified_schemas_project_state_compliance_matrix_type",
+      "redtape_navigator_unified_schemas_project_state_form_artifacts_items",
+      "redtape_navigator_unified_schemas_project_state_form_artifacts_type",
+      "redtape_navigator_unified_schemas_project_state_items_ref",
+      "redtape_navigator_unified_schemas_project_state_portal_artifacts_items",
+      "redtape_navigator_unified_schemas_project_state_portal_artifacts_type",
+      "redtape_navigator_unified_schemas_project_state_properties_compliance_matrix",
+      "redtape_navigator_unified_schemas_project_state_properties_form_artifacts",
+      "redtape_navigator_unified_schemas_project_state_properties_portal_artifacts"
+    ],
+    "11": [
+      "redtape_navigator_unified_schemas_project_state_errors_items",
+      "redtape_navigator_unified_schemas_project_state_errors_type",
+      "redtape_navigator_unified_schemas_project_state_passed_type",
+      "redtape_navigator_unified_schemas_project_state_properties_errors",
+      "redtape_navigator_unified_schemas_project_state_properties_passed",
+      "redtape_navigator_unified_schemas_project_state_properties_timestamp",
+      "redtape_navigator_unified_schemas_project_state_properties_validation",
+      "redtape_navigator_unified_schemas_project_state_timestamp_type",
+      "redtape_navigator_unified_schemas_project_state_validation_properties",
+      "redtape_navigator_unified_schemas_project_state_validation_type"
+    ],
+    "12": [
+      "redtape_navigator_unified_schemas_project_state_goal_type",
+      "redtape_navigator_unified_schemas_project_state_preferred_language_default",
+      "redtape_navigator_unified_schemas_project_state_preferred_language_type",
+      "redtape_navigator_unified_schemas_project_state_project_id_type",
+      "redtape_navigator_unified_schemas_project_state_properties",
+      "redtape_navigator_unified_schemas_project_state_properties_goal",
+      "redtape_navigator_unified_schemas_project_state_properties_preferred_language",
+      "redtape_navigator_unified_schemas_project_state_properties_project_id",
+      "redtape_navigator_unified_schemas_project_state_properties_required_supporting_documents",
+      "redtape_navigator_unified_schemas_project_state_required_supporting_documents_type"
+    ],
+    "13": [
+      "redtape_navigator_unified_schemas_project_state_items_type",
+      "redtape_navigator_unified_schemas_project_state_open_questions_items",
+      "redtape_navigator_unified_schemas_project_state_open_questions_type",
+      "redtape_navigator_unified_schemas_project_state_properties_open_questions",
+      "redtape_navigator_unified_schemas_project_state_properties_research_findings",
+      "redtape_navigator_unified_schemas_project_state_properties_warnings",
+      "redtape_navigator_unified_schemas_project_state_research_findings_items",
+      "redtape_navigator_unified_schemas_project_state_research_findings_type",
+      "redtape_navigator_unified_schemas_project_state_warnings_items",
+      "redtape_navigator_unified_schemas_project_state_warnings_type"
+    ],
+    "14": [
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_1_compliance_matrix",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_2_audit_trail_rule_reasoning",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_3_conflicts_system_notices",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_4_filled_pdf_drafts_digital_portal_packs",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_5_supporting_document_checklist",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_6_submission_readiness",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review_application_review_package_i_want_to_open_a_small_bakery_in_park_circus_kolkata_with_5_counter_seats"
+    ],
+    "15": [
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_1_compliance_matrix",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_2_audit_trail_rule_reasoning",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_3_conflicts_system_notices",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_4_filled_pdf_drafts_digital_portal_packs",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_5_supporting_document_checklist",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_6_submission_readiness",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_review_application_review_package_i_want_to_open_a_small_bakery_in_park_circus_kolkata_with_5_counter_seats"
+    ],
+    "16": [
+      "redtape_navigator_unified_scripts_generate_form_templates",
+      "redtape_navigator_unified_scripts_generate_form_templates_build_building_plan_form",
+      "redtape_navigator_unified_scripts_generate_form_templates_build_fssai_form_a",
+      "redtape_navigator_unified_scripts_generate_form_templates_build_pmksy_grant_form",
+      "redtape_navigator_unified_scripts_generate_form_templates_build_wb_shops_form_b",
+      "redtape_navigator_unified_scripts_generate_form_templates_rationale_2",
+      "reportlab_lib_pagesizes",
+      "reportlab_pdfgen"
+    ],
+    "17": [
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_foscos_pack",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_foscos_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_foscos_pack_portal_submission_pack_foscos_fssai_basic_food_registration_form_a",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_foscos_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_foscos_pack_step_1_applicant_premises_details",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_foscos_pack_step_2_kind_of_business_turnover"
+    ],
+    "18": [
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_kmc_trade_license_pack",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_kmc_trade_license_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_kmc_trade_license_pack_portal_submission_pack_kmc_certificate_of_enlistment_trade_license",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_kmc_trade_license_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_kmc_trade_license_pack_step_1_location_premises_identification",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_kmc_trade_license_pack_step_2_business_applicant_profile"
+    ],
+    "19": [
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_silpasathi_pack",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_silpasathi_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_silpasathi_pack_portal_submission_pack_silpasathi_west_bengal_shops_establishments_form_b",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_silpasathi_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_silpasathi_pack_step_1_establishment_particulars",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_silpasathi_pack_step_2_employment_employer"
+    ],
+    "20": [
+      "redtape_navigator_unified_drafts_demo_zoning_extension_bmc_building_plan_pack",
+      "redtape_navigator_unified_drafts_demo_zoning_extension_bmc_building_plan_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_demo_zoning_extension_bmc_building_plan_pack_portal_submission_pack_bidhannagar_municipal_corporation_bmc_building_sanction",
+      "redtape_navigator_unified_drafts_demo_zoning_extension_bmc_building_plan_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_demo_zoning_extension_bmc_building_plan_pack_step_1_plot_location_particulars",
+      "redtape_navigator_unified_drafts_demo_zoning_extension_bmc_building_plan_pack_step_2_proposed_construction_details"
+    ],
+    "21": [
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_foscos_pack",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_foscos_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_foscos_pack_portal_submission_pack_foscos_fssai_basic_food_registration_form_a",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_foscos_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_foscos_pack_step_1_applicant_premises_details",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_foscos_pack_step_2_kind_of_business_turnover"
+    ],
+    "22": [
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_kmc_trade_license_pack",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_kmc_trade_license_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_kmc_trade_license_pack_portal_submission_pack_kmc_certificate_of_enlistment_trade_license",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_kmc_trade_license_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_kmc_trade_license_pack_step_1_location_premises_identification",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_kmc_trade_license_pack_step_2_business_applicant_profile"
+    ],
+    "23": [
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_silpasathi_pack",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_silpasathi_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_silpasathi_pack_portal_submission_pack_silpasathi_west_bengal_shops_establishments_form_b",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_silpasathi_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_silpasathi_pack_step_1_establishment_particulars",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_silpasathi_pack_step_2_employment_employer"
+    ],
+    "24": [
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_foscos_pack",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_foscos_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_foscos_pack_portal_submission_pack_foscos_fssai_basic_food_registration_form_a",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_foscos_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_foscos_pack_step_1_applicant_premises_details",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_foscos_pack_step_2_kind_of_business_turnover"
+    ],
+    "25": [
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_kmc_trade_license_pack",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_kmc_trade_license_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_kmc_trade_license_pack_portal_submission_pack_kmc_certificate_of_enlistment_trade_license",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_kmc_trade_license_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_kmc_trade_license_pack_step_1_location_premises_identification",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_kmc_trade_license_pack_step_2_business_applicant_profile"
+    ],
+    "26": [
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_silpasathi_pack",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_silpasathi_pack_human_only_gates_agent_stops_here",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_silpasathi_pack_portal_submission_pack_silpasathi_west_bengal_shops_establishments_form_b",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_silpasathi_pack_required_portal_uploads",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_silpasathi_pack_step_1_establishment_particulars",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_silpasathi_pack_step_2_employment_employer"
+    ],
+    "27": [
+      "redtape_navigator_unified_schemas_project_state",
+      "redtape_navigator_unified_schemas_project_state_description",
+      "redtape_navigator_unified_schemas_project_state_required",
+      "redtape_navigator_unified_schemas_project_state_schema",
+      "redtape_navigator_unified_schemas_project_state_title",
+      "redtape_navigator_unified_schemas_project_state_type"
+    ],
+    "28": [
+      "redtape_navigator_unified_scripts_test_pipeline",
+      "redtape_navigator_unified_scripts_test_pipeline_main",
+      "redtape_navigator_unified_scripts_test_pipeline_rationale_2",
+      "redtape_navigator_unified_scripts_test_pipeline_run",
+      "subprocess",
+      "tempfile"
+    ],
+    "29": [
+      "redtape_navigator_unified_schemas_project_state_additionalproperties_type",
+      "redtape_navigator_unified_schemas_project_state_properties_provenance",
+      "redtape_navigator_unified_schemas_project_state_provenance_additionalproperties",
+      "redtape_navigator_unified_schemas_project_state_provenance_type"
+    ],
+    "30": [
+      "redtape_navigator_unified_schemas_project_state_created_at_format",
+      "redtape_navigator_unified_schemas_project_state_created_at_type",
+      "redtape_navigator_unified_schemas_project_state_properties_created_at"
+    ],
+    "31": [
+      "redtape_navigator_unified_schemas_project_state_domain_enum",
+      "redtape_navigator_unified_schemas_project_state_domain_type",
+      "redtape_navigator_unified_schemas_project_state_properties_domain"
+    ],
+    "32": [
+      "redtape_navigator_unified_schemas_project_state_overrides_additionalproperties",
+      "redtape_navigator_unified_schemas_project_state_overrides_type",
+      "redtape_navigator_unified_schemas_project_state_properties_overrides"
+    ],
+    "33": [
+      "assets_templates_landlord_noc_template",
+      "drafts_demo_bakery_kolkata_draft_landlord_noc"
+    ],
+    "34": [
+      "assets_templates_structural_stability_declaration",
+      "drafts_demo_zoning_extension_draft_structural_stability"
+    ],
+    "35": [
+      "redtape_navigator_unified_assets_templates_food_safety_hygiene_declaration",
+      "redtape_navigator_unified_assets_templates_food_safety_hygiene_declaration_declaration_regarding_sanitary_hygienic_practices_fssai"
+    ],
+    "36": [
+      "redtape_navigator_unified_assets_templates_land_possession_self_declaration",
+      "redtape_navigator_unified_assets_templates_land_possession_self_declaration_self_declaration_of_land_possession_cultivation"
+    ],
+    "37": [
+      "redtape_navigator_unified_assets_templates_landlord_noc_template",
+      "redtape_navigator_unified_assets_templates_landlord_noc_template_no_objection_certificate_noc_from_property_owner"
+    ],
+    "38": [
+      "redtape_navigator_unified_assets_templates_structural_stability_declaration",
+      "redtape_navigator_unified_assets_templates_structural_stability_declaration_certificate_of_structural_stability_safety"
+    ],
+    "39": [
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_draft_landlord_noc",
+      "redtape_navigator_unified_drafts_demo_bakery_kolkata_draft_landlord_noc_no_objection_certificate_noc_from_property_owner"
+    ],
+    "40": [
+      "redtape_navigator_unified_drafts_demo_zoning_extension_draft_structural_stability",
+      "redtape_navigator_unified_drafts_demo_zoning_extension_draft_structural_stability_certificate_of_structural_stability_safety"
+    ],
+    "41": [
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_draft_food_hygiene_declaration",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_draft_food_hygiene_declaration_declaration_regarding_sanitary_hygienic_practices_fssai"
+    ],
+    "42": [
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_draft_landlord_noc",
+      "redtape_navigator_unified_drafts_proj_business_i_want_to_open_a_small_baker_202611201605_draft_landlord_noc_no_objection_certificate_noc_from_property_owner"
+    ],
+    "43": [
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_draft_food_hygiene_declaration",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_draft_food_hygiene_declaration_declaration_regarding_sanitary_hygienic_practices_fssai"
+    ],
+    "44": [
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_draft_landlord_noc",
+      "redtape_navigator_unified_drafts_test_thread_bakery_hitl_draft_landlord_noc_no_objection_certificate_noc_from_property_owner"
+    ],
+    "45": [
+      "assets_templates_food_safety_hygiene_declaration"
+    ],
+    "46": [
+      "assets_templates_land_possession_self_declaration"
+    ],
+    "47": [
+      "drafts_demo_bakery_kolkata_foscos_pack"
+    ],
+    "48": [
+      "drafts_demo_bakery_kolkata_kmc_trade_license_pack"
+    ],
+    "49": [
+      "drafts_demo_bakery_kolkata_silpasathi_pack"
+    ],
+    "50": [
+      "drafts_demo_zoning_extension_bmc_building_plan_pack"
+    ],
+    "51": [
+      "drafts_proj_business_i_want_to_open_a_small_baker_202611201605_review"
+    ],
+    "52": [
+      "emblem_test_png"
+    ],
+    "53": [
+      "full_test_png"
+    ],
+    "54": [
+      "problem_statement"
+    ],
+    "55": [
+      "redtape_navigator_unified_references_jurisdictions_india_agricultural_grants"
+    ],
+    "56": [
+      "redtape_navigator_unified_references_jurisdictions_india_food_business"
+    ],
+    "57": [
+      "redtape_navigator_unified_references_jurisdictions_india_residential_zoning"
+    ],
+    "58": [
+      "static_logo_full_png"
+    ]
+  },
+  "cohesion": {
+    "0": 0.05517503805175038,
+    "1": 0.08853118712273642,
+    "2": 0.043478260869565216,
+    "3": 0.048625792811839326,
+    "4": 0.11596638655462185,
+    "5": 0.06451612903225806,
+    "6": 0.15669515669515668,
+    "7": 0.08,
+    "8": 0.09090909090909091,
+    "9": 0.1,
+    "10": 0.2,
+    "11": 0.2,
+    "12": 0.2,
+    "13": 0.2,
+    "14": 0.25,
+    "15": 0.25,
+    "16": 0.25,
+    "17": 0.3333333333333333,
+    "18": 0.3333333333333333,
+    "19": 0.3333333333333333,
+    "20": 0.3333333333333333,
+    "21": 0.3333333333333333,
+    "22": 0.3333333333333333,
+    "23": 0.3333333333333333,
+    "24": 0.3333333333333333,
+    "25": 0.3333333333333333,
+    "26": 0.3333333333333333,
+    "27": 0.3333333333333333,
+    "28": 0.5333333333333333,
+    "29": 0.5,
+    "30": 0.6666666666666666,
+    "31": 0.6666666666666666,
+    "32": 0.6666666666666666,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0
+  },
+  "gods": [
+    {
+      "id": "redtape_navigator_unified_scripts_common_load_json",
+      "label": "load_json()",
+      "degree": 26
+    },
+    {
+      "id": "redtape_navigator_unified_scripts_common_save_json",
+      "label": "save_json()",
+      "degree": 22
+    },
+    {
+      "id": "redtape_navigator_unified_scripts_common_effective_value",
+      "label": "effective_value()",
+      "degree": 19
+    },
+    {
+      "id": "demo_server_livedemostate",
+      "label": "LiveDemoState",
+      "degree": 16
+    },
+    {
+      "id": "redtape_navigator_unified_scripts_common_is_blank",
+      "label": "is_blank()",
+      "degree": 16
+    },
+    {
+      "id": "redtape_navigator_unified_workflow_build_workflow",
+      "label": "build_workflow()",
+      "degree": 16
+    },
+    {
+      "id": "redtape_navigator_unified_skilli",
+      "label": "RedTape Navigator Unified Skill",
+      "degree": 15
+    },
+    {
+      "id": "redtape_navigator_unified_workflow_redtapestate",
+      "label": "RedTapeState",
+      "degree": 13
+    },
+    {
+      "id": "redtape_navigator_unified_scripts_document_engine_generate_documents",
+      "label": "generate_documents()",
+      "degree": 13
+    },
+    {
+      "id": "redtape_navigator_unified_scripts_validate_state_validate",
+      "label": "validate()",
+      "degree": 11
+    }
+  ],
+  "surprises": [
+    {
+      "source": "start_test_server()",
+      "target": "DemoServerHandler",
+      "source_files": [
+        "redtape-navigator-unified/scripts/test_phase7_server_orchestration.py",
+        "demo_server.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "uses",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "node_orchestrator()",
+      "target": "parse_intent()",
+      "source_files": [
+        "redtape-navigator-unified/workflow.py",
+        "redtape-navigator-unified/scripts/orchestrator_parser.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "node_documents()",
+      "target": "generate_documents()",
+      "source_files": [
+        "redtape-navigator-unified/workflow.py",
+        "redtape-navigator-unified/scripts/document_engine.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "build_workflow()",
+      "source_files": [
+        "redtape-navigator-unified/scripts/test_langgraph_hitl.py",
+        "redtape-navigator-unified/workflow.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities; peripheral node `main()` unexpectedly reaches hub `build_workflow()`"
+    },
+    {
+      "source": "test_dynamic_overrides_and_audit_trail()",
+      "target": "compliance()",
+      "source_files": [
+        "redtape-navigator-unified/scripts/test_phase6_review_overrides.py",
+        "redtape-navigator-unified/scripts/compliance_engine.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `properties` connect `properties` to `overrides`, `properties`, `properties`, `$ref`, `properties`, `type`, `project_state.json`, `provenance`, `created_at`, `domain`?",
+      "why": "High betweenness centrality (0.037) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?",
+      "why": "33 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `research_engine.py` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.05517503805175038 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `applicant_profile` connect `properties` to `properties`?",
+      "why": "High betweenness centrality (0.021) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `_common.py` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08853118712273642 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `properties` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `properties` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

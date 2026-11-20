@@ -1163,6 +1163,40 @@ class DemoServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path.startswith("/static/"):
+            rel_path = parsed.path.lstrip("/")
+            fpath = ROOT_DIR / rel_path
+            if fpath.exists() and fpath.is_file():
+                self.send_response(200)
+                if fpath.suffix == ".png":
+                    self.send_header("Content-Type", "image/png")
+                elif fpath.suffix in (".ico",):
+                    self.send_header("Content-Type", "image/x-icon")
+                elif fpath.suffix in (".jpeg", ".jpg"):
+                    self.send_header("Content-Type", "image/jpeg")
+                elif fpath.suffix == ".svg":
+                    self.send_header("Content-Type", "image/svg+xml")
+                else:
+                    self.send_header("Content-Type", "application/octet-stream")
+                self.send_header("Cache-Control", "public, max-age=86400")
+                data = fpath.read_bytes()
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_response(404)
+            self.end_headers()
+            return
+        elif parsed.path == "/favicon.ico":
+            fpath = ROOT_DIR / "static" / "favicon.ico"
+            if fpath.exists():
+                self.send_response(200)
+                self.send_header("Content-Type", "image/x-icon")
+                data = fpath.read_bytes()
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+                return
         if parsed.path == "/api/state":
             self.send_json(ACTIVE_STATE.to_dict())
         elif parsed.path == "/api/chat/history":
@@ -1255,6 +1289,8 @@ def render_ui_html():
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedTape Navigator | Autonomous Bureaucracy Intelligence (Claude Chat Interface)</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+  <link rel="apple-touch-icon" href="/static/logo-squircle.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
@@ -1322,8 +1358,8 @@ def render_ui_html():
   <!-- Top App Bar -->
   <header class="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40 px-5 py-3 flex items-center justify-between shadow-sm">
     <div class="flex items-center space-x-3">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20 agent-pulse">
-        <i class="fa-solid fa-sparkles text-sm"></i>
+      <div class="w-9 h-9 rounded-xl overflow-hidden border border-orange-500/35 shadow-md shadow-orange-500/20 agent-pulse shrink-0 flex items-center justify-center bg-[#f4efe8]/15 backdrop-blur-sm p-0.5">
+        <img src="/static/logo-icon.png" alt="RedTape Logo" class="w-full h-full object-contain">
       </div>
       <div>
         <div class="flex items-center space-x-2">
@@ -1406,8 +1442,8 @@ def render_ui_html():
     <!-- Live Reasoning / Thinking Indicator (Shown when agent is running) -->
     <div id="thinking-indicator" class="hidden my-4">
       <div class="flex items-start space-x-3">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20 agent-pulse shrink-0">
-          <i class="fa-solid fa-brain text-xs"></i>
+        <div class="w-8 h-8 rounded-full overflow-hidden border border-orange-500/35 shadow-md shadow-orange-500/20 agent-pulse shrink-0 flex items-center justify-center bg-[#f4efe8]/15 backdrop-blur-sm p-0.5">
+          <img src="/static/logo-icon.png" alt="RedTape Agent" class="w-full h-full object-contain">
         </div>
         <div class="flex-1 bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 shadow-sm backdrop-blur shimmer-bg">
           <div class="flex items-center space-x-2 text-xs font-semibold text-orange-400 mb-1.5">
@@ -1664,8 +1700,8 @@ def render_ui_html():
     <!-- Drawer Header -->
     <div class="p-4 border-b border-zinc-800/80 flex items-center justify-between bg-zinc-900/60">
       <div class="flex items-center space-x-2.5">
-        <div class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs">
-          <i class="fa-solid fa-folder-open"></i>
+        <div class="w-7 h-7 rounded-lg overflow-hidden border border-orange-500/35 bg-[#f4efe8]/15 p-0.5 shrink-0 flex items-center justify-center">
+          <img src="/static/logo-icon.png" alt="RedTape" class="w-full h-full object-contain">
         </div>
         <div>
           <h3 class="text-sm font-semibold text-zinc-100">Artifacts & Submission Packs</h3>
@@ -1982,8 +2018,11 @@ def render_ui_html():
       if (!history || history.length === 0) {
         stream.innerHTML = `
           <div class="flex-1 flex flex-col items-center justify-center min-h-[380px] text-center px-4 py-8 animate-fadeIn">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/25 mb-4 agent-pulse">
-              <i class="fa-solid fa-sparkles text-2xl"></i>
+            <div class="relative mb-5 group">
+              <div class="absolute -inset-2 rounded-2xl bg-gradient-to-r from-orange-500/30 via-amber-500/25 to-orange-600/30 opacity-70 blur-md group-hover:opacity-100 transition duration-500"></div>
+              <div class="relative w-16 h-16 rounded-2xl overflow-hidden border border-orange-500/40 shadow-xl agent-pulse flex items-center justify-center bg-[#f4efe8]/15 p-1 backdrop-blur">
+                <img src="/static/logo-icon.png" alt="RedTape AI" class="w-full h-full object-contain">
+              </div>
             </div>
             <h2 class="text-xl sm:text-2xl font-semibold text-zinc-100 tracking-tight mb-2">How can I guide your bureaucratic paperwork today?</h2>
             <p class="text-xs text-zinc-400 max-w-lg mb-8 leading-relaxed">
@@ -2104,8 +2143,8 @@ def render_ui_html():
           const formattedContent = formatMarkdown(msg.content);
 
           div.innerHTML = `
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-500 flex items-center justify-center text-white shadow-sm shadow-orange-500/20 shrink-0 mt-1">
-              <i class="fa-solid fa-sparkles text-xs"></i>
+            <div class="w-8 h-8 rounded-full overflow-hidden border border-orange-500/35 shadow-sm shadow-orange-500/20 shrink-0 mt-1 flex items-center justify-center bg-[#f4efe8]/15 backdrop-blur-sm p-0.5">
+              <img src="/static/logo-icon.png" alt="RedTape" class="w-full h-full object-contain">
             </div>
             <div class="flex-1 max-w-[90%]">
               <!-- Thinking Accordion -->
