@@ -20,7 +20,7 @@
 | Portal Field | Value to Enter | Status |
 |---|---|---|
 | Nature of Business | `Bakery` | Ready |
-| Expected Annual Turnover (INR) | `25000000` | Ready |
+| Expected Annual Turnover (INR) | `800000` | Ready |
 
 ## Required Portal Uploads
 

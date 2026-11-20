@@ -1,0 +1,73 @@
+{
+  "portal_name": "Bidhannagar Municipal Corporation (BMC) Building Sanction",
+  "licence_id": "lic_municipal_building_sanction",
+  "portal_url": "https://bmcwb.gov.in/",
+  "stop_before_gates": [
+    "Registered Architect / LBS Login",
+    "Applicant Aadhaar OTP verification",
+    "Sanction Fee & Scrutiny Fee payment",
+    "Digital Signature (DSC) & Final Submit"
+  ],
+  "actions": [
+    {
+      "action": "fill",
+      "label": "Municipality / Urban Local Body",
+      "selector": "#ulbName",
+      "source": "applicant_profile.location.city_or_village",
+      "value_masked": false,
+      "value": "Salt Lake"
+    },
+    {
+      "action": "fill",
+      "label": "Ward / Sector Number",
+      "selector": "#wardSector",
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "value_masked": false,
+      "value": "Bidhannagar Municipal Corporation"
+    },
+    {
+      "action": "fill",
+      "label": "Width of Abutting Public Road (ft)",
+      "selector": "#roadWidth",
+      "source": "applicant_profile.domain_attributes.road_width_ft",
+      "value_masked": false,
+      "value": "24.0"
+    },
+    {
+      "action": "fill",
+      "label": "Total Plot Area (sq ft)",
+      "selector": "#plotArea",
+      "source": "applicant_profile.domain_attributes.plot_area_sqft",
+      "value_masked": false,
+      "value": "2400"
+    },
+    {
+      "action": "fill",
+      "label": "Proposed Additional Floors",
+      "selector": "#proposedFloors",
+      "source": "applicant_profile.domain_attributes.proposed_floors",
+      "value_masked": false,
+      "value": "2"
+    },
+    {
+      "action": "fill",
+      "label": "Applicant Full Name",
+      "selector": "#ownerName",
+      "source": "applicant_profile.applicant.name",
+      "value_masked": false,
+      "value": "Priyanka Roy"
+    },
+    {
+      "action": "fill",
+      "label": "Contact Mobile Number",
+      "selector": "#ownerPhone",
+      "source": "applicant_profile.applicant.phone",
+      "value_masked": false,
+      "value": "9831123456"
+    }
+  ],
+  "missing_fields": [
+    "applicant_profile.location.address"
+  ],
+  "completion_percentage": 88
+}

@@ -55,7 +55,7 @@
       "selector": "#annualTurnover",
       "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
       "value_masked": false,
-      "value": "25000000"
+      "value": "800000"
     }
   ],
   "missing_fields": [

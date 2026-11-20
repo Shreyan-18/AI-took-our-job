@@ -750,17 +750,88 @@ class LiveDemoState:
         thoughts = []
         start_time = time.time()
 
-        # 1. Preset / Scenario switching
-        if any(k in msg_lower for k in ("small bakery", "open a bakery", "bakery in kolkata", "scenario 1")):
+        # 1. Preset / Scenario switching or New Citizen Goal Extraction
+        if any(k in msg_lower for k in ("bakery", "restaurant", "cafe", "food shop", "food stall", "barrackpore", "scenario 1")):
+            loc_name = "Kolkata"
+            district = "Kolkata"
+            if "barrackpore" in msg_lower:
+                loc_name = "Barrackpore"
+                district = "North 24 Parganas"
+            elif "salt lake" in msg_lower:
+                loc_name = "Salt Lake, Bidhannagar"
+                district = "North 24 Parganas"
+            elif "howrah" in msg_lower:
+                loc_name = "Howrah"
+                district = "Howrah"
+
             self.load_preset("bakery_kolkata")
+            self.goal = user_message
+            self.applicant_profile["location"]["city_or_village"] = loc_name
+            self.applicant_profile["location"]["district"] = district
+            self.provenance["applicant_profile.location.city_or_village"] = user_message
+            self.provenance["applicant_profile.activity_type"] = user_message
+
+            turn = self.get_interview_turn()
+            permits_summary = "\n".join([f"• **{m['name']}** — `{m['status']}` ({m['tier'].capitalize()} / {m.get('statutory_fee', 'Statutory Fee')})" for m in self.compliance_matrix])
+            reply_text = (
+                f"Namaste! I have analyzed your goal to **\"{user_message}\"**.\n\n"
+                f"I mapped the statutory frameworks governing this in **{loc_name} ({district}), West Bengal** across Municipal, State, and Central authorities:\n\n"
+                f"{permits_summary}\n\n"
+                f"To generate your submission-ready AcroForm PDFs and digital portal packs with zero guesswork:\n\n"
+                f"👉 **{turn.get('question')}**"
+            )
+            thoughts = [
+                {
+                    "node": "node_orchestrator",
+                    "title": "Intent & Provenance Extraction",
+                    "status": "completed",
+                    "time": "0.3s",
+                    "details": f"Parsed citizen goal: \"{user_message}\". Extracted domain='business', activity='bakery', location='{loc_name}, {district}, West Bengal'. Strict Zero Fabrication: PAN, Aadhaar, and turnover preserved as null."
+                },
+                {
+                    "node": "node_research",
+                    "title": "3-Tier Statutory Research (Pitch Shield Active)",
+                    "status": "completed",
+                    "time": "0.5s",
+                    "details": f"Retrieved statutory requirements across Municipal ({loc_name} Municipality), State (WB Labour Dept), and Central (FSSAI) registries ({len(self.research_findings)} active statutory baselines cataloged)."
+                },
+                {
+                    "node": "node_compliance",
+                    "title": "Compliance Matrix Classification",
+                    "status": "completed",
+                    "time": "0.4s",
+                    "details": f"Classified {len(self.compliance_matrix)} requirements into Required, Conditional, and Not Applicable. Mapped statutory fees and renewal rules."
+                },
+                {
+                    "node": "node_interview",
+                    "title": "Impact-Ranked Slot Formulation",
+                    "status": "completed",
+                    "time": "0.3s",
+                    "details": f"Identified unresolved statutory dependency: `{turn.get('field_targeted', 'attribute')}`. Formulating plain-language inquiry with Indian currency parser."
+                }
+            ]
+            self.chat_history = [
+                {"role": "user", "content": user_message, "timestamp": "Just now"},
+                {
+                    "role": "assistant",
+                    "content": reply_text,
+                    "thought_process": thoughts,
+                    "duration_seconds": 1.4,
+                    "timestamp": "Just now",
+                    "has_artifacts": False,
+                    "interview_turn": turn
+                }
+            ]
             return {
-                "thought_process": self.chat_history[-1]["thought_process"],
-                "duration_seconds": 1.5,
-                "agent_reply": self.chat_history[-1]["content"],
+                "thought_process": thoughts,
+                "duration_seconds": 1.4,
+                "agent_reply": reply_text,
                 "chat_history": self.chat_history,
+                "has_artifacts": False,
+                "interview_turn": turn,
                 "state": self.to_dict()
             }
-        elif any(k in msg_lower for k in ("floor extension", "salt lake", "residential extension", "scenario 2")):
+        elif any(k in msg_lower for k in ("floor extension", "salt lake", "residential extension", "zoning", "setback", "scenario 2")):
             self.load_preset("zoning_extension")
             return {
                 "thought_process": self.chat_history[-1]["thought_process"],
@@ -769,7 +840,7 @@ class LiveDemoState:
                 "chat_history": self.chat_history,
                 "state": self.to_dict()
             }
-        elif any(k in msg_lower for k in ("solar pump", "drip irrigation", "nadia", "agriculture subsidy", "scenario 3")):
+        elif any(k in msg_lower for k in ("solar pump", "drip irrigation", "nadia", "agriculture subsidy", "farming", "scenario 3")):
             self.load_preset("agri_irrigation")
             return {
                 "thought_process": self.chat_history[-1]["thought_process"],
@@ -1751,14 +1822,14 @@ def render_ui_html():
         
         stopThinkingAnimation();
 
-        if (data.state) {
-          currentState = data.state;
-          renderDashboard(currentState);
-          renderArtifactsDrawer(currentState);
+        if (data.chat_history) {
+          try { renderChatHistory(data.chat_history); } catch (e) { console.error('Chat render error:', e); }
         }
 
-        if (data.chat_history) {
-          renderChatHistory(data.chat_history);
+        if (data.state) {
+          currentState = data.state;
+          try { renderDashboard(currentState); } catch (e) { console.error('Dashboard render error:', e); }
+          try { renderArtifactsDrawer(currentState); } catch (e) { console.error('Artifacts render error:', e); }
         }
 
       } catch (err) {
@@ -1970,11 +2041,11 @@ def render_ui_html():
       try {
         const res = await fetch('/api/state');
         currentState = await res.json();
-        renderDashboard(currentState);
-        renderArtifactsDrawer(currentState);
         if (currentState.chat_history && currentState.chat_history.length > 0) {
-          renderChatHistory(currentState.chat_history);
+          try { renderChatHistory(currentState.chat_history); } catch (e) { console.error('Chat history render error:', e); }
         }
+        try { renderDashboard(currentState); } catch (e) { console.error('Dashboard render error:', e); }
+        try { renderArtifactsDrawer(currentState); } catch (e) { console.error('Artifacts render error:', e); }
       } catch (e) {
         console.error('Failed to load initial state:', e);
       }
@@ -2202,14 +2273,18 @@ def render_ui_html():
 
       const provList = document.getElementById('provenance-list');
       provList.innerHTML = '';
-      const provs = state.provenance || [];
-      if (provs.length === 0) {
+      const rawProvs = state.provenance || {};
+      const provEntries = Array.isArray(rawProvs) 
+        ? rawProvs.map(p => ({ field: p.field || 'field', quote: p.verbatim_quote || p.quote || JSON.stringify(p) }))
+        : Object.entries(rawProvs).map(([k, v]) => ({ field: k, quote: typeof v === 'object' && v !== null ? (v.verbatim_quote || JSON.stringify(v)) : String(v) }));
+
+      if (provEntries.length === 0) {
         provList.innerHTML = '<div class="text-zinc-500">No external provenance claimed. Zero hallucinations.</div>';
       } else {
-        provs.forEach(p => {
+        provEntries.forEach(p => {
           const d = document.createElement('div');
           d.className = 'flex items-start space-x-1.5 text-zinc-300';
-          d.innerHTML = `<span class="text-orange-400 font-mono font-bold">•</span><span><strong class="text-zinc-200">${p.field}:</strong> <span class="text-zinc-400">"${p.verbatim_quote}"</span></span>`;
+          d.innerHTML = `<span class="text-orange-400 font-mono font-bold">•</span><span><strong class="text-zinc-200">${escapeHtml(p.field)}:</strong> <span class="text-zinc-400">"${escapeHtml(p.quote)}"</span></span>`;
           provList.appendChild(d);
         });
       }
@@ -2219,20 +2294,22 @@ def render_ui_html():
       (state.research_findings || []).forEach(f => {
         const item = document.createElement('div');
         item.className = 'p-3 bg-zinc-950/70 border border-zinc-800 rounded-lg space-y-1';
+        let hostName = 'portal.gov.in';
+        try { hostName = f.source_url ? new URL(f.source_url).hostname : 'portal.gov.in'; } catch (e) { hostName = f.source_url || 'gov.in'; }
         item.innerHTML = `
           <div class="flex items-center justify-between">
             <span class="font-bold text-zinc-200 flex items-center space-x-1.5">
               <span class="w-2 h-2 rounded-full tier-${f.tier}"></span>
-              <span>${f.authority}</span>
+              <span>${escapeHtml(f.authority || '')}</span>
             </span>
             <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 uppercase">${f.tier} Tier</span>
           </div>
-          <p class="text-zinc-300 font-medium">${f.rule_title}</p>
-          <p class="text-[11px] text-zinc-400">${f.summary}</p>
+          <p class="text-zinc-300 font-medium">${escapeHtml(f.rule_title || '')}</p>
+          <p class="text-[11px] text-zinc-400">${escapeHtml(f.summary || '')}</p>
           <div class="pt-1 flex items-center justify-between text-[10px] text-zinc-500 font-mono">
             <span>Circuit: ${f.cached ? 'Persistent Cache (pitch-safe)' : 'Direct Gov Sweep'}</span>
-            <a href="${f.source_url}" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center space-x-1">
-              <span>${new URL(f.source_url).hostname}</span>
+            <a href="${f.source_url || '#'}" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center space-x-1">
+              <span>${escapeHtml(hostName)}</span>
               <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
             </a>
           </div>

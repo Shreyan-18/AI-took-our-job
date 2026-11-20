@@ -1,0 +1,39 @@
+{
+  "form": "Building_Plan_Sanction_Application.pdf",
+  "backend": "pymupdf",
+  "filled": [
+    {
+      "field": "applicant_name",
+      "source": "applicant_profile.applicant.name"
+    },
+    {
+      "field": "plot_area_sqft",
+      "source": "applicant_profile.domain_attributes.plot_area_sqft"
+    },
+    {
+      "field": "proposed_floors",
+      "source": "applicant_profile.domain_attributes.proposed_floors"
+    },
+    {
+      "field": "road_width_ft",
+      "source": "applicant_profile.domain_attributes.road_width_ft"
+    },
+    {
+      "field": "contact_phone",
+      "source": "applicant_profile.applicant.phone"
+    }
+  ],
+  "pending": [
+    {
+      "field": "plot_address",
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    }
+  ],
+  "unmapped": [],
+  "completion_percentage": 83,
+  "missing_fields": [
+    "applicant_profile.location.address"
+  ],
+  "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/demo_zoning_extension/draft_Building_Plan_Sanction_Application.pdf"
+}
