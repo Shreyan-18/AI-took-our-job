@@ -163,15 +163,41 @@ def test_server_endpoints():
     assert len(res.get("overrides", {})) > 0
     print(f"  [PASS] Active overrides: {res.get('overrides')}")
 
-    # 8. GET UI HTML page
+    # 8. Test Claude Chat History & Interaction API
+    print("\n  Testing Claude Chat History & Conversational Reasoning APIs...")
+    status, ctype, hist_bytes = http_get("/api/chat/history")
+    assert status == 200
+    hist = json.loads(hist_bytes.decode("utf-8"))
+    assert "chat_history" in hist
+    assert len(hist["chat_history"]) >= 2
+    init_assistant = hist["chat_history"][1]
+    assert init_assistant["role"] == "assistant"
+    assert "thought_process" in init_assistant
+    assert len(init_assistant["thought_process"]) >= 4
+    print(f"  [PASS] /api/chat/history returned initial thought trace with {len(init_assistant['thought_process'])} nodes.")
+
+    # 9. Test POST /api/chat with user message
+    print("  Sending chat message: 'What if my turnover is 2.5 Crore?'...")
+    status, chat_res = http_post("/api/chat", {"message": "What if my turnover is 2.5 Crore?"})
+    assert status == 200
+    assert "thought_process" in chat_res
+    assert len(chat_res["thought_process"]) > 0
+    assert "agent_reply" in chat_res or "reply" in chat_res
+    assert chat_res.get("duration_seconds", 0) > 0
+    print(f"  [PASS] POST /api/chat executed LangGraph reasoning in {chat_res.get('duration_seconds')}s with {len(chat_res['thought_process'])} evaluated nodes.")
+
+    # 10. GET UI HTML page
     status, ctype, html_bytes = http_get("/")
     assert status == 200
     assert "text/html" in ctype
     html_text = html_bytes.decode("utf-8")
     assert "RedTape Navigator" in html_text
-    assert "Autonomous Pipeline" in html_text
-    assert "Human Override & Discretion Checkpoint" in html_text
-    print("  [PASS] Root GET / rendered full responsive Tailwind dashboard HTML.")
+    assert "Claude UI · Agentic LangGraph" in html_text
+    assert "claude-chat-container" in html_text
+    assert "thinking-indicator" in html_text
+    assert "artifacts-drawer" in html_text
+    assert "1-Click Discretionary Overrides" in html_text
+    print("  [PASS] Root GET / rendered full airy Claude Chat UI with thinking process & artifacts drawer.")
 
 
 def main():
