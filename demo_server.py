@@ -812,7 +812,7 @@ def render_ui_html():
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RedTape Navigator | Live Judge Demo (Phases 1-3)</title>
+  <title>RedTape Navigator | Autonomous Bureaucracy Navigator (Live Pitch)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
@@ -853,7 +853,7 @@ def render_ui_html():
       <div>
         <div class="flex items-center space-x-2">
           <h1 class="text-xl font-bold tracking-tight text-white">RedTape Navigator</h1>
-          <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-semibold border border-blue-500/30">Live Workflow · Phases 1–3</span>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-semibold border border-blue-500/30">Autonomous Pipeline · Phases 1–7</span>
         </div>
         <p class="text-xs text-slate-400">Autonomous Legal-Administrative Intelligence for Everyday Citizens</p>
       </div>
@@ -1087,6 +1087,32 @@ def render_ui_html():
           </div>
         </div>
 
+        <!-- Human Review & Overrides Testing Console -->
+        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-lg space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center space-x-1.5">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>Human Override & Discretion Checkpoint</span>
+            </span>
+            <span class="text-[10px] text-slate-500">Overrides re-trigger compliance & log status changes to audit trail</span>
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <button type="button" onclick="applyQuickOverride('applicant_profile.domain_attributes.expected_annual_turnover_inr', 25000000)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-600/40 rounded text-[11px] font-medium transition flex items-center space-x-1">
+              <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+              <span>Turnover ₹2.5 Cr (FSSAI State Lic)</span>
+            </button>
+            <button type="button" onclick="applyQuickOverride('applicant_profile.domain_attributes.customer_seating', 65)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-600/40 rounded text-[11px] font-medium transition flex items-center space-x-1">
+              <i class="fa-solid fa-fire text-[10px]"></i>
+              <span>65 Seats (Trigger Fire NOC)</span>
+            </button>
+            <button type="button" onclick="applyQuickOverride('applicant_profile.applicant.pan', 'ABCDE1234F')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-600/40 rounded text-[11px] font-medium transition flex items-center space-x-1">
+              <i class="fa-solid fa-id-card text-[10px]"></i>
+              <span>Supply PAN (ABCDE1234F)</span>
+            </button>
+          </div>
+          <div id="active-overrides-badge" class="text-[10px] text-slate-400 hidden pt-1 border-t border-slate-800"></div>
+        </div>
+
         <div id="artifacts-container" class="grid grid-cols-2 gap-3 pt-2">
           <!-- Rendered via JS -->
           <div class="col-span-2 text-center py-4 text-xs text-slate-500 border border-dashed border-slate-800 rounded-lg">
@@ -1209,6 +1235,23 @@ def render_ui_html():
       handleAnswerSubmit(null);
     }
 
+    async function applyQuickOverride(field, value) {
+      try {
+        const res = await fetch('/api/override', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ field, value })
+        });
+        currentState = await res.json();
+        renderDashboard(currentState);
+        if (currentState.review_md) {
+          document.getElementById('review-viewer').innerText = currentState.review_md;
+        }
+      } catch (err) {
+        console.error("Override failed:", err);
+      }
+    }
+
     function renderDashboard(state) {
       if (!state) return;
 
@@ -1324,6 +1367,20 @@ def render_ui_html():
 
       // Update Modal JSON
       document.getElementById('json-viewer').innerText = JSON.stringify(state, null, 2);
+
+      // Overrides badge
+      const ovBadge = document.getElementById('active-overrides-badge');
+      if (ovBadge) {
+        const ov = state.overrides || {};
+        const keys = Object.keys(ov);
+        if (keys.length > 0) {
+          ovBadge.classList.remove('hidden');
+          ovBadge.innerHTML = `<span class="text-amber-400 font-semibold">Active User Overrides:</span> ` +
+            keys.map(k => `<span class="px-1.5 py-0.5 rounded bg-amber-950/40 border border-amber-800/60 text-amber-300 font-mono text-[9px] mr-1">${k.split('.').pop()}: ${ov[k]}</span>`).join('');
+        } else {
+          ovBadge.classList.add('hidden');
+        }
+      }
 
       // Phase 5 & 6: Artifacts rendering
       const artContainer = document.getElementById('artifacts-container');

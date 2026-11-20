@@ -1,17 +1,17 @@
 # Graph Report - red-tape  (2026-11-21)
 
 ## Corpus Check
-- 91 files · ~35,683 words
+- 92 files · ~36,798 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 1 file(s) not represented in the graph (top: (none) 1)
 
 ## Summary
-- 527 nodes · 871 edges · 42 communities (28 shown, 14 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 23 edges (avg confidence: 0.85)
+- 536 nodes · 907 edges · 42 communities (28 shown, 14 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 24 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `95524303`
+- Built from commit: `99145dd5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -63,24 +63,24 @@
 2. `save_json()` - 22 edges
 3. `effective_value()` - 19 edges
 4. `is_blank()` - 16 edges
-5. `RedTape Navigator Unified Skill` - 15 edges
-6. `build_workflow()` - 14 edges
-7. `generate_documents()` - 13 edges
-8. `LiveDemoState` - 12 edges
-9. `RedTapeState` - 12 edges
+5. `build_workflow()` - 16 edges
+6. `RedTape Navigator Unified Skill` - 15 edges
+7. `LiveDemoState` - 13 edges
+8. `RedTapeState` - 13 edges
+9. `generate_documents()` - 13 edges
 10. `validate()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `start_test_server()` --uses--> `DemoServerHandler`  [INFERRED]
+  redtape-navigator-unified/scripts/test_phase7_server_orchestration.py → demo_server.py
 - `node_documents()` --calls--> `generate_documents()`  [INFERRED]
   redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/document_engine.py
 - `node_orchestrator()` --calls--> `parse_intent()`  [INFERRED]
   redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/orchestrator_parser.py
-- `node_interview()` --calls--> `generate_question_batch()`  [INFERRED]
-  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
-- `node_interview()` --calls--> `process_user_answer()`  [INFERRED]
-  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
-- `node_interview()` --calls--> `rank_open_questions()`  [INFERRED]
-  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
+- `rank_open_questions()` --calls--> `effective_value()`  [EXTRACTED]
+  redtape-navigator-unified/scripts/interview_engine.py → redtape-navigator-unified/scripts/_common.py
+- `rank_open_questions()` --calls--> `is_blank()`  [EXTRACTED]
+  redtape-navigator-unified/scripts/interview_engine.py → redtape-navigator-unified/scripts/_common.py
 
 ## Import Cycles
 - None detected.
@@ -88,8 +88,8 @@
 ## Communities (42 total, 14 thin omitted)
 
 ### Community 0 - "_common.py"
-Cohesion: 0.10
-Nodes (36): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+28 more)
+Cohesion: 0.09
+Nodes (37): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+29 more)
 
 ### Community 1 - "properties"
 Cohesion: 0.05
@@ -125,7 +125,7 @@ Nodes (28): type, description, type, properties, type, properties, type, type (+
 
 ### Community 10 - "research_engine.py"
 Cohesion: 0.06
-Nodes (26): catalog_supporting_documents(), compliance(), evaluate_with_gemini(), make_state(), call_gemini_interview(), generate_fallback_question(), generate_question_batch(), interview_turn() (+18 more)
+Nodes (26): catalog_supporting_documents(), compliance(), evaluate_with_gemini(), call_gemini_interview(), generate_fallback_question(), generate_question_batch(), interview_turn(), is_pii_field() (+18 more)
 
 ### Community 16 - "properties"
 Cohesion: 0.20
@@ -156,11 +156,11 @@ Cohesion: 0.67
 Nodes (3): additionalProperties, type, overrides
 
 ### Community 23 - "workflow.py"
-Cohesion: 0.12
-Nodes (12): main(), build_workflow(), node_compliance(), node_documents(), node_interview(), node_orchestrator(), node_research(), node_review() (+4 more)
+Cohesion: 0.11
+Nodes (17): main(), http_get(), http_post(), main(), start_test_server(), test_langgraph_routing_and_structure(), test_server_endpoints(), build_workflow() (+9 more)
 
 ### Community 24 - "demo_server.py"
-Cohesion: 0.12
+Cohesion: 0.16
 Nodes (3): DemoServerHandler, LiveDemoState, render_ui_html()
 
 ### Community 25 - "properties"
@@ -208,16 +208,16 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSat
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `properties` connect `properties` to `$ref`, `properties`, `type`, `properties`, `properties`, `project_state.json`, `provenance`, `created_at`, `domain`, `overrides`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _19 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `_common.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.09557109557109557 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09306409130816505 - nodes in this community are weakly interconnected._
 - **Why does `properties` connect `properties` to `properties`?**
-  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
 - **Why does `applicant_profile` connect `properties` to `properties`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
