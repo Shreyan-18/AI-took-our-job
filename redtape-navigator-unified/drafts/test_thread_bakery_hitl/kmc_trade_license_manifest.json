@@ -39,7 +39,7 @@
       "selector": "#seatingCount",
       "source": "applicant_profile.domain_attributes.customer_seating",
       "value_masked": false,
-      "value": "8"
+      "value": "5"
     }
   ],
   "missing_fields": [

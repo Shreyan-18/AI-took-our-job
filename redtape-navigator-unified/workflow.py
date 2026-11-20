@@ -95,7 +95,8 @@ def node_research(state: RedTapeState) -> dict[str, Any]:
     print("\n--- [LangGraph Node: Research Engine (3-Tier & Pitch Shield)] ---")
     findings = state.get("research_findings", [])
     if not findings:
-        updated = run_research(state)
+        is_demo = state.get("workflow_flags", {}).get("research_mode") in ("cached_live", "demo")
+        updated = run_research(state, demo_mode=is_demo)
         return {
             "research_findings": updated.get("research_findings", []),
             "workflow_flags": updated.get("workflow_flags", {}),

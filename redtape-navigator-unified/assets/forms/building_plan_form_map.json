@@ -1,0 +1,39 @@
+{
+  "form": "Building_Plan_Sanction_Application.pdf",
+  "licence_id": "lic_municipal_building_sanction",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": { "acroform": "applicant_name" },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "plot_address" },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "plot_area_sqft" },
+      "source": "applicant_profile.domain_attributes.plot_area_sqft",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "proposed_floors" },
+      "source": "applicant_profile.domain_attributes.proposed_floors",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "road_width_ft" },
+      "source": "applicant_profile.domain_attributes.road_width_ft",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "contact_phone" },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    }
+  ]
+}

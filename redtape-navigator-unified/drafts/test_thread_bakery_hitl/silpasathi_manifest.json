@@ -30,7 +30,7 @@
       "selector": "#workerCount",
       "source": "applicant_profile.domain_attributes.workers_on_site",
       "value_masked": false,
-      "value": "8"
+      "value": "3"
     }
   ],
   "missing_fields": [

@@ -19,12 +19,12 @@
       {
         "tier": "municipal",
         "query": "Kolkata Municipal Corporation Certificate of Enlistment trade license",
-        "title": "Official Website Of Kolkata Municipal Corporation",
-        "snippet": "Certificate of Enlistment Requirements for CE List of Unit Offices (Licence) View CE Information Online Application Registration (For New CE) Online Application For Change (For Existing CE) Online Application For Closure (For Existing CE) Documents required for update, change or register the mobile number",
-        "url": "https://www.kolkatamycity.com/KMCPortal/jsp/TradeLicenseInformation.html"
+        "title": "Certificate of Enlistment (CE) by Kolkata Municipal Corporation, West ...",
+        "snippet": "The National Portal of India provides single-window access to information and services offered by the government at all levels. It focuses on unifying information collated from platforms and portals, packaged and served based on user segments such as farmers, students, women, youth, etc., as well as sectoral views. The portal is built using the latest technology, featuring a user-friendly ...",
+        "url": "https://www.india.gov.in/services/details/certificate-of-enlistment-ce-by-kolkata-municipal-corporation-west-bengal"
       }
     ],
-    "timestamp": "2026-11-20T17:14:21+00:00"
+    "timestamp": "2026-11-20T17:57:18+00:00"
   },
   "ccc0c92d2b337de2": {
     "query": "West Bengal shops and establishments registration portal",
@@ -39,19 +39,19 @@
       {
         "tier": "state",
         "query": "West Bengal shops and establishments registration portal",
-        "title": "Registration Under Shop & Establishment Act - WEST BENGAL",
-        "snippet": "The 2026 \"Silpasathi\" Integration In the current cycle, West Bengal has migrated Shop & Establishment services to the Silpasathi (Single Window) Portal. This ensures that your registration is linked to your Property Tax and Trade License data. Our support ensures that your Form B application is accurately filled to reflect the correct category of your establishment, preventing labor ...",
-        "url": "https://incorpiq.com/registration/shop-registration/"
+        "title": "Labour Department: Registration under The Shops and ... - West Bengal",
+        "snippet": "This document is intended to serve as a User Manual for grant of the service \"Registration under The Shops and Establishment Act\" by Labour Department, Govt. of West Bengal through Single window of the State, 'SilpaSathi'. The service is integrated with the Single Window (SilpaSathi) and can be accessed through the SilpaSathi portal.",
+        "url": "https://silpasathi.wb.gov.in/read-bytea-file-all/aWQ%3D/MjAx/NDQ%3D/ZW9kYl9zdGF0aWNfcGFnZV9wZGZfbWFuYWdl/cGRmX2NvbnRlbnQ%3D/MTAtUmVnaXN0cmF0aW9uIHVuZGVyIFRoZSBTaG9wcyBhbmQgRXN0YWJsaXNobWVudCBBY3QsIDE5NjMtdXNlci1tYW51YWwucGRm"
       },
       {
         "tier": "state",
         "query": "West Bengal shops and establishments registration portal",
-        "title": "West Bengal - State Online Single Window Services",
-        "snippet": "Verification by Third Party Online System for search unit wise establishment information and track Registration/License Details.",
-        "url": "https://silpasathi.wb.gov.in/"
+        "title": "Registration Under Shop & Establishment Act - WEST BENGAL",
+        "snippet": "The 2026 \"Silpasathi\" Integration In the current cycle, West Bengal has migrated Shop & Establishment services to the Silpasathi (Single Window) Portal. This ensures that your registration is linked to your Property Tax and Trade License data. Our support ensures that your Form B application is accurately filled to reflect the correct category of your establishment, preventing labor ...",
+        "url": "https://incorpiq.com/registration/shop-registration/"
       }
     ],
-    "timestamp": "2026-11-20T17:14:22+00:00"
+    "timestamp": "2026-11-20T17:57:28+00:00"
   },
   "7f7333c66726bf1f": {
     "query": "West Bengal fire emergency services NOC commercial",
@@ -73,12 +73,12 @@
       {
         "tier": "state",
         "query": "West Bengal fire emergency services NOC commercial",
-        "title": "Issuance of Fire Safety Certificate",
-        "snippet": "Apply User Manual Fire and Emergency Services Department Newtown Fire Station Building (2nd & 3rd Floor) CF-7, Street Number 175, Action Area 1C, New Town, West Bengal - 700156",
-        "url": "https://wbfes.gov.in/Issuance_of_Fire_Safety_Certificate"
+        "title": "Department of Fire and Emergency Services",
+        "snippet": "GOVT OF WEST BENGAL OFFICE OF THE DIRECTOR GENERAL WEST BENGAL FIRE AND EMERGENCY SERVICES 13-D MIRZA GHALIB STREET, KOLKATA - 700016",
+        "url": "https://wbfes.gov.in/?language=beng"
       }
     ],
-    "timestamp": "2026-11-20T17:14:25+00:00"
+    "timestamp": "2026-11-20T17:57:36+00:00"
   },
   "90b35adf8337fa9f": {
     "query": "FSSAI FoSCoS basic registration turnover limit bakery",
@@ -113,13 +113,6 @@
       {
         "tier": "central",
         "query": "GST registration threshold requirements India goods services",
-        "title": "GST Registration Limit 2026: Rs 40 vs 20 Lakh | Tax Garden",
-        "snippet": "GST registration limit explained: Rs 40 lakh, Rs 20 lakh and Rs 10 lakh turnover thresholds for goods vs services, special states and compulsory cases.",
-        "url": "https://taxgarden.in/blog/gst-registration-turnover-limit-40-lakh-20-lakh-threshold-india-2026"
-      },
-      {
-        "tier": "central",
-        "query": "GST registration threshold requirements India goods services",
         "title": "GST Registration Threshold Limits : Goods & Services Guide",
         "snippet": "What is the minimum turnover for GST registration? Learn the ₹40 Lakh limit for goods and ₹20 Lakh for services. Includes special category state rules (₹10L/₹20L) and mandatory registration criteria.",
         "url": "https://www.legalwiz.in/blog/gst-registration-threshold-limits-for-goods-and-services-providers"
@@ -130,9 +123,16 @@
         "title": "GST Registration Turnover Limit in India: Goods & Services",
         "snippet": "The GST registration threshold in India generally depends on aggregate turnover, the type of supply and the state or Union Territory. The usual threshold is ₹40 lakh for eligible businesses exclusively supplying goods and ₹20 lakh for services or mixed supplies.",
         "url": "https://www.startbusiness.co.in/blog/gst-registration-turnover-limit-in-india"
+      },
+      {
+        "tier": "central",
+        "query": "GST registration threshold requirements India goods services",
+        "title": "GST Limit in India 2026: Registration Threshold Explained",
+        "snippet": "Know the GST registration limit in India 2026, including turnover thresholds for goods and services, special states and when registration is mandatory.",
+        "url": "https://tallysolutions.com/gst/gst-limit-registration-threshold-india/"
       }
     ],
-    "timestamp": "2026-11-20T17:14:28+00:00"
+    "timestamp": "2026-11-20T17:57:52+00:00"
   },
   "7ac3cbda6436ac13": {
     "query": "FSSAI FoSCoS basic registration turnover limit I want to open a small bakery in Kolkata",
@@ -174,18 +174,18 @@
       {
         "tier": "central",
         "query": "FSSAI FoSCoS basic registration turnover limit I want to open a small bakery in Park Circus, Kolkata with 5 counter seats",
-        "title": "FSSAI Basic Registration 2026: Eligibility, Fees & Process",
-        "snippet": "Complete guide to FSSAI Basic Registration - eligibility, new 2026 turnover limit, documents, process, fees, and perpetual validity.",
-        "url": "https://seyecs.com/fssai-basic-registration"
+        "title": "FSSAI Registration and Licence Rules for 2026 Explained",
+        "snippet": "FSSAI registration in 2026 has new turnover limits and no expiry for new licences. Check eligibility, types, documents, fees and the FoSCoS process.",
+        "url": "https://tallysolutions.com/business-guides/fssai-registration-validity/"
       },
       {
         "tier": "central",
         "query": "FSSAI FoSCoS basic registration turnover limit I want to open a small bakery in Park Circus, Kolkata with 5 counter seats",
-        "title": "FSSAI Registration for Bakery and Confectionery Guide 2026",
-        "snippet": "New 2026 turnover slabs apply directly to bakery and confectionery: Registration up to ₹1.5 crore, State License ₹1.5 crore-₹50 crore, Central License above ₹50 crore. Home bakers, cloud kitchens, and small cake/sweet sellers usually qualify for low-cost Basic Registration, not a full license. All bakery products made with fats, oils, or shortening must meet FSSAI's mandatory 2% ...",
-        "url": "https://blogs.seyecs.com/fssai-registration-for-bakery-and-confectionery/"
+        "title": "FSSAI Registration & License 2026: New ₹1.5 Crore Threshold",
+        "snippet": "The Food Safety and Standards (Licensing and Registration of Food Businesses) Amendment Regulations, 2026, gazetted on 10 March 2026 and operationalised by FSSAI's order dated 13 March 2026, raised the basic registration threshold from ₹12 lakh to ₹1.5 crore of annual turnover and abolished license renewals altogether.",
+        "url": "https://sschandak.com/insights/fssai-registration-license-2026-threshold-perpetual-validity/"
       }
     ],
-    "timestamp": "2026-11-20T17:08:26+00:00"
+    "timestamp": "2026-11-20T17:57:44+00:00"
   }
 }

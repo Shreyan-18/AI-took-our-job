@@ -18,7 +18,7 @@
 |---|---|---|
 | Name of Enterprise / Trade | [PENDING_USER_INPUT] | PENDING (Required) |
 | Nature of Trade / Activity | `Bakery` | Ready |
-| Customer Seating Count | `8` | Ready |
+| Customer Seating Count | `5` | Ready |
 | Applicant Full Name | [PENDING_USER_INPUT] | PENDING (Required) |
 | Contact Mobile | [PENDING_USER_INPUT] | PENDING (Required) |
 

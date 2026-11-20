@@ -1,0 +1,90 @@
+{
+  "portal_name": "Bidhannagar Municipal Corporation (BMC) Building Sanction",
+  "licence_id": "lic_municipal_building_sanction",
+  "portal_url": "https://bmcwb.gov.in/",
+  "human_gates": [
+    "Registered Architect / LBS Login",
+    "Applicant Aadhaar OTP verification",
+    "Sanction Fee & Scrutiny Fee payment",
+    "Digital Signature (DSC) & Final Submit"
+  ],
+  "steps": [
+    {
+      "step_name": "Step 1: Plot & Location Particulars",
+      "fields": [
+        {
+          "label": "Municipality / Urban Local Body",
+          "selector": "#ulbName",
+          "source": "applicant_profile.location.city_or_village",
+          "mandatory": true
+        },
+        {
+          "label": "Ward / Sector Number",
+          "selector": "#wardSector",
+          "source": "applicant_profile.location.municipal_ward_or_block",
+          "mandatory": true
+        },
+        {
+          "label": "Plot Address / Premises No.",
+          "selector": "#plotAddress",
+          "source": "applicant_profile.location.address",
+          "mandatory": true
+        },
+        {
+          "label": "Width of Abutting Public Road (ft)",
+          "selector": "#roadWidth",
+          "source": "applicant_profile.domain_attributes.road_width_ft",
+          "mandatory": true
+        }
+      ]
+    },
+    {
+      "step_name": "Step 2: Proposed Construction Details",
+      "fields": [
+        {
+          "label": "Total Plot Area (sq ft)",
+          "selector": "#plotArea",
+          "source": "applicant_profile.domain_attributes.plot_area_sqft",
+          "mandatory": true
+        },
+        {
+          "label": "Proposed Additional Floors",
+          "selector": "#proposedFloors",
+          "source": "applicant_profile.domain_attributes.proposed_floors",
+          "mandatory": true
+        },
+        {
+          "label": "Applicant Full Name",
+          "selector": "#ownerName",
+          "source": "applicant_profile.applicant.name",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Contact Mobile Number",
+          "selector": "#ownerPhone",
+          "source": "applicant_profile.applicant.phone",
+          "transform": "phone_10digit",
+          "mandatory": true
+        }
+      ]
+    }
+  ],
+  "uploads": [
+    {
+      "label": "Deed of Conveyance / Land Mutation Certificate",
+      "accepted_formats": "PDF <= 5MB",
+      "mandatory": true
+    },
+    {
+      "label": "Architectural Building Plan Drawing (DWG/PDF)",
+      "accepted_formats": "PDF/DWG <= 10MB",
+      "mandatory": true
+    },
+    {
+      "label": "Structural Stability Certificate from Licensed Engineer",
+      "accepted_formats": "PDF <= 3MB",
+      "mandatory": true
+    }
+  ]
+}

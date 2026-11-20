@@ -1,0 +1,136 @@
+{
+  "project_id": "proj_zoning_extension_salt_lake_001",
+  "goal": "Add a second floor residential extension in Salt Lake, Bidhannagar",
+  "domain": "zoning",
+  "preferred_language": "en",
+  "created_at": "2026-11-20T14:00:00+00:00",
+  "applicant_profile": {
+    "entity_name": "Residential Property",
+    "activity_type": "residential_extension",
+    "applicant": {
+      "name": "Priyanka Roy",
+      "pan": null,
+      "aadhaar_last4": "9012",
+      "phone": "9831123456",
+      "email": "priyanka.roy@example.com",
+      "dob": "1988-11-03"
+    },
+    "location": {
+      "city_or_village": "Salt Lake",
+      "district": "North 24 Parganas",
+      "state": "West Bengal",
+      "municipal_ward_or_block": "Bidhannagar Municipal Corporation",
+      "address": "Plot FD-120, Sector 3, Salt Lake",
+      "pin": "700091",
+      "premises_type": "owned"
+    },
+    "domain_attributes": {
+      "plot_area_sqft": 2400,
+      "proposed_floors": 2,
+      "road_width_ft": 24,
+      "heritage_or_eco_zone": false
+    }
+  },
+  "provenance": {
+    "applicant_profile.location.city_or_village": "in Salt Lake, Bidhannagar",
+    "applicant_profile.domain_attributes.proposed_floors": "second floor residential extension",
+    "applicant_profile.domain_attributes.road_width_ft": "road is 24 feet wide"
+  },
+  "research_findings": [
+    {
+      "id": "lic_municipal_building_sanction",
+      "name": "Building Plan Sanction / Vertical Addition Permit",
+      "authority": "Bidhannagar Municipal Corporation (BMC)",
+      "tier": "municipal",
+      "triggers": "Mandatory prior approval for any structural floor addition under WB Municipal Building Rules.",
+      "statutory_fee": "₹15 / sq.ft",
+      "renewal_period": "3 years",
+      "submission_channel": "hybrid",
+      "form_version": "BMC Form 2 Building Application",
+      "official_source_url": "https://bmcwb.gov.in",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "required_documents": [
+        "Structural Stability Certificate by Empanelled Engineer",
+        "Sanctioned Original Plan Copy",
+        "Mutation Certificate & Property Tax Receipt"
+      ]
+    }
+  ],
+  "compliance_matrix": [
+    {
+      "id": "lic_municipal_building_sanction",
+      "name": "Building Plan Sanction / Vertical Addition Permit",
+      "authority": "Bidhannagar Municipal Corporation (BMC)",
+      "tier": "municipal",
+      "status": "Required",
+      "rationale": "Vertical structural extension of 2 floors requires formal building plan sanction under West Bengal Municipal (Building) Rules.",
+      "depends_on": [],
+      "statutory_fee": "₹15 / sq.ft sanctioned area",
+      "renewal_period": "Valid for 3 years",
+      "submission_channel": "hybrid",
+      "form_version": "BMC Form 2 Building Application",
+      "official_source_url": "https://bmcwb.gov.in"
+    }
+  ],
+  "open_questions": [],
+  "form_artifacts": [
+    {
+      "form_name": "Building_Plan_Sanction_Application.pdf",
+      "licence_id": "lic_municipal_building_sanction",
+      "status": "Ready_For_Signature",
+      "completion_percentage": 100,
+      "missing_fields": [],
+      "file_path": "redtape-navigator-unified/drafts/test_zoning/draft_Building_Plan_Sanction_Application.pdf",
+      "report_path": "redtape-navigator-unified/drafts/test_zoning/draft_Building_Plan_Sanction_Application.pdf.report.json"
+    }
+  ],
+  "portal_artifacts": [
+    {
+      "portal_name": "Bidhannagar Municipal Corporation (BMC) Building Sanction",
+      "licence_id": "lic_municipal_building_sanction",
+      "portal_url": "https://bmcwb.gov.in/",
+      "status": "Ready_For_User_Submit",
+      "completion_percentage": 100,
+      "missing_fields": [],
+      "copy_sheet_path": "redtape-navigator-unified/drafts/test_zoning/bmc_building_plan_pack.md",
+      "manifest_path": "redtape-navigator-unified/drafts/test_zoning/bmc_building_plan_manifest.json",
+      "human_gates": [
+        "Registered Architect / LBS Login",
+        "Applicant Aadhaar OTP verification",
+        "Sanction Fee & Scrutiny Fee payment",
+        "Digital Signature (DSC) & Final Submit"
+      ]
+    }
+  ],
+  "required_supporting_documents": [
+    {
+      "name": "Structural Stability Certificate by Empanelled Engineer",
+      "authority": "BMC",
+      "status": "Pending",
+      "precheck_status": "Template_Available",
+      "template_path": "redtape-navigator-unified/drafts/test_zoning/draft_structural_stability.md"
+    },
+    {
+      "name": "Sanctioned Original Plan Copy",
+      "authority": "BMC",
+      "status": "Ready",
+      "precheck_status": "Action_Required"
+    },
+    {
+      "name": "Mutation Certificate & Property Tax Receipt",
+      "authority": "BMC",
+      "status": "Ready",
+      "precheck_status": "Action_Required"
+    }
+  ],
+  "overrides": {},
+  "workflow_flags": {
+    "research_complete": true,
+    "compliance_complete": true,
+    "interview_complete": true,
+    "documents_generated": true,
+    "research_mode": "cached_live"
+  },
+  "errors": []
+}

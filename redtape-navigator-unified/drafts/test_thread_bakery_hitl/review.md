@@ -18,8 +18,8 @@
 ## 2. Audit Trail & Rule Reasoning
 
 - **Certificate of Enlistment (Trade License)** (`Required`): Mandatory for operating any trade or commercial business within Kolkata jurisdiction.
-- **Registration under The Shops and Establishments Act** (`Required`): Required for commercial establishment operating with 8 worker(s) on site.
-  - status change: 2026-11-20: Conditional -> Required (Required for commercial establishment operating with 8 worker(s) on site.)
+- **Registration under The Shops and Establishments Act** (`Required`): Required for commercial establishment operating with 3 worker(s) on site.
+  - status change: 2026-11-20: Conditional -> Required (Required for commercial establishment operating with 3 worker(s) on site.)
 - **FSSAI Basic Food Safety Registration** (`Required`): Required: expected annual turnover of Rs 800,000 is within the Basic Registration threshold of <= Rs 1.5 Crore.
   - status change: 2026-11-20: Conditional -> Required (Required: expected annual turnover of Rs 800,000 is within the Basic Registratio)
 

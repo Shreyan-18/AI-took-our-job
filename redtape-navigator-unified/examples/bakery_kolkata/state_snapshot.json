@@ -121,8 +121,79 @@
     }
   ],
   "open_questions": [],
-  "form_artifacts": [],
-  "portal_artifacts": [],
+  "form_artifacts": [
+    {
+      "form_name": "FSSAI_Registration_Form_A.pdf",
+      "licence_id": "lic_fssai_basic",
+      "status": "Draft_Generated",
+      "completion_percentage": 88,
+      "missing_fields": [
+        "applicant_profile.applicant.pan"
+      ],
+      "file_path": "redtape-navigator-unified/drafts/test_bakery/draft_FSSAI_Registration_Form_A.pdf",
+      "report_path": "redtape-navigator-unified/drafts/test_bakery/draft_FSSAI_Registration_Form_A.pdf.report.json"
+    },
+    {
+      "form_name": "WB_Shops_Establishment_Form_B.pdf",
+      "licence_id": "lic_wb_shops_est",
+      "status": "Ready_For_Signature",
+      "completion_percentage": 100,
+      "missing_fields": [],
+      "file_path": "redtape-navigator-unified/drafts/test_bakery/draft_WB_Shops_Establishment_Form_B.pdf",
+      "report_path": "redtape-navigator-unified/drafts/test_bakery/draft_WB_Shops_Establishment_Form_B.pdf.report.json"
+    }
+  ],
+  "portal_artifacts": [
+    {
+      "portal_name": "FoSCoS FSSAI Basic Food Registration (Form A)",
+      "licence_id": "lic_fssai_basic",
+      "portal_url": "https://foscos.fssai.gov.in",
+      "status": "Pack_Generated",
+      "completion_percentage": 89,
+      "missing_fields": [
+        "applicant_profile.applicant.pan"
+      ],
+      "copy_sheet_path": "redtape-navigator-unified/drafts/test_bakery/foscos_pack.md",
+      "manifest_path": "redtape-navigator-unified/drafts/test_bakery/foscos_manifest.json",
+      "human_gates": [
+        "Mobile/Email OTP verification",
+        "CAPTCHA entry",
+        "Statutory fee payment (Rs. 100/yr)",
+        "Final declaration & Submit"
+      ]
+    },
+    {
+      "portal_name": "KMC Certificate of Enlistment (Trade License)",
+      "licence_id": "lic_kmc_trade",
+      "portal_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCTradeLicenseHome.jsp",
+      "status": "Ready_For_User_Submit",
+      "completion_percentage": 100,
+      "missing_fields": [],
+      "copy_sheet_path": "redtape-navigator-unified/drafts/test_bakery/kmc_trade_license_pack.md",
+      "manifest_path": "redtape-navigator-unified/drafts/test_bakery/kmc_trade_license_manifest.json",
+      "human_gates": [
+        "Assessee Number / Ward verification",
+        "OTP verification on registered mobile",
+        "Municipal fee payment & Challan generation",
+        "Final declaration & Submit"
+      ]
+    },
+    {
+      "portal_name": "SilpaSathi West Bengal Shops & Establishments (Form B)",
+      "licence_id": "lic_wb_shops_est",
+      "portal_url": "https://silpasathi.wb.gov.in/",
+      "status": "Ready_For_User_Submit",
+      "completion_percentage": 100,
+      "missing_fields": [],
+      "copy_sheet_path": "redtape-navigator-unified/drafts/test_bakery/silpasathi_pack.md",
+      "manifest_path": "redtape-navigator-unified/drafts/test_bakery/silpasathi_manifest.json",
+      "human_gates": [
+        "SilpaSathi Login & Mobile OTP",
+        "Statutory registration fee calculation & payment",
+        "Final declaration & Submit"
+      ]
+    }
+  ],
   "required_supporting_documents": [
     {
       "name": "Government Photo ID (Aadhaar / PAN / Voter ID)",
@@ -130,7 +201,7 @@
         "lic_fssai_basic",
         "lic_kmc_trade"
       ],
-      "precheck_status": "missing"
+      "precheck_status": "Action_Required"
     },
     {
       "name": "Rent Agreement or Landlord NOC",
@@ -139,7 +210,8 @@
         "lic_kmc_trade",
         "lic_wb_shops_est"
       ],
-      "precheck_status": "missing"
+      "precheck_status": "Template_Available",
+      "template_path": "redtape-navigator-unified/drafts/test_bakery/draft_landlord_noc.md"
     },
     {
       "name": "Recent Electricity Bill of Premises (<3 months)",
@@ -147,7 +219,7 @@
         "lic_fssai_basic",
         "lic_kmc_trade"
       ],
-      "precheck_status": "missing"
+      "precheck_status": "Action_Required"
     }
   ],
   "overrides": {},
@@ -163,7 +235,7 @@
     "compliance_needs_reeval": false,
     "interview_complete": true,
     "interview_rounds": 1,
-    "documents_generated": false,
+    "documents_generated": true,
     "validation_passed": false,
     "source_fallback": false
   },

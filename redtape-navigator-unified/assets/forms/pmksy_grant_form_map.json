@@ -1,0 +1,39 @@
+{
+  "form": "PMKSY_Micro_Irrigation_Application.pdf",
+  "licence_id": "grant_pmksy_micro_irrigation",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": { "acroform": "farmer_name" },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "farm_location" },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "landholding_acres" },
+      "source": "applicant_profile.domain_attributes.landholding_acres",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "crop_types" },
+      "source": "applicant_profile.domain_attributes.crop_types",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "irrigation_source" },
+      "source": "applicant_profile.domain_attributes.irrigation_source",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "mobile_number" },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    }
+  ]
+}

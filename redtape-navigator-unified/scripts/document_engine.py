@@ -74,7 +74,41 @@ def precheck_supporting_documents(state: dict, draft_dir: Path) -> list[dict]:
             else:
                 doc["precheck_status"] = "Action_Required"
 
-        # 3. Government ID / PAN / Photo
+        # 3. Structural Stability Certificate (Zoning)
+        elif any(term in name_lower for term in ("structural", "stability", "engineer")):
+            struct_tpl = TEMPLATES_DIR / "structural_stability_declaration.md"
+            if struct_tpl.exists():
+                staged_path = draft_dir / "draft_structural_stability.md"
+                content = struct_tpl.read_text(encoding="utf-8")
+                content = content.replace("{applicant_name}", applicant.get("name") or "[APPLICANT_NAME]")
+                content = content.replace("{plot_address}", location.get("address") or location.get("municipal_ward_or_block") or "[PLOT_ADDRESS]")
+                content = content.replace("{city_or_village}", location.get("city_or_village") or "Bidhannagar")
+                content = content.replace("{proposed_floors}", str(ap.get("domain_attributes", {}).get("proposed_floors") or "1"))
+                staged_path.write_text(content, encoding="utf-8")
+                doc["precheck_status"] = "Template_Available"
+                doc["template_path"] = str(staged_path)
+            else:
+                doc["precheck_status"] = "Action_Required"
+
+        # 4. Land Possession / RoR / Khatian (Agriculture)
+        elif any(term in name_lower for term in ("khatian", "ror", "landholding", "cultivat", "passbook")):
+            land_tpl = TEMPLATES_DIR / "land_possession_self_declaration.md"
+            if land_tpl.exists():
+                staged_path = draft_dir / "draft_land_possession.md"
+                content = land_tpl.read_text(encoding="utf-8")
+                content = content.replace("{farmer_name}", applicant.get("name") or "[FARMER_NAME]")
+                content = content.replace("{farm_location}", location.get("address") or location.get("city_or_village") or "[FARM_LOCATION]")
+                content = content.replace("{district}", location.get("district") or location.get("city_or_village") or "Nadia")
+                content = content.replace("{landholding_acres}", str(ap.get("domain_attributes", {}).get("landholding_acres") or "2.5"))
+                content = content.replace("{crop_types}", str(ap.get("domain_attributes", {}).get("crop_types") or "Vegetables / Horticulture"))
+                content = content.replace("{mobile_number}", applicant.get("phone") or "[MOBILE_NUMBER]")
+                staged_path.write_text(content, encoding="utf-8")
+                doc["precheck_status"] = "Template_Available"
+                doc["template_path"] = str(staged_path)
+            else:
+                doc["precheck_status"] = "Action_Required"
+
+        # 5. Government ID / PAN / Photo
         elif any(term in name_lower for term in ("id", "photo", "pan", "aadhaar")):
             pan_val = effective_value(state, "applicant_profile.applicant.pan")
             if not is_blank(pan_val):
@@ -82,7 +116,7 @@ def precheck_supporting_documents(state: dict, draft_dir: Path) -> list[dict]:
             else:
                 doc["precheck_status"] = "Action_Required"
 
-        # 4. General / Property tax / Assessee details
+        # 6. General / Property tax / Assessee details
         else:
             doc["precheck_status"] = "Action_Required"
 
@@ -99,6 +133,12 @@ def resolve_permit_target(lic_id: str, name: str) -> str:
         return "lic_kmc_certificate_of_enlistment"
     if "shop" in combined or "establishment" in combined or "silpasathi" in combined:
         return "lic_wb_shops_and_establishments"
+    if "building" in combined or "sanction" in combined or "zoning" in combined or "floor" in combined or "bmc" in combined:
+        return "lic_municipal_building_sanction"
+    if "pmksy" in combined or "drip" in combined or "micro_irrigation" in combined or "micro irrigation" in combined:
+        return "grant_pmksy_micro_irrigation"
+    if "kusum" in combined or "solar pump" in combined:
+        return "grant_pm_kusum"
     return lic_id
 
 
@@ -116,11 +156,15 @@ def generate_documents(state: dict, output_dir: str = None) -> dict:
     form_maps = {
         "lic_fssai_basic_registration": FORMS_DIR / "fssai_form_a_map.json",
         "lic_wb_shops_and_establishments": FORMS_DIR / "wb_shops_form_b_map.json",
+        "lic_municipal_building_sanction": FORMS_DIR / "building_plan_form_map.json",
+        "grant_pmksy_micro_irrigation": FORMS_DIR / "pmksy_grant_form_map.json",
     }
     portal_maps = {
         "lic_fssai_basic_registration": PORTALS_DIR / "foscos_portal_map.json",
         "lic_kmc_certificate_of_enlistment": PORTALS_DIR / "kmc_trade_license_portal_map.json",
         "lic_wb_shops_and_establishments": PORTALS_DIR / "silpasathi_portal_map.json",
+        "lic_municipal_building_sanction": PORTALS_DIR / "bmc_building_plan_portal_map.json",
+        "grant_pmksy_micro_irrigation": PORTALS_DIR / "banglar_krishi_portal_map.json",
     }
 
     form_artifacts = []
@@ -182,7 +226,6 @@ def generate_documents(state: dict, output_dir: str = None) -> dict:
                 "manifest_path": str(out_man_path),
                 "human_gates": manifest.get("stop_before_gates", []),
             })
-            print(f"  [Portal Pack] {pmap['portal_name']}: {completion}% ready -> {out_md_path.name}")
             print(f"  [Portal Pack] {pmap['portal_name']}: {completion}% ready -> {out_md_path.name}")
 
     # Stage supporting document templates & pre-checks

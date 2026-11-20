@@ -1,0 +1,78 @@
+{
+  "portal_name": "Banglar Krishi PMKSY Micro-Irrigation Portal",
+  "licence_id": "grant_pmksy_micro_irrigation",
+  "portal_url": "https://banglarkrishi.wb.gov.in/",
+  "human_gates": [
+    "Krishak Bandhu / Aadhaar OTP verification",
+    "Bank Account verification for Direct Benefit Transfer (DBT)",
+    "Block Agriculture Officer (AEO) physical field inspection",
+    "Final declaration & Submit"
+  ],
+  "steps": [
+    {
+      "step_name": "Step 1: Farmer & Cultivation Profile",
+      "fields": [
+        {
+          "label": "Farmer Full Name",
+          "selector": "#farmerName",
+          "source": "applicant_profile.applicant.name",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "District / Block / Gram Panchayat",
+          "selector": "#locationDesc",
+          "source": "applicant_profile.location.city_or_village",
+          "mandatory": true
+        },
+        {
+          "label": "Total Cultivable Land (Acres)",
+          "selector": "#landAcres",
+          "source": "applicant_profile.domain_attributes.landholding_acres",
+          "mandatory": true
+        },
+        {
+          "label": "Crop Types Cultivated",
+          "selector": "#cropTypes",
+          "source": "applicant_profile.domain_attributes.crop_types",
+          "mandatory": true
+        }
+      ]
+    },
+    {
+      "step_name": "Step 2: Micro-Irrigation Particulars",
+      "fields": [
+        {
+          "label": "Source of Irrigation Water",
+          "selector": "#waterSource",
+          "source": "applicant_profile.domain_attributes.irrigation_source",
+          "mandatory": true
+        },
+        {
+          "label": "Mobile Phone Number",
+          "selector": "#mobileNumber",
+          "source": "applicant_profile.applicant.phone",
+          "transform": "phone_10digit",
+          "mandatory": true
+        }
+      ]
+    }
+  ],
+  "uploads": [
+    {
+      "label": "Record of Rights (RoR / Khatian) / Land Possession Certificate",
+      "accepted_formats": "PDF/JPG <= 2MB",
+      "mandatory": true
+    },
+    {
+      "label": "Bank Passbook Front Page showing IFSC & Account No.",
+      "accepted_formats": "PDF/JPG <= 2MB",
+      "mandatory": true
+    },
+    {
+      "label": "Aadhaar Card Copy",
+      "accepted_formats": "PDF/JPG <= 2MB",
+      "mandatory": true
+    }
+  ]
+}

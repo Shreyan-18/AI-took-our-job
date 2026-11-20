@@ -16,7 +16,7 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Number of Workers on Site | `8` | Ready |
+| Number of Workers on Site | `3` | Ready |
 | Employer Full Name | [PENDING_USER_INPUT] | PENDING (Required) |
 | Employer Mobile Number | [PENDING_USER_INPUT] | PENDING (Required) |
 

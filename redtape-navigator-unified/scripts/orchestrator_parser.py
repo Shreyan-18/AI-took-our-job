@@ -144,6 +144,14 @@ def parse_intent(goal_text: str, api_key: str = None) -> dict:
                 if dom not in DOMAIN_DEFAULTS:
                     dom = "general"
                 result["domain"] = dom
+                if "applicant_profile" not in result:
+                    result["applicant_profile"] = {
+                        "entity_name": result.get("entity_name"),
+                        "activity_type": result.get("activity_type"),
+                        "applicant": result.get("applicant", {}),
+                        "location": result.get("location", {}),
+                        "domain_attributes": result.get("domain_attributes", {}),
+                    }
                 return result
     except Exception as e:
         print(f"Notice: Gemini orchestrator unavailable ({e}); falling back to heuristic goal parser.", file=sys.stderr)
