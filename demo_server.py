@@ -272,17 +272,49 @@ class LiveDemoState:
         self.research_findings = preset["research_findings"]
         self.round = 1
         self.interview_complete = False
+        self.overrides = {}
+        self.compliance_matrix = []
         self.evaluate_compliance()
+
+    def get_effective(self, dotted):
+        if hasattr(self, "overrides") and dotted in self.overrides and self.overrides[dotted] not in (None, ""):
+            return self.overrides[dotted]
+        cur = self.applicant_profile
+        for part in dotted.replace("applicant_profile.", "").split("."):
+            if isinstance(cur, dict) and part in cur:
+                cur = cur[part]
+            else:
+                return None
+        return cur
+
+    def apply_override(self, field, value):
+        if not hasattr(self, "overrides"):
+            self.overrides = {}
+        if isinstance(value, str):
+            if value.isdigit():
+                value = int(value)
+            elif value.lower() in ("true", "yes"):
+                value = True
+            elif value.lower() in ("false", "no"):
+                value = False
+        self.overrides[field] = value
+        self.evaluate_compliance()
+        if getattr(self, "form_artifacts", []):
+            self.generate_docs()
+        else:
+            self.review_md = render_review_md(self.to_full_state())
+        return self.to_dict()
 
     def evaluate_compliance(self):
         """Deterministically evaluates compliance matrix with legal statutory thresholds."""
+        prev_matrix = {m["id"]: m for m in getattr(self, "compliance_matrix", [])}
         matrix = []
         attrs = self.applicant_profile.get("domain_attributes", {})
         loc = self.applicant_profile.get("location", {})
 
         if self.domain == "business":
             # 1. KMC Trade License
-            city = loc.get("city_or_village")
+            city = self.get_effective("applicant_profile.location.city_or_village")
             if not city:
                 matrix.append({
                     "id": "lic_kmc_ce",
@@ -309,20 +341,21 @@ class LiveDemoState:
                 })
 
             # 2. WB Shops & Establishments
+            workers = self.get_effective("applicant_profile.domain_attributes.workers_on_site") or 3
             matrix.append({
                 "id": "lic_wb_shops",
                 "name": "Registration under WB Shops & Establishments Act, 1963",
                 "authority": "Labour Commissionerate, Govt of WB",
                 "tier": "state",
                 "status": "Required",
-                "rationale": "Commercial establishment employing 3 on-site workers in West Bengal requires statutory registration within 30 days.",
+                "rationale": f"Commercial establishment employing {workers} on-site workers in West Bengal requires statutory registration within 30 days.",
                 "depends_on": [],
                 "statutory_fee": "₹300",
                 "renewal_period": "3 years"
             })
 
             # 3. FSSAI Basic vs State
-            turnover = attrs.get("expected_annual_turnover_inr")
+            turnover = self.get_effective("applicant_profile.domain_attributes.expected_annual_turnover_inr")
             if turnover is None:
                 matrix.append({
                     "id": "lic_fssai_basic",
@@ -361,8 +394,12 @@ class LiveDemoState:
                 })
 
             # 4. Fire NOC
-            seating = attrs.get("customer_seating", 0)
-            lpg = attrs.get("commercial_lpg", False)
+            seating = self.get_effective("applicant_profile.domain_attributes.customer_seating")
+            if seating is None:
+                seating = attrs.get("customer_seating", 0)
+            lpg = self.get_effective("applicant_profile.domain_attributes.commercial_lpg")
+            if lpg is None:
+                lpg = attrs.get("commercial_lpg", False)
             if seating < 50 and not lpg:
                 matrix.append({
                     "id": "lic_wb_fire",
@@ -476,6 +513,14 @@ class LiveDemoState:
                 "statutory_fee": "Nil",
                 "renewal_period": "Once per 7 years"
             })
+
+        for item in matrix:
+            item_id = item.get("id")
+            prev = prev_matrix.get(item_id, {})
+            item["history"] = list(prev.get("history", []))
+            if prev.get("status") and prev["status"] != item["status"]:
+                today_str = datetime.date.today().isoformat()
+                item["history"].append(f"{today_str}: {prev['status']} -> {item['status']} ({item['rationale'][:80]})")
 
         self.compliance_matrix = matrix
 
@@ -614,7 +659,7 @@ class LiveDemoState:
             "form_artifacts": getattr(self, "form_artifacts", []),
             "portal_artifacts": getattr(self, "portal_artifacts", []),
             "required_supporting_documents": self.supporting_documents,
-            "overrides": {},
+            "overrides": getattr(self, "overrides", {}),
             "workflow_flags": {
                 "research_complete": True,
                 "compliance_complete": True,
@@ -650,6 +695,7 @@ class LiveDemoState:
             "form_artifacts": getattr(self, "form_artifacts", []),
             "portal_artifacts": getattr(self, "portal_artifacts", []),
             "review_md": getattr(self, "review_md", ""),
+            "overrides": getattr(self, "overrides", {}),
         }
 
 
@@ -742,6 +788,13 @@ class DemoServerHandler(BaseHTTPRequestHandler):
 
         elif parsed.path == "/api/documents/generate":
             ACTIVE_STATE.generate_docs()
+            self.send_json(ACTIVE_STATE.to_dict())
+
+        elif parsed.path == "/api/override":
+            field = req_data.get("field")
+            value = req_data.get("value")
+            if field:
+                ACTIVE_STATE.apply_override(field, value)
             self.send_json(ACTIVE_STATE.to_dict())
 
         elif parsed.path == "/api/reset":

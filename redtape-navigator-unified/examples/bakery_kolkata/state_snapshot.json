@@ -43,7 +43,82 @@
     "applicant_profile.domain_attributes.commercial_lpg": "only electric deck ovens, no gas cylinders",
     "applicant_profile.domain_attributes.expected_annual_turnover_inr": "around 8 lakh a year"
   },
-  "research_findings": [],
+  "research_findings": [
+    {
+      "id": "lic_kmc_ce",
+      "name": "Certificate of Enlistment (Trade License)",
+      "authority": "Kolkata Municipal Corporation (KMC)",
+      "tier": "municipal",
+      "triggers": "Mandatory for all commercial trades operating within KMC jurisdiction under KMC Act 1980.",
+      "statutory_fee": "₹1,500 - ₹2,500 / year",
+      "renewal_period": "Annual",
+      "submission_channel": "hybrid",
+      "form_version": "KMC CE Application 2024",
+      "official_source_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCTradeLicenseHome.jsp",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "required_documents": [
+        "Rent Agreement or Landlord NOC",
+        "Recent Electricity Bill (<3 months)",
+        "Government Photo ID"
+      ]
+    },
+    {
+      "id": "lic_wb_shops",
+      "name": "The West Bengal Shops and Establishments Act, 1963",
+      "authority": "Labour Commissionerate, Government of West Bengal",
+      "tier": "state",
+      "triggers": "Mandatory for commercial establishments employing workers.",
+      "statutory_fee": "₹300 - ₹500",
+      "renewal_period": "3 years",
+      "submission_channel": "web_portal",
+      "form_version": "Form B (Silpasathi)",
+      "official_source_url": "https://silpasathi.wb.gov.in/",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "required_documents": [
+        "Establishment and Worker Details",
+        "Rent Agreement / Lease Deed"
+      ]
+    },
+    {
+      "id": "lic_fssai_basic",
+      "name": "FSSAI Basic Food Registration (Form A)",
+      "authority": "Food Safety and Standards Authority of India",
+      "tier": "central",
+      "triggers": "Mandatory for Food Business Operators with turnover up to ₹12 Lakhs.",
+      "statutory_fee": "₹100 / year",
+      "renewal_period": "1 to 5 years",
+      "submission_channel": "web_portal",
+      "form_version": "Form A (FoSCoS)",
+      "official_source_url": "https://foscos.fssai.gov.in",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "required_documents": [
+        "Government Photo ID (Aadhaar / PAN)",
+        "Passport Size Photograph",
+        "Proof of Premises Possession"
+      ]
+    },
+    {
+      "id": "lic_wb_fire",
+      "name": "Fire Safety Recommendation / NOC",
+      "authority": "West Bengal Fire & Emergency Services",
+      "tier": "state",
+      "triggers": "Mandatory if customer seating >= 50 or commercial bulk LPG used.",
+      "statutory_fee": "₹5,000",
+      "renewal_period": "Annual",
+      "submission_channel": "web_portal",
+      "form_version": "Form V Fire NOC",
+      "official_source_url": "https://wbfes.wb.gov.in/",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "required_documents": [
+        "Architectural Floor Layout Plan",
+        "Fire Equipment Certificate"
+      ]
+    }
+  ],
   "compliance_matrix": [
     {
       "id": "lic_fssai_basic",

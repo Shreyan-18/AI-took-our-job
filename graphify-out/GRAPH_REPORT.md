@@ -1,17 +1,17 @@
-# Graph Report - red-tape  (2026-11-20)
+# Graph Report - red-tape  (2026-11-21)
 
 ## Corpus Check
-- 90 files · ~34,276 words
+- 91 files · ~35,683 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 1 file(s) not represented in the graph (top: (none) 1)
 
 ## Summary
-- 519 nodes · 831 edges · 42 communities (28 shown, 14 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.85)
+- 527 nodes · 871 edges · 42 communities (28 shown, 14 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 23 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4f5aaf20`
+- Built from commit: `95524303`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -41,7 +41,7 @@
 - overrides
 - workflow.py
 - demo_server.py
-- interview_engine.py
+- properties
 - Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
 - Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
 - Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)
@@ -59,16 +59,16 @@
 - structural_stability_declaration.md
 
 ## God Nodes (most connected - your core abstractions)
-1. `load_json()` - 24 edges
-2. `save_json()` - 21 edges
-3. `effective_value()` - 18 edges
+1. `load_json()` - 26 edges
+2. `save_json()` - 22 edges
+3. `effective_value()` - 19 edges
 4. `is_blank()` - 16 edges
 5. `RedTape Navigator Unified Skill` - 15 edges
 6. `build_workflow()` - 14 edges
-7. `RedTapeState` - 12 edges
-8. `generate_documents()` - 11 edges
-9. `LiveDemoState` - 10 edges
-10. `rank_open_questions()` - 10 edges
+7. `generate_documents()` - 13 edges
+8. `LiveDemoState` - 12 edges
+9. `RedTapeState` - 12 edges
+10. `validate()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `node_documents()` --calls--> `generate_documents()`  [INFERRED]
@@ -88,8 +88,8 @@
 ## Communities (42 total, 14 thin omitted)
 
 ### Community 0 - "_common.py"
-Cohesion: 0.11
-Nodes (30): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+22 more)
+Cohesion: 0.10
+Nodes (36): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+28 more)
 
 ### Community 1 - "properties"
 Cohesion: 0.05
@@ -120,12 +120,12 @@ Cohesion: 0.20
 Nodes (10): items, type, type, items, type, errors, open_questions, research_findings (+2 more)
 
 ### Community 8 - "properties"
-Cohesion: 0.04
-Nodes (46): type, description, type, type, properties, type, properties, type (+38 more)
+Cohesion: 0.07
+Nodes (28): type, description, type, properties, type, properties, type, type (+20 more)
 
 ### Community 10 - "research_engine.py"
-Cohesion: 0.07
-Nodes (19): catalog_supporting_documents(), compliance(), evaluate_deterministic(), evaluate_with_gemini(), main(), make_state(), parse_fallback_answer(), find_api_key() (+11 more)
+Cohesion: 0.06
+Nodes (26): catalog_supporting_documents(), compliance(), evaluate_with_gemini(), make_state(), call_gemini_interview(), generate_fallback_question(), generate_question_batch(), interview_turn() (+18 more)
 
 ### Community 16 - "properties"
 Cohesion: 0.20
@@ -160,12 +160,12 @@ Cohesion: 0.12
 Nodes (12): main(), build_workflow(), node_compliance(), node_documents(), node_interview(), node_orchestrator(), node_research(), node_review() (+4 more)
 
 ### Community 24 - "demo_server.py"
-Cohesion: 0.15
+Cohesion: 0.12
 Nodes (3): DemoServerHandler, LiveDemoState, render_ui_html()
 
-### Community 25 - "interview_engine.py"
-Cohesion: 0.17
-Nodes (9): call_gemini_interview(), generate_fallback_question(), generate_question_batch(), interview_turn(), is_pii_field(), main(), process_user_answer(), rank_open_questions() (+1 more)
+### Community 25 - "properties"
+Cohesion: 0.11
+Nodes (18): type, type, type, properties, type, type, type, enum (+10 more)
 
 ### Community 26 - "Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats"
 Cohesion: 0.25
@@ -201,23 +201,23 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSat
 
 ## Knowledge Gaps
 - **19 isolated node(s):** `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction`, `India Residential Zoning Jurisdiction`, `Compliance System Prompt` (+14 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 272 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 273 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `properties` connect `properties` to `$ref`, `properties`, `type`, `properties`, `properties`, `project_state.json`, `provenance`, `created_at`, `domain`, `overrides`?**
-  _High betweenness centrality (0.046) - this node is a cross-community bridge._
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _19 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `_common.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.11178451178451178 - nodes in this community are weakly interconnected._
-- **Why does `applicant_profile` connect `properties` to `properties`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _Cohesion score 0.09557109557109557 - nodes in this community are weakly interconnected._
+- **Why does `properties` connect `properties` to `properties`?**
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
+- **Why does `applicant_profile` connect `properties` to `properties`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
-- **Should `properties` be split into smaller, more focused modules?**
-  _Cohesion score 0.08 - nodes in this community are weakly interconnected._

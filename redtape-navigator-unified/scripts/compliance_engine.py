@@ -159,15 +159,15 @@ def evaluate_deterministic(state: dict) -> tuple[list[dict], str]:
             if is_blank(turnover):
                 status = "Conditional"
                 depends_on = ["applicant_profile.domain_attributes.expected_annual_turnover_inr"]
-                rationale = "FSSAI Basic Registration applies for food units with annual turnover <= Rs 1.5 Crore; pending turnover confirmation."
-            elif isinstance(turnover, (int, float)) and turnover <= 15000000:
+                rationale = "FSSAI Basic Registration applies for food units with annual turnover <= Rs 12 Lakhs; pending turnover confirmation."
+            elif isinstance(turnover, (int, float)) and turnover <= 1200000:
                 status = "Required"
                 depends_on = []
-                rationale = f"Required: expected annual turnover of Rs {int(turnover):,} is within the Basic Registration threshold of <= Rs 1.5 Crore."
+                rationale = f"Required: expected annual turnover of Rs {int(turnover):,} is within the Basic Registration threshold of <= Rs 12 Lakhs."
             else:
                 status = "Not Applicable"
                 depends_on = []
-                rationale = f"Not Applicable for Basic Registration: annual turnover of Rs {int(turnover):,} exceeds Rs 1.5 Crore (State License required)."
+                rationale = f"Not Applicable for Basic Registration: annual turnover of Rs {int(turnover):,} exceeds Rs 12 Lakhs (State License required)."
 
         # 3. Shops & Establishments Act
         elif "shops" in name_lower or "establishment" in name_lower:
@@ -257,8 +257,11 @@ def compliance(state: dict) -> dict:
     """Core LangGraph node: evaluates compliance matrix, maintains audit trail, and generates open_questions."""
     findings = state.get("research_findings", [])
     if not findings:
-        print("Warning: compliance called with empty research_findings.", file=sys.stderr)
-        return state
+        if state.get("compliance_matrix"):
+            findings = state["compliance_matrix"]
+        else:
+            print("Warning: compliance called with empty research_findings.", file=sys.stderr)
+            return state
 
     previous_matrix = {item["id"]: item for item in state.get("compliance_matrix", []) if "id" in item}
 
