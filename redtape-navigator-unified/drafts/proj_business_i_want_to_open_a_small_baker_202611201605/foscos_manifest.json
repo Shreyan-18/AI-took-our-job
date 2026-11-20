@@ -1,0 +1,46 @@
+{
+  "portal_name": "FoSCoS FSSAI Basic Food Registration (Form A)",
+  "licence_id": "lic_fssai_basic_registration",
+  "portal_url": "https://foscos.fssai.gov.in",
+  "stop_before_gates": [
+    "Mobile/Email OTP verification",
+    "CAPTCHA entry",
+    "Statutory fee payment (Rs. 100/yr)",
+    "Final declaration & Submit"
+  ],
+  "actions": [
+    {
+      "action": "fill",
+      "label": "City / Village",
+      "selector": "#cityVillage",
+      "source": "applicant_profile.location.city_or_village",
+      "value_masked": false,
+      "value": "Kolkata"
+    },
+    {
+      "action": "fill",
+      "label": "Nature of Business",
+      "selector": "#kindOfBusiness",
+      "source": "applicant_profile.activity_type",
+      "value_masked": false,
+      "value": "Bakery"
+    },
+    {
+      "action": "fill",
+      "label": "Expected Annual Turnover (INR)",
+      "selector": "#annualTurnover",
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+      "value_masked": false,
+      "value": "800000"
+    }
+  ],
+  "missing_fields": [
+    "applicant_profile.entity_name",
+    "applicant_profile.applicant.name",
+    "applicant_profile.location.address",
+    "applicant_profile.location.pin",
+    "applicant_profile.applicant.phone",
+    "applicant_profile.applicant.pan"
+  ],
+  "completion_percentage": 33
+}

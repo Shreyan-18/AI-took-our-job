@@ -1,0 +1,94 @@
+{
+  "portal_name": "KMC Certificate of Enlistment (Trade License)",
+  "licence_id": "lic_kmc_certificate_of_enlistment",
+  "portal_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCTradeLicenseHome.jsp",
+  "human_gates": [
+    "Assessee Number / Ward verification",
+    "OTP verification on registered mobile",
+    "Municipal fee payment & Challan generation",
+    "Final declaration & Submit"
+  ],
+  "steps": [
+    {
+      "step_name": "Step 1: Location & Premises Identification",
+      "fields": [
+        {
+          "label": "Municipal Ward / Area",
+          "selector": "#wardArea",
+          "source": "applicant_profile.location.municipal_ward_or_block",
+          "mandatory": true
+        },
+        {
+          "label": "City",
+          "selector": "#cityName",
+          "source": "applicant_profile.location.city_or_village",
+          "mandatory": true
+        },
+        {
+          "label": "Premises / Street Address",
+          "selector": "#premisesAddress",
+          "source": "applicant_profile.location.address",
+          "mandatory": true
+        },
+        {
+          "label": "Premises Tenancy Type",
+          "selector": "#tenancyType",
+          "source": "applicant_profile.location.premises_type",
+          "transform": "title",
+          "mandatory": true
+        }
+      ]
+    },
+    {
+      "step_name": "Step 2: Business & Applicant Profile",
+      "fields": [
+        {
+          "label": "Name of Enterprise / Trade",
+          "selector": "#businessName",
+          "source": "applicant_profile.entity_name",
+          "transform": "upper",
+          "mandatory": true
+        },
+        {
+          "label": "Nature of Trade / Activity",
+          "selector": "#tradeNature",
+          "source": "applicant_profile.activity_type",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Customer Seating Count",
+          "selector": "#seatingCount",
+          "source": "applicant_profile.domain_attributes.customer_seating",
+          "mandatory": false
+        },
+        {
+          "label": "Applicant Full Name",
+          "selector": "#applicantName",
+          "source": "applicant_profile.applicant.name",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Contact Mobile",
+          "selector": "#applicantMobile",
+          "source": "applicant_profile.applicant.phone",
+          "transform": "phone_10digit",
+          "mandatory": true
+        }
+      ]
+    }
+  ],
+  "uploads": [
+    {
+      "label": "Rent Bill / Rent Agreement or Municipal Tax Receipt",
+      "accepted_formats": "PDF <= 2MB",
+      "mandatory": true
+    },
+    {
+      "label": "Applicant Photo Identity Proof (Aadhaar / Voter ID / PAN)",
+      "accepted_formats": "PDF/JPG <= 2MB",
+      "mandatory": true
+    }
+  ]
+}

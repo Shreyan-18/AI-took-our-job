@@ -1,0 +1,54 @@
+{
+  "form": "FSSAI_Registration_Form_A.pdf",
+  "licence_id": "lic_fssai_basic_registration",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": { "acroform": "applicant_name" },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "business_name" },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "premises_address" },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "annual_turnover_words" },
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+      "transform": "inr_words",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "mobile_number" },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "applicant_pan" },
+      "source": "applicant_profile.applicant.pan",
+      "transform": "pan",
+      "mandatory": true
+    },
+    {
+      "target": { "acroform": "owns_premises" },
+      "source": "applicant_profile.location.premises_type",
+      "type": "checkbox",
+      "checked_if": "owned"
+    },
+    {
+      "target": { "page": 0, "x": 65, "y": 465, "fontsize": 10 },
+      "source": "applicant_profile.applicant.dob",
+      "transform": "date_ddmmyyyy",
+      "mandatory": false
+    }
+  ]
+}

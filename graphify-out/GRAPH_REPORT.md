@@ -1,17 +1,17 @@
 # Graph Report - red-tape  (2026-11-20)
 
 ## Corpus Check
-- 47 files · ~14,352 words
+- 84 files · ~32,759 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 1 file(s) not represented in the graph (top: (none) 1)
 
 ## Summary
-- 352 nodes · 535 edges · 23 communities (19 shown, 4 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 513 nodes · 827 edges · 41 communities (29 shown, 12 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b31bbe03`
+- Built from commit: `e9f6c7c5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,7 +27,7 @@
 - properties
 - properties
 - research_engine.py
-- sys
+- test_pipeline.py
 - Problem Statement
 - India Agricultural Grants Jurisdiction
 - India Food Business Jurisdiction
@@ -39,39 +39,56 @@
 - created_at
 - domain
 - overrides
+- workflow.py
+- demo_server.py
+- process_user_answer
+- Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
+- Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
+- Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)
+- Portal Submission Pack: KMC Certificate of Enlistment (Trade License)
+- Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)
+- Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)
+- Portal Submission Pack: KMC Certificate of Enlistment (Trade License)
+- Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)
+- food_safety_hygiene_declaration.md
+- landlord_noc_template.md
+- proj_business_i_want_to_open_a_small_baker_202611201605/draft_food_hygiene_declaration.md
+- proj_business_i_want_to_open_a_small_baker_202611201605/draft_landlord_noc.md
+- test_thread_bakery_hitl/draft_food_hygiene_declaration.md
+- test_thread_bakery_hitl/draft_landlord_noc.md
 
 ## God Nodes (most connected - your core abstractions)
-1. `load_json()` - 17 edges
-2. `RedTape Navigator Unified Skill` - 15 edges
-3. `save_json()` - 14 edges
-4. `effective_value()` - 13 edges
-5. `is_blank()` - 10 edges
-6. `research()` - 9 edges
-7. `apply_transform()` - 8 edges
-8. `validate()` - 8 edges
-9. `parse_intent()` - 8 edges
-10. `search_serpapi_with_circuit_breaker()` - 8 edges
+1. `load_json()` - 24 edges
+2. `save_json()` - 21 edges
+3. `effective_value()` - 18 edges
+4. `is_blank()` - 16 edges
+5. `RedTape Navigator Unified Skill` - 15 edges
+6. `build_workflow()` - 14 edges
+7. `RedTapeState` - 12 edges
+8. `generate_documents()` - 11 edges
+9. `LiveDemoState` - 10 edges
+10. `rank_open_questions()` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `make_state()` --calls--> `parse_intent()`  [EXTRACTED]
-  redtape-navigator-unified/scripts/init_state.py → redtape-navigator-unified/scripts/orchestrator_parser.py
-- `RedTape Navigator Unified Skill` --references--> `Compliance Agent Skill`  [EXTRACTED]
-  redtape-navigator-unified/SKILL.md → redtape-navigator-unified/agents/compliance/SKILL.md
-- `RedTape Navigator Unified Skill` --references--> `Document Agent Skill`  [EXTRACTED]
-  redtape-navigator-unified/SKILL.md → redtape-navigator-unified/agents/document/SKILL.md
-- `RedTape Navigator Unified Skill` --references--> `Interview Agent Skill`  [EXTRACTED]
-  redtape-navigator-unified/SKILL.md → redtape-navigator-unified/agents/interview/SKILL.md
-- `RedTape Navigator Unified Skill` --references--> `Orchestrator Agent Skill`  [EXTRACTED]
-  redtape-navigator-unified/SKILL.md → redtape-navigator-unified/agents/orchestrator/SKILL.md
+- `node_documents()` --calls--> `generate_documents()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/document_engine.py
+- `node_interview()` --calls--> `rank_open_questions()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
+- `node_interview()` --calls--> `generate_question_batch()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
+- `node_interview()` --calls--> `process_user_answer()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
+- `node_orchestrator()` --calls--> `parse_intent()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/orchestrator_parser.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (23 total, 4 thin omitted)
+## Communities (41 total, 12 thin omitted)
 
 ### Community 0 - "_common.py"
-Cohesion: 0.13
-Nodes (23): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), save_json() (+15 more)
+Cohesion: 0.09
+Nodes (35): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+27 more)
 
 ### Community 1 - "properties"
 Cohesion: 0.05
@@ -110,12 +127,8 @@ Cohesion: 0.11
 Nodes (18): type, type, type, properties, type, type, type, enum (+10 more)
 
 ### Community 10 - "research_engine.py"
-Cohesion: 0.09
-Nodes (14): catalog_supporting_documents(), compliance(), evaluate_with_gemini(), find_api_key(), main(), parse_intent(), build_search_queries(), call_gemini_research() (+6 more)
-
-### Community 11 - "sys"
-Cohesion: 0.24
-Nodes (6): need(), inspect(), main(), render_page(), main(), run()
+Cohesion: 0.08
+Nodes (17): catalog_supporting_documents(), compliance(), evaluate_deterministic(), evaluate_with_gemini(), call_gemini_interview(), find_api_key(), main(), parse_intent() (+9 more)
 
 ### Community 16 - "properties"
 Cohesion: 0.20
@@ -145,25 +158,69 @@ Nodes (3): enum, type, domain
 Cohesion: 0.67
 Nodes (3): additionalProperties, type, overrides
 
+### Community 23 - "workflow.py"
+Cohesion: 0.12
+Nodes (12): main(), build_workflow(), node_compliance(), node_documents(), node_interview(), node_orchestrator(), node_research(), node_review() (+4 more)
+
+### Community 24 - "demo_server.py"
+Cohesion: 0.12
+Nodes (3): DemoServerHandler, LiveDemoState, render_ui_html()
+
+### Community 25 - "process_user_answer"
+Cohesion: 0.17
+Nodes (6): generate_fallback_question(), generate_question_batch(), interview_turn(), parse_fallback_answer(), process_user_answer(), set_path()
+
+### Community 26 - "Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats"
+Cohesion: 0.25
+Nodes (7): 1. Compliance Matrix, 2. Audit Trail & Rule Reasoning, 3. Conflicts & System Notices, 4. Filled PDF Drafts & Digital Portal Packs, 5. Supporting Document Checklist, 6. Submission Readiness, Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
+
+### Community 27 - "Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats"
+Cohesion: 0.25
+Nodes (7): 1. Compliance Matrix, 2. Audit Trail & Rule Reasoning, 3. Conflicts & System Notices, 4. Filled PDF Drafts & Digital Portal Packs, 5. Supporting Document Checklist, 6. Submission Readiness, Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
+
+### Community 28 - "Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)"
+Cohesion: 0.33
+Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A), Required Portal Uploads, Step 1: Applicant & Premises Details, Step 2: Kind of Business & Turnover
+
+### Community 29 - "Portal Submission Pack: KMC Certificate of Enlistment (Trade License)"
+Cohesion: 0.33
+Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: KMC Certificate of Enlistment (Trade License), Required Portal Uploads, Step 1: Location & Premises Identification, Step 2: Business & Applicant Profile
+
+### Community 30 - "Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)"
+Cohesion: 0.33
+Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B), Required Portal Uploads, Step 1: Establishment Particulars, Step 2: Employment & Employer
+
+### Community 31 - "Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)"
+Cohesion: 0.33
+Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A), Required Portal Uploads, Step 1: Applicant & Premises Details, Step 2: Kind of Business & Turnover
+
+### Community 32 - "Portal Submission Pack: KMC Certificate of Enlistment (Trade License)"
+Cohesion: 0.33
+Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: KMC Certificate of Enlistment (Trade License), Required Portal Uploads, Step 1: Location & Premises Identification, Step 2: Business & Applicant Profile
+
+### Community 33 - "Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)"
+Cohesion: 0.33
+Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B), Required Portal Uploads, Step 1: Establishment Particulars, Step 2: Employment & Employer
+
 ## Knowledge Gaps
 - **19 isolated node(s):** `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction`, `India Residential Zoning Jurisdiction`, `Compliance System Prompt` (+14 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 165 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 266 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `properties` connect `properties` to `$ref`, `properties`, `type`, `properties`, `properties`, `project_state.json`, `provenance`, `created_at`, `domain`, `overrides`?**
-  _High betweenness centrality (0.101) - this node is a cross-community bridge._
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _19 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `_common.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09043020193151888 - nodes in this community are weakly interconnected._
 - **Why does `properties` connect `properties` to `properties`?**
-  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
 - **Why does `applicant_profile` connect `properties` to `properties`?**
-  _High betweenness centrality (0.059) - this node is a cross-community bridge._
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._

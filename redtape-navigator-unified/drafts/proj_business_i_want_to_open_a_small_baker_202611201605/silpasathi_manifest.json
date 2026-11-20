@@ -1,0 +1,43 @@
+{
+  "portal_name": "SilpaSathi West Bengal Shops & Establishments (Form B)",
+  "licence_id": "lic_wb_shops_and_establishments",
+  "portal_url": "https://silpasathi.wb.gov.in/",
+  "stop_before_gates": [
+    "SilpaSathi Login & Mobile OTP",
+    "Statutory registration fee calculation & payment",
+    "Final declaration & Submit"
+  ],
+  "actions": [
+    {
+      "action": "fill",
+      "label": "Category of Establishment",
+      "selector": "#estCategory",
+      "source": "applicant_profile.activity_type",
+      "value_masked": false,
+      "value": "Bakery"
+    },
+    {
+      "action": "fill",
+      "label": "District / Municipality",
+      "selector": "#estDistrict",
+      "source": "applicant_profile.location.city_or_village",
+      "value_masked": false,
+      "value": "Kolkata"
+    },
+    {
+      "action": "fill",
+      "label": "Number of Workers on Site",
+      "selector": "#workerCount",
+      "source": "applicant_profile.domain_attributes.workers_on_site",
+      "value_masked": false,
+      "value": "3"
+    }
+  ],
+  "missing_fields": [
+    "applicant_profile.entity_name",
+    "applicant_profile.location.address",
+    "applicant_profile.applicant.name",
+    "applicant_profile.applicant.phone"
+  ],
+  "completion_percentage": 43
+}

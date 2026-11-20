@@ -1,0 +1,53 @@
+{
+  "portal_name": "KMC Certificate of Enlistment (Trade License)",
+  "licence_id": "lic_kmc_certificate_of_enlistment",
+  "portal_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCTradeLicenseHome.jsp",
+  "stop_before_gates": [
+    "Assessee Number / Ward verification",
+    "OTP verification on registered mobile",
+    "Municipal fee payment & Challan generation",
+    "Final declaration & Submit"
+  ],
+  "actions": [
+    {
+      "action": "fill",
+      "label": "Municipal Ward / Area",
+      "selector": "#wardArea",
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "value_masked": false,
+      "value": "Park Circus"
+    },
+    {
+      "action": "fill",
+      "label": "City",
+      "selector": "#cityName",
+      "source": "applicant_profile.location.city_or_village",
+      "value_masked": false,
+      "value": "Kolkata"
+    },
+    {
+      "action": "fill",
+      "label": "Nature of Trade / Activity",
+      "selector": "#tradeNature",
+      "source": "applicant_profile.activity_type",
+      "value_masked": false,
+      "value": "Bakery"
+    },
+    {
+      "action": "fill",
+      "label": "Customer Seating Count",
+      "selector": "#seatingCount",
+      "source": "applicant_profile.domain_attributes.customer_seating",
+      "value_masked": false,
+      "value": "8"
+    }
+  ],
+  "missing_fields": [
+    "applicant_profile.location.address",
+    "applicant_profile.location.premises_type",
+    "applicant_profile.entity_name",
+    "applicant_profile.applicant.name",
+    "applicant_profile.applicant.phone"
+  ],
+  "completion_percentage": 44
+}

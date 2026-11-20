@@ -1,0 +1,80 @@
+{
+  "portal_name": "SilpaSathi West Bengal Shops & Establishments (Form B)",
+  "licence_id": "lic_wb_shops_and_establishments",
+  "portal_url": "https://silpasathi.wb.gov.in/",
+  "human_gates": [
+    "SilpaSathi Login & Mobile OTP",
+    "Statutory registration fee calculation & payment",
+    "Final declaration & Submit"
+  ],
+  "steps": [
+    {
+      "step_name": "Step 1: Establishment Particulars",
+      "fields": [
+        {
+          "label": "Name of Establishment",
+          "selector": "#estName",
+          "source": "applicant_profile.entity_name",
+          "transform": "upper",
+          "mandatory": true
+        },
+        {
+          "label": "Category of Establishment",
+          "selector": "#estCategory",
+          "source": "applicant_profile.activity_type",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Premises Address",
+          "selector": "#estAddress",
+          "source": "applicant_profile.location.address",
+          "mandatory": true
+        },
+        {
+          "label": "District / Municipality",
+          "selector": "#estDistrict",
+          "source": "applicant_profile.location.city_or_village",
+          "mandatory": true
+        }
+      ]
+    },
+    {
+      "step_name": "Step 2: Employment & Employer",
+      "fields": [
+        {
+          "label": "Number of Workers on Site",
+          "selector": "#workerCount",
+          "source": "applicant_profile.domain_attributes.workers_on_site",
+          "mandatory": true
+        },
+        {
+          "label": "Employer Full Name",
+          "selector": "#empName",
+          "source": "applicant_profile.applicant.name",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Employer Mobile Number",
+          "selector": "#empMobile",
+          "source": "applicant_profile.applicant.phone",
+          "transform": "phone_10digit",
+          "mandatory": true
+        }
+      ]
+    }
+  ],
+  "uploads": [
+    {
+      "label": "Proof of Occupancy of Premises (Trade License / Rent Receipt)",
+      "accepted_formats": "PDF <= 2MB",
+      "mandatory": true
+    },
+    {
+      "label": "Identity & Address Proof of Employer",
+      "accepted_formats": "PDF/JPG <= 2MB",
+      "mandatory": true
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "portal_name": "FoSCoS FSSAI Basic Food Registration (Form A)",
+  "licence_id": "lic_fssai_basic_registration",
+  "portal_url": "https://foscos.fssai.gov.in",
+  "human_gates": [
+    "Mobile/Email OTP verification",
+    "CAPTCHA entry",
+    "Statutory fee payment (Rs. 100/yr)",
+    "Final declaration & Submit"
+  ],
+  "steps": [
+    {
+      "step_name": "Step 1: Applicant & Premises Details",
+      "fields": [
+        {
+          "label": "Name of Applicant / Company",
+          "selector": "#applicantName",
+          "source": "applicant_profile.entity_name",
+          "transform": "upper",
+          "mandatory": true
+        },
+        {
+          "label": "Authorized Signatory Name",
+          "selector": "#ownerName",
+          "source": "applicant_profile.applicant.name",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Premises Address",
+          "selector": "#premisesAddress",
+          "source": "applicant_profile.location.address",
+          "mandatory": true
+        },
+        {
+          "label": "City / Village",
+          "selector": "#cityVillage",
+          "source": "applicant_profile.location.city_or_village",
+          "mandatory": true
+        },
+        {
+          "label": "PIN Code",
+          "selector": "#pinCode",
+          "source": "applicant_profile.location.pin",
+          "transform": "digits",
+          "mandatory": true
+        },
+        {
+          "label": "Mobile Number",
+          "selector": "#mobileNo",
+          "source": "applicant_profile.applicant.phone",
+          "transform": "phone_10digit",
+          "mandatory": true
+        },
+        {
+          "label": "PAN Number",
+          "selector": "#panNumber",
+          "source": "applicant_profile.applicant.pan",
+          "transform": "pan",
+          "mandatory": true
+        }
+      ]
+    },
+    {
+      "step_name": "Step 2: Kind of Business & Turnover",
+      "fields": [
+        {
+          "label": "Nature of Business",
+          "selector": "#kindOfBusiness",
+          "source": "applicant_profile.activity_type",
+          "transform": "title",
+          "mandatory": true
+        },
+        {
+          "label": "Expected Annual Turnover (INR)",
+          "selector": "#annualTurnover",
+          "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+          "mandatory": true
+        }
+      ]
+    }
+  ],
+  "uploads": [
+    {
+      "label": "Passport-size Photo of Applicant",
+      "accepted_formats": "JPG/PNG <= 3MB",
+      "mandatory": true
+    },
+    {
+      "label": "Government Photo ID (Aadhaar / Voter ID / PAN)",
+      "accepted_formats": "PDF/JPG <= 3MB",
+      "mandatory": true
+    },
+    {
+      "label": "Proof of Premises Possession (Rent Agreement / Electricity Bill)",
+      "accepted_formats": "PDF <= 3MB",
+      "mandatory": true
+    }
+  ]
+}

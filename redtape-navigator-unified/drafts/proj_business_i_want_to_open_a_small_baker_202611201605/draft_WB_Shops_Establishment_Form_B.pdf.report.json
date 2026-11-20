@@ -1,0 +1,45 @@
+{
+  "form": "WB_Shops_Establishment_Form_B.pdf",
+  "backend": "pymupdf",
+  "filled": [
+    {
+      "field": "category_of_establishment",
+      "source": "applicant_profile.activity_type"
+    },
+    {
+      "field": "workers_count",
+      "source": "applicant_profile.domain_attributes.workers_on_site"
+    }
+  ],
+  "pending": [
+    {
+      "field": "establishment_name",
+      "source": "applicant_profile.entity_name",
+      "mandatory": true
+    },
+    {
+      "field": "premises_address",
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "field": "employer_name",
+      "source": "applicant_profile.applicant.name",
+      "mandatory": true
+    },
+    {
+      "field": "employer_phone",
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true
+    }
+  ],
+  "unmapped": [],
+  "completion_percentage": 33,
+  "missing_fields": [
+    "applicant_profile.entity_name",
+    "applicant_profile.location.address",
+    "applicant_profile.applicant.name",
+    "applicant_profile.applicant.phone"
+  ],
+  "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/proj_business_i_want_to_open_a_small_baker_202611201605/draft_WB_Shops_Establishment_Form_B.pdf"
+}
