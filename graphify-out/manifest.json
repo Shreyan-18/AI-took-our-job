@@ -257,12 +257,6 @@
     "ast_hash": "5092ecfcada3d296585f04ad8c70f6a9",
     "semantic_hash": "5092ecfcada3d296585f04ad8c70f6a9"
   },
-  "bakery_state.json": {
-    "mtime": 1795186678.0130403,
-    "seen": 1795187789.877366,
-    "ast_hash": "84f02c5d67e1872b054f92cd434d2927",
-    "semantic_hash": ""
-  },
   "redtape-navigator-unified/scripts/orchestrator_parser.py": {
     "mtime": 1795185830.2854671,
     "seen": 1795187789.8773801,
@@ -276,9 +270,15 @@
     "semantic_hash": ""
   },
   "redtape-navigator-unified/cache/research_cache.json": {
-    "mtime": 1795189183.1251087,
-    "seen": 1795189366.261041,
-    "ast_hash": "07e0c1b181b10b5b800f7a4e7983d0b0",
+    "mtime": 1795189898.2569385,
+    "seen": 1795190284.804981,
+    "ast_hash": "79d1560efadf5f309a07cdf09a54f7b2",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/scripts/compliance_engine.py": {
+    "mtime": 1795190175.0865123,
+    "seen": 1795190284.804987,
+    "ast_hash": "4eaecb068e978e65291edb936772f68f",
     "semantic_hash": ""
   }
 }

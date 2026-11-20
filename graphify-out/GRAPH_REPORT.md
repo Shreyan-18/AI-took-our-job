@@ -1,14 +1,19 @@
 # Graph Report - red-tape  (2026-11-20)
 
 ## Corpus Check
-- 47 files · ~13,333 words
+- 47 files · ~14,352 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 1 file(s) not represented in the graph (top: (none) 1)
 
 ## Summary
-- 343 nodes · 501 edges · 23 communities (18 shown, 5 thin omitted)
+- 352 nodes · 535 edges · 23 communities (19 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `b31bbe03`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - _common.py
@@ -22,7 +27,7 @@
 - properties
 - properties
 - research_engine.py
-- test_pipeline.py
+- sys
 - Problem Statement
 - India Agricultural Grants Jurisdiction
 - India Food Business Jurisdiction
@@ -36,16 +41,16 @@
 - overrides
 
 ## God Nodes (most connected - your core abstractions)
-1. `load_json()` - 15 edges
+1. `load_json()` - 17 edges
 2. `RedTape Navigator Unified Skill` - 15 edges
-3. `effective_value()` - 12 edges
-4. `save_json()` - 12 edges
+3. `save_json()` - 14 edges
+4. `effective_value()` - 13 edges
 5. `is_blank()` - 10 edges
 6. `research()` - 9 edges
-7. `search_serpapi_with_circuit_breaker()` - 8 edges
-8. `apply_transform()` - 8 edges
-9. `validate()` - 8 edges
-10. `parse_intent()` - 8 edges
+7. `apply_transform()` - 8 edges
+8. `validate()` - 8 edges
+9. `parse_intent()` - 8 edges
+10. `search_serpapi_with_circuit_breaker()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `make_state()` --calls--> `parse_intent()`  [EXTRACTED]
@@ -62,11 +67,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (23 total, 5 thin omitted)
+## Communities (23 total, 4 thin omitted)
 
 ### Community 0 - "_common.py"
-Cohesion: 0.12
-Nodes (26): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+18 more)
+Cohesion: 0.13
+Nodes (23): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), save_json() (+15 more)
 
 ### Community 1 - "properties"
 Cohesion: 0.05
@@ -98,15 +103,19 @@ Nodes (10): items, type, type, items, type, errors, open_questions, research_fin
 
 ### Community 8 - "properties"
 Cohesion: 0.07
-Nodes (30): type, description, type, properties, type, properties, type, type (+22 more)
+Nodes (28): type, description, type, properties, type, properties, type, type (+20 more)
 
 ### Community 9 - "properties"
-Cohesion: 0.12
-Nodes (16): type, type, type, properties, type, type, enum, type (+8 more)
+Cohesion: 0.11
+Nodes (18): type, type, type, properties, type, type, type, enum (+10 more)
 
 ### Community 10 - "research_engine.py"
-Cohesion: 0.11
-Nodes (11): find_api_key(), main(), parse_intent(), build_search_queries(), call_gemini_research(), find_serpapi_key(), get_cache(), load_jurisdiction_fallback() (+3 more)
+Cohesion: 0.09
+Nodes (14): catalog_supporting_documents(), compliance(), evaluate_with_gemini(), find_api_key(), main(), parse_intent(), build_search_queries(), call_gemini_research() (+6 more)
+
+### Community 11 - "sys"
+Cohesion: 0.24
+Nodes (6): need(), inspect(), main(), render_page(), main(), run()
 
 ### Community 16 - "properties"
 Cohesion: 0.20
@@ -138,23 +147,23 @@ Nodes (3): additionalProperties, type, overrides
 
 ## Knowledge Gaps
 - **19 isolated node(s):** `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction`, `India Residential Zoning Jurisdiction`, `Compliance System Prompt` (+14 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 161 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 165 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `properties` connect `properties` to `$ref`, `properties`, `type`, `properties`, `properties`, `project_state.json`, `provenance`, `created_at`, `domain`, `overrides`?**
-  _High betweenness centrality (0.107) - this node is a cross-community bridge._
+  _High betweenness centrality (0.101) - this node is a cross-community bridge._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _19 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `_common.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.1192156862745098 - nodes in this community are weakly interconnected._
-- **Why does `applicant_profile` connect `properties` to `properties`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
+- **Why does `properties` connect `properties` to `properties`?**
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
+- **Why does `applicant_profile` connect `properties` to `properties`?**
+  _High betweenness centrality (0.059) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
-- **Should `properties` be split into smaller, more focused modules?**
-  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
