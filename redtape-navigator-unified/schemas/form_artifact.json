@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FormArtifact",
+  "type": "object",
+  "required": [
+    "form_name",
+    "status",
+    "completion_percentage",
+    "file_path"
+  ],
+  "properties": {
+    "form_name": {
+      "type": "string"
+    },
+    "licence_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Draft_Generated",
+        "Validated",
+        "Ready_For_Signature"
+      ]
+    },
+    "completion_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "file_path": {
+      "type": "string"
+    },
+    "report_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

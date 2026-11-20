@@ -1,0 +1,54 @@
+{
+  "project_id": "",
+  "goal": "",
+  "domain": "business",
+  "preferred_language": "en",
+  "created_at": "",
+  "applicant_profile": {
+    "entity_name": null,
+    "activity_type": null,
+    "applicant": {
+      "name": null,
+      "pan": null,
+      "aadhaar_last4": null,
+      "phone": null,
+      "email": null,
+      "dob": null
+    },
+    "location": {
+      "city_or_village": null,
+      "district": null,
+      "state": null,
+      "municipal_ward_or_block": null,
+      "address": null,
+      "pin": null,
+      "premises_type": null
+    },
+    "domain_attributes": {}
+  },
+  "provenance": {},
+  "research_findings": [],
+  "compliance_matrix": [],
+  "open_questions": [],
+  "form_artifacts": [],
+  "portal_artifacts": [],
+  "required_supporting_documents": [],
+  "overrides": {},
+  "validation": {
+    "passed": false,
+    "timestamp": null,
+    "errors": [],
+    "warnings": []
+  },
+  "workflow_flags": {
+    "research_complete": false,
+    "compliance_complete": false,
+    "compliance_needs_reeval": false,
+    "interview_complete": false,
+    "interview_rounds": 0,
+    "documents_generated": false,
+    "validation_passed": false,
+    "source_fallback": false
+  },
+  "errors": []
+}

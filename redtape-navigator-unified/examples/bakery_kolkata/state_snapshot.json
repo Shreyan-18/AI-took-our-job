@@ -1,0 +1,171 @@
+{
+  "project_id": "proj_business_bakery_kolkata_001",
+  "goal": "I want to open a small bakery in Kolkata",
+  "domain": "business",
+  "preferred_language": "en",
+  "created_at": "2026-11-20T14:00:00+00:00",
+  "applicant_profile": {
+    "entity_name": "Sunrise Bakery",
+    "activity_type": "bakery",
+    "applicant": {
+      "name": "Aarav Sen",
+      "pan": null,
+      "aadhaar_last4": "4821",
+      "phone": "9830012345",
+      "email": "aarav@sunrisebakery.example",
+      "dob": "1992-05-14"
+    },
+    "location": {
+      "city_or_village": "Kolkata",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "municipal_ward_or_block": "Ward 65, KMC",
+      "address": "14B Park Circus Connector, Kolkata",
+      "pin": "700017",
+      "premises_type": "rented"
+    },
+    "domain_attributes": {
+      "food_prepared_on_site": true,
+      "customer_seating": 5,
+      "commercial_lpg": false,
+      "expected_annual_turnover_inr": 800000,
+      "workers_on_site": 3,
+      "food_categories": [
+        "bakery products",
+        "bread",
+        "pastries"
+      ]
+    }
+  },
+  "provenance": {
+    "applicant_profile.location.premises_type": "Rented shop near Park Circus",
+    "applicant_profile.domain_attributes.customer_seating": "just 5 counter stools",
+    "applicant_profile.domain_attributes.commercial_lpg": "only electric deck ovens, no gas cylinders",
+    "applicant_profile.domain_attributes.expected_annual_turnover_inr": "around 8 lakh a year"
+  },
+  "research_findings": [],
+  "compliance_matrix": [
+    {
+      "id": "lic_fssai_basic",
+      "name": "FSSAI Basic Registration (Form A)",
+      "authority": "Food Safety and Standards Authority of India",
+      "tier": "central",
+      "status": "Required",
+      "rationale": "Food manufacturing with expected annual turnover of Rs. 8 Lakhs (under Rs. 12 Lakhs threshold) requires Basic Registration.",
+      "depends_on": [],
+      "statutory_fee": "Rs. 100 / year",
+      "renewal_period": "1 to 5 years",
+      "submission_channel": "hybrid",
+      "form_version": "Form A (FoSCoS)",
+      "official_source_url": "https://foscos.fssai.gov.in",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "history": [
+        "2026-11-20: Conditional -> Required (expected_annual_turnover_inr=800000 < 1200000)"
+      ]
+    },
+    {
+      "id": "lic_kmc_trade",
+      "name": "KMC Certificate of Enlistment (Trade License)",
+      "authority": "Kolkata Municipal Corporation",
+      "tier": "municipal",
+      "status": "Required",
+      "rationale": "Mandatory for commercial trade within Kolkata Municipal Corporation Ward 65.",
+      "depends_on": [],
+      "statutory_fee": "Variable by ward & trade category",
+      "renewal_period": "Annual",
+      "submission_channel": "web_portal",
+      "form_version": "KMC Online CE",
+      "official_source_url": "https://www.kmcgov.in",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "history": []
+    },
+    {
+      "id": "lic_wb_shops_est",
+      "name": "West Bengal Shops & Establishments Registration",
+      "authority": "Department of Labour, Govt. of West Bengal",
+      "tier": "state",
+      "status": "Required",
+      "rationale": "Commercial bakery with 3 workers on site must register under the WB Shops & Establishments Act.",
+      "depends_on": [],
+      "statutory_fee": "As per employee slab on portal",
+      "renewal_period": "As prescribed",
+      "submission_channel": "web_portal",
+      "form_version": "WB Labour Online",
+      "official_source_url": "https://wblabour.gov.in",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [],
+      "history": []
+    },
+    {
+      "id": "lic_wb_fire_noc",
+      "name": "West Bengal Fire & Emergency Services NOC",
+      "authority": "WBFES",
+      "tier": "state",
+      "status": "Needs Verification",
+      "rationale": "Low seating (5) and electric-only ovens reduce trigger likelihood, but exact municipal floor-area/occupancy threshold must be confirmed on WBFES portal.",
+      "depends_on": [],
+      "statutory_fee": "Verify on portal",
+      "renewal_period": "Annual/Triennial",
+      "submission_channel": "web_portal",
+      "form_version": null,
+      "official_source_url": "https://wbfes.gov.in",
+      "source_verified_at": "2026-11-20",
+      "conflicts": [
+        "Secondary guides cite >50 seats threshold; confirm official WBFES notification for small electric-oven bakeries."
+      ],
+      "history": [
+        "2026-11-20: Conditional -> Needs Verification (seating=5, commercial_lpg=false; threshold unconfirmed)"
+      ]
+    }
+  ],
+  "open_questions": [],
+  "form_artifacts": [],
+  "portal_artifacts": [],
+  "required_supporting_documents": [
+    {
+      "name": "Government Photo ID (Aadhaar / PAN / Voter ID)",
+      "needed_for": [
+        "lic_fssai_basic",
+        "lic_kmc_trade"
+      ],
+      "precheck_status": "missing"
+    },
+    {
+      "name": "Rent Agreement or Landlord NOC",
+      "needed_for": [
+        "lic_fssai_basic",
+        "lic_kmc_trade",
+        "lic_wb_shops_est"
+      ],
+      "precheck_status": "missing"
+    },
+    {
+      "name": "Recent Electricity Bill of Premises (<3 months)",
+      "needed_for": [
+        "lic_fssai_basic",
+        "lic_kmc_trade"
+      ],
+      "precheck_status": "missing"
+    }
+  ],
+  "overrides": {},
+  "validation": {
+    "passed": false,
+    "timestamp": null,
+    "errors": [],
+    "warnings": []
+  },
+  "workflow_flags": {
+    "research_complete": true,
+    "compliance_complete": true,
+    "compliance_needs_reeval": false,
+    "interview_complete": true,
+    "interview_rounds": 1,
+    "documents_generated": false,
+    "validation_passed": false,
+    "source_fallback": false
+  },
+  "errors": []
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PortalArtifact",
+  "description": "Structured digital web-portal submission pack (copy sheet + Playwright draft-fill manifest).",
+  "type": "object",
+  "required": [
+    "portal_name",
+    "portal_url",
+    "status",
+    "completion_percentage",
+    "copy_sheet_path"
+  ],
+  "properties": {
+    "portal_name": {
+      "type": "string"
+    },
+    "licence_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "portal_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Pack_Generated",
+        "Draft_Prefilled",
+        "Ready_For_User_Submit"
+      ]
+    },
+    "completion_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "copy_sheet_path": {
+      "type": "string"
+    },
+    "manifest_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "human_gates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

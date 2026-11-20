@@ -1,0 +1,264 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RedTapeProjectState",
+  "description": "Unified shared state supporting small business, residential zoning, and agricultural grant workflows.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "goal",
+    "domain",
+    "created_at",
+    "applicant_profile",
+    "workflow_flags"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "goal": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "business",
+        "zoning",
+        "agriculture",
+        "general"
+      ]
+    },
+    "preferred_language": {
+      "type": "string",
+      "default": "en"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "applicant_profile": {
+      "type": "object",
+      "properties": {
+        "entity_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Business name, property title, or farm/applicant unit name"
+        },
+        "activity_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "e.g. bakery, residential_extension, micro_irrigation_grant"
+        },
+        "applicant": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pan": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "aadhaar_last4": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "phone": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "email": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dob": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "city_or_village": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "district": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "state": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "municipal_ward_or_block": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "address": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pin": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "premises_type": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "owned",
+                "rented",
+                "leased",
+                "family_owned",
+                "unknown",
+                null
+              ]
+            }
+          }
+        },
+        "domain_attributes": {
+          "type": "object",
+          "description": "Domain-specific structured parameters (business operations, zoning plot specs, or agricultural land/crop details).",
+          "additionalProperties": true
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "research_findings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "compliance_matrix": {
+      "type": "array",
+      "items": {
+        "$ref": "compliance_matrix.json#/items"
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "form_artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "form_artifact.json"
+      }
+    },
+    "portal_artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "portal_artifact.json"
+      }
+    },
+    "required_supporting_documents": {
+      "type": "array"
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "workflow_flags": {
+      "type": "object",
+      "properties": {
+        "research_complete": {
+          "type": "boolean"
+        },
+        "compliance_complete": {
+          "type": "boolean"
+        },
+        "compliance_needs_reeval": {
+          "type": "boolean"
+        },
+        "interview_complete": {
+          "type": "boolean"
+        },
+        "interview_rounds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "documents_generated": {
+          "type": "boolean"
+        },
+        "validation_passed": {
+          "type": "boolean"
+        },
+        "source_fallback": {
+          "type": "boolean"
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

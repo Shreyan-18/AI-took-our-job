@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComplianceMatrix",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "authority",
+      "tier",
+      "status",
+      "rationale"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "authority": {
+        "type": "string"
+      },
+      "tier": {
+        "type": "string",
+        "enum": [
+          "municipal",
+          "state",
+          "central"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "Required",
+          "Conditional",
+          "Not Applicable",
+          "Needs Verification"
+        ]
+      },
+      "rationale": {
+        "type": "string"
+      },
+      "depends_on": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "statutory_fee": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "renewal_period": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "submission_channel": {
+        "type": "string",
+        "enum": [
+          "pdf",
+          "web_portal",
+          "hybrid"
+        ]
+      },
+      "form_version": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "official_source_url": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "source_verified_at": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "conflicts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "history": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
