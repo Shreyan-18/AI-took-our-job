@@ -1,17 +1,17 @@
 # Graph Report - red-tape  (2026-11-21)
 
 ## Corpus Check
-- 105 files · ~43,205 words
+- 105 files · ~44,081 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 1 file(s) not represented in the graph (top: (none) 1)
 
 ## Summary
-- 568 nodes · 946 edges · 48 communities (32 shown, 16 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 25 edges (avg confidence: 0.85)
+- 568 nodes · 951 edges · 48 communities (32 shown, 16 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3cb62966`
+- Built from commit: `fb8c1f55`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -41,7 +41,7 @@
 - overrides
 - workflow.py
 - demo_server.py
-- properties
+- interview_engine.py
 - Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
 - Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats
 - Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)
@@ -79,14 +79,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `start_test_server()` --uses--> `DemoServerHandler`  [INFERRED]
   redtape-navigator-unified/scripts/test_phase7_server_orchestration.py → demo_server.py
-- `main()` --calls--> `load_json()`  [INFERRED]
-  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/_common.py
-- `main()` --calls--> `save_json()`  [INFERRED]
-  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/_common.py
-- `node_documents()` --calls--> `generate_documents()`  [INFERRED]
-  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/document_engine.py
 - `node_orchestrator()` --calls--> `parse_intent()`  [INFERRED]
   redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/orchestrator_parser.py
+- `node_documents()` --calls--> `generate_documents()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/document_engine.py
+- `node_interview()` --calls--> `generate_question_batch()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
+- `node_interview()` --calls--> `process_user_answer()`  [INFERRED]
+  redtape-navigator-unified/workflow.py → redtape-navigator-unified/scripts/interview_engine.py
 
 ## Import Cycles
 - None detected.
@@ -94,8 +94,8 @@
 ## Communities (48 total, 16 thin omitted)
 
 ### Community 0 - "_common.py"
-Cohesion: 0.08
-Nodes (39): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+31 more)
+Cohesion: 0.10
+Nodes (35): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+27 more)
 
 ### Community 1 - "properties"
 Cohesion: 0.05
@@ -126,12 +126,12 @@ Cohesion: 0.20
 Nodes (10): items, type, type, items, type, errors, open_questions, research_findings (+2 more)
 
 ### Community 8 - "properties"
-Cohesion: 0.07
-Nodes (28): type, description, type, properties, type, properties, type, type (+20 more)
+Cohesion: 0.04
+Nodes (46): type, description, type, type, properties, type, properties, type (+38 more)
 
 ### Community 10 - "research_engine.py"
-Cohesion: 0.07
-Nodes (22): call_gemini_interview(), generate_fallback_question(), generate_question_batch(), interview_turn(), is_pii_field(), main(), parse_fallback_answer(), process_user_answer() (+14 more)
+Cohesion: 0.08
+Nodes (17): catalog_supporting_documents(), compliance(), evaluate_with_gemini(), main(), make_state(), find_api_key(), main(), parse_intent() (+9 more)
 
 ### Community 16 - "properties"
 Cohesion: 0.20
@@ -163,15 +163,15 @@ Nodes (3): additionalProperties, type, overrides
 
 ### Community 23 - "workflow.py"
 Cohesion: 0.10
-Nodes (19): main(), http_get(), http_post(), main(), start_test_server(), test_langgraph_routing_and_structure(), test_server_endpoints(), build_workflow() (+11 more)
+Nodes (18): main(), http_get(), http_post(), main(), start_test_server(), test_langgraph_routing_and_structure(), test_server_endpoints(), build_workflow() (+10 more)
 
 ### Community 24 - "demo_server.py"
-Cohesion: 0.13
+Cohesion: 0.16
 Nodes (3): DemoServerHandler, LiveDemoState, render_ui_html()
 
-### Community 25 - "properties"
-Cohesion: 0.11
-Nodes (18): type, type, type, properties, type, type, type, enum (+10 more)
+### Community 25 - "interview_engine.py"
+Cohesion: 0.16
+Nodes (10): call_gemini_interview(), generate_fallback_question(), generate_question_batch(), interview_turn(), is_pii_field(), main(), parse_fallback_answer(), process_user_answer() (+2 more)
 
 ### Community 26 - "Application Review Package: I want to open a small bakery in Park Circus, Kolkata with 5 counter seats"
 Cohesion: 0.25
@@ -223,7 +223,7 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: Bidhanna
 
 ## Knowledge Gaps
 - **19 isolated node(s):** `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction`, `India Residential Zoning Jurisdiction`, `Compliance System Prompt` (+14 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 298 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 299 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -234,12 +234,12 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _19 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `_common.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.08373205741626795 - nodes in this community are weakly interconnected._
-- **Why does `properties` connect `properties` to `properties`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **Should `properties` be split into smaller, more focused modules?**
-  _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09984639016897082 - nodes in this community are weakly interconnected._
 - **Why does `applicant_profile` connect `properties` to `properties`?**
   _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Should `properties` be split into smaller, more focused modules?**
+  _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
+- **Should `properties` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
+- **Should `properties` be split into smaller, more focused modules?**
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._

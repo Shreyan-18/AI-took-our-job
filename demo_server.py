@@ -24,6 +24,10 @@ SCRIPTS_DIR = ROOT_DIR / "redtape-navigator-unified" / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 from document_engine import generate_documents
 from render_review import render as render_review_md
+from orchestrator_parser import parse_intent
+from research_engine import research as run_research
+from compliance_engine import compliance as run_compliance
+from interview_engine import generate_question_batch, process_user_answer, rank_open_questions
 
 # Preset verified domain fixtures for instant, zero-latency judge demonstrations
 PRESETS = {
@@ -258,7 +262,29 @@ class LiveDemoState:
     """In-memory state management for the live demonstration."""
 
     def __init__(self):
-        self.load_preset("bakery_kolkata")
+        self.preset_key = None
+        self.goal = ""
+        self.domain = "general"
+        self.preferred_language = "en"
+        self.applicant_profile = {
+            "entity_name": None,
+            "activity_type": None,
+            "applicant": {},
+            "location": {},
+            "domain_attributes": {}
+        }
+        self.provenance = {}
+        self.research_findings = []
+        self.compliance_matrix = []
+        self.supporting_documents = []
+        self.open_questions = []
+        self.round = 1
+        self.interview_complete = False
+        self.overrides = {}
+        self.form_artifacts = []
+        self.portal_artifacts = []
+        self.review_md = ""
+        self.chat_history = []
 
     def load_preset(self, key):
         if key not in PRESETS:
@@ -750,88 +776,17 @@ class LiveDemoState:
         thoughts = []
         start_time = time.time()
 
-        # 1. Preset / Scenario switching or New Citizen Goal Extraction
-        if any(k in msg_lower for k in ("bakery", "restaurant", "cafe", "food shop", "food stall", "barrackpore", "scenario 1")):
-            loc_name = "Kolkata"
-            district = "Kolkata"
-            if "barrackpore" in msg_lower:
-                loc_name = "Barrackpore"
-                district = "North 24 Parganas"
-            elif "salt lake" in msg_lower:
-                loc_name = "Salt Lake, Bidhannagar"
-                district = "North 24 Parganas"
-            elif "howrah" in msg_lower:
-                loc_name = "Howrah"
-                district = "Howrah"
-
+        # 1. Preset button switches
+        if msg_lower in ("preset:bakery_kolkata", "preset 1", "scenario 1"):
             self.load_preset("bakery_kolkata")
-            self.goal = user_message
-            self.applicant_profile["location"]["city_or_village"] = loc_name
-            self.applicant_profile["location"]["district"] = district
-            self.provenance["applicant_profile.location.city_or_village"] = user_message
-            self.provenance["applicant_profile.activity_type"] = user_message
-
-            turn = self.get_interview_turn()
-            permits_summary = "\n".join([f"• **{m['name']}** — `{m['status']}` ({m['tier'].capitalize()} / {m.get('statutory_fee', 'Statutory Fee')})" for m in self.compliance_matrix])
-            reply_text = (
-                f"Namaste! I have analyzed your goal to **\"{user_message}\"**.\n\n"
-                f"I mapped the statutory frameworks governing this in **{loc_name} ({district}), West Bengal** across Municipal, State, and Central authorities:\n\n"
-                f"{permits_summary}\n\n"
-                f"To generate your submission-ready AcroForm PDFs and digital portal packs with zero guesswork:\n\n"
-                f"👉 **{turn.get('question')}**"
-            )
-            thoughts = [
-                {
-                    "node": "node_orchestrator",
-                    "title": "Intent & Provenance Extraction",
-                    "status": "completed",
-                    "time": "0.3s",
-                    "details": f"Parsed citizen goal: \"{user_message}\". Extracted domain='business', activity='bakery', location='{loc_name}, {district}, West Bengal'. Strict Zero Fabrication: PAN, Aadhaar, and turnover preserved as null."
-                },
-                {
-                    "node": "node_research",
-                    "title": "3-Tier Statutory Research (Pitch Shield Active)",
-                    "status": "completed",
-                    "time": "0.5s",
-                    "details": f"Retrieved statutory requirements across Municipal ({loc_name} Municipality), State (WB Labour Dept), and Central (FSSAI) registries ({len(self.research_findings)} active statutory baselines cataloged)."
-                },
-                {
-                    "node": "node_compliance",
-                    "title": "Compliance Matrix Classification",
-                    "status": "completed",
-                    "time": "0.4s",
-                    "details": f"Classified {len(self.compliance_matrix)} requirements into Required, Conditional, and Not Applicable. Mapped statutory fees and renewal rules."
-                },
-                {
-                    "node": "node_interview",
-                    "title": "Impact-Ranked Slot Formulation",
-                    "status": "completed",
-                    "time": "0.3s",
-                    "details": f"Identified unresolved statutory dependency: `{turn.get('field_targeted', 'attribute')}`. Formulating plain-language inquiry with Indian currency parser."
-                }
-            ]
-            self.chat_history = [
-                {"role": "user", "content": user_message, "timestamp": "Just now"},
-                {
-                    "role": "assistant",
-                    "content": reply_text,
-                    "thought_process": thoughts,
-                    "duration_seconds": 1.4,
-                    "timestamp": "Just now",
-                    "has_artifacts": False,
-                    "interview_turn": turn
-                }
-            ]
             return {
-                "thought_process": thoughts,
-                "duration_seconds": 1.4,
-                "agent_reply": reply_text,
+                "thought_process": self.chat_history[-1]["thought_process"],
+                "duration_seconds": 1.5,
+                "agent_reply": self.chat_history[-1]["content"],
                 "chat_history": self.chat_history,
-                "has_artifacts": False,
-                "interview_turn": turn,
                 "state": self.to_dict()
             }
-        elif any(k in msg_lower for k in ("floor extension", "salt lake", "residential extension", "zoning", "setback", "scenario 2")):
+        elif msg_lower in ("preset:zoning_extension", "preset 2", "scenario 2"):
             self.load_preset("zoning_extension")
             return {
                 "thought_process": self.chat_history[-1]["thought_process"],
@@ -840,13 +795,139 @@ class LiveDemoState:
                 "chat_history": self.chat_history,
                 "state": self.to_dict()
             }
-        elif any(k in msg_lower for k in ("solar pump", "drip irrigation", "nadia", "agriculture subsidy", "farming", "scenario 3")):
+        elif msg_lower in ("preset:agri_irrigation", "preset 3", "scenario 3"):
             self.load_preset("agri_irrigation")
             return {
                 "thought_process": self.chat_history[-1]["thought_process"],
                 "duration_seconds": 1.5,
                 "agent_reply": self.chat_history[-1]["content"],
                 "chat_history": self.chat_history,
+                "state": self.to_dict()
+            }
+
+        # 2. Real Autonomous Pipeline Execution on New Goal Input
+        is_override = ("override" in msg_lower or any(k in msg_lower for k in ("25000000", "2.5 cr", "2.5 crore", "65 stool", "65 seat", "pan ")))
+        is_new_goal = (not self.goal) or (not is_override and any(k in msg_lower for k in ("bakery", "restaurant", "cafe", "food shop", "zoning", "extension", "solar", "pump", "irrigation", "i want to", "i wanna", "open a", "start a", "apply for")))
+
+        if is_new_goal and not is_override:
+            os.environ.setdefault("GEMINI_MODEL", "gemini-3.1-flash-lite")
+
+            # Step 1: Real Orchestrator LLM Inference (Gemini 3.1 Flash Lite - exactly 1 call)
+            t0 = time.time()
+            parsed = parse_intent(user_message)
+            t_orch = round(time.time() - t0, 1)
+
+            self.goal = user_message
+            self.domain = parsed.get("domain", "business")
+            self.applicant_profile = parsed.get("applicant_profile", {})
+            self.provenance = parsed.get("provenance", {})
+            self.overrides = {}
+            self.round = 1
+            self.interview_complete = False
+            self.form_artifacts = []
+            self.portal_artifacts = []
+            self.review_md = ""
+
+            loc_data = self.applicant_profile.get("location", {})
+            loc_name = loc_data.get("city_or_village") or "West Bengal"
+            act_type = self.applicant_profile.get("activity_type") or self.domain
+
+            thoughts.append({
+                "node": "node_orchestrator",
+                "title": "Intent & Verbatim Provenance Parser",
+                "status": "completed",
+                "time": f"{max(t_orch, 0.4)}s",
+                "details": f"Parsed citizen goal: \"{user_message}\". Extracted domain='{self.domain}', activity='{act_type}', location='{loc_name}'. Zero fabrication enforced: missing fields preserved as null."
+            })
+
+            # Step 2: Real 3-Tier Research Engine
+            t0 = time.time()
+            st_res = run_research({
+                "goal": self.goal,
+                "domain": self.domain,
+                "applicant_profile": self.applicant_profile,
+                "provenance": self.provenance,
+                "workflow_flags": {"research_mode": "cached_live"}
+            }, demo_mode=True)
+            self.research_findings = st_res.get("research_findings", [])
+            t_res = round(time.time() - t0, 1)
+
+            thoughts.append({
+                "node": "node_research",
+                "title": "3-Tier Government Statutory Sweep",
+                "status": "completed",
+                "time": f"{max(t_res, 0.5)}s",
+                "details": f"Swept Municipal ({loc_name}), State (West Bengal), and Central registries. Cataloged {len(self.research_findings)} applicable statutory rules with Pitch Shield protection."
+            })
+
+            # Step 3: Real Statutory Compliance Matrix Classification
+            t0 = time.time()
+            st_comp = run_compliance({
+                "goal": self.goal,
+                "domain": self.domain,
+                "applicant_profile": self.applicant_profile,
+                "research_findings": self.research_findings,
+                "overrides": self.overrides
+            })
+            self.compliance_matrix = st_comp.get("compliance_matrix", [])
+            self.supporting_documents = st_comp.get("required_supporting_documents", [])
+            self.open_questions = st_comp.get("open_questions", [])
+            t_comp = round(time.time() - t0, 1)
+
+            thoughts.append({
+                "node": "node_compliance",
+                "title": "Statutory Compliance Matrix Classification",
+                "status": "completed",
+                "time": f"{max(t_comp, 0.3)}s",
+                "details": f"Classified {len(self.compliance_matrix)} statutory requirements (Required, Conditional, Needs Verification). Evaluated fees and renewal mandates."
+            })
+
+            # Step 4: Real Dynamic Interview Engine
+            t0 = time.time()
+            turn = generate_question_batch({
+                "domain": self.domain,
+                "applicant_profile": self.applicant_profile,
+                "compliance_matrix": self.compliance_matrix,
+                "open_questions": self.open_questions,
+                "workflow_flags": {"interview_rounds": 0}
+            })
+            t_int = round(time.time() - t0, 1)
+
+            thoughts.append({
+                "node": "node_interview",
+                "title": "Impact-Ranked Slot Question Formulation",
+                "status": "completed",
+                "time": f"{max(t_int, 0.3)}s",
+                "details": f"Ranked missing fields by statutory impact. Formulated natural inquiry for: {turn.get('field_targeted') or 'clarifications'}."
+            })
+
+            permits_summary = "\n".join([f"• **{m['name']}** — `{m['status']}` ({m.get('tier', 'State').capitalize()} / {m.get('statutory_fee', 'Statutory Fee')})" for m in self.compliance_matrix[:4]])
+            reply_text = (
+                f"Namaste! I have analyzed your goal: **\"{user_message}\"**.\n\n"
+                f"I mapped the statutory frameworks governing this in **{loc_name}** across Municipal, State, and Central authorities:\n\n"
+                f"{permits_summary}\n\n"
+                f"To generate your submission-ready AcroForm PDFs and digital portal packs with zero guesswork:\n\n"
+                f"👉 **{turn.get('question')}**"
+            )
+
+            duration = round(time.time() - start_time, 1)
+            self.chat_history.append({"role": "user", "content": user_message, "timestamp": "Just now"})
+            self.chat_history.append({
+                "role": "assistant",
+                "content": reply_text,
+                "thought_process": thoughts,
+                "duration_seconds": duration,
+                "timestamp": "Just now",
+                "has_artifacts": False,
+                "interview_turn": turn
+            })
+            return {
+                "thought_process": thoughts,
+                "duration_seconds": duration,
+                "agent_reply": reply_text,
+                "chat_history": self.chat_history,
+                "has_artifacts": False,
+                "interview_turn": turn,
                 "state": self.to_dict()
             }
 
@@ -1292,7 +1373,7 @@ def render_ui_html():
       <span class="text-zinc-400 font-semibold uppercase tracking-wider text-[10px] whitespace-nowrap">
         <i class="fa-solid fa-bolt mr-1 text-amber-400"></i> Judge Scenarios:
       </span>
-      <button onclick="switchPreset('bakery_kolkata')" id="btn-bakery" class="preset-btn px-3 py-1 rounded-md font-medium border border-orange-500/60 bg-orange-500/15 text-orange-300 transition whitespace-nowrap">
+      <button onclick="switchPreset('bakery_kolkata')" id="btn-bakery" class="preset-btn px-3 py-1 rounded-md font-medium border border-zinc-800 bg-zinc-900/90 text-zinc-400 hover:border-zinc-700 hover:text-zinc-300 transition whitespace-nowrap">
         1. Bakery in Kolkata (Business Licensing)
       </button>
       <button onclick="switchPreset('zoning_extension')" id="btn-zoning" class="preset-btn px-3 py-1 rounded-md font-medium border border-zinc-800 bg-zinc-900/90 text-zinc-400 hover:border-zinc-700 hover:text-zinc-300 transition whitespace-nowrap">
@@ -1315,10 +1396,10 @@ def render_ui_html():
   <!-- ============================================================== -->
   <!-- VIEW 1: CLAUDE CHAT VIEW (AIRY CONVERSATIONAL INTERFACE)       -->
   <!-- ============================================================== -->
-  <div id="claude-chat-container" class="flex-1 flex flex-col justify-between max-w-4xl mx-auto w-full px-4 sm:px-6 py-6 transition-all duration-300">
+  <div id="claude-chat-container" class="flex-1 flex flex-col h-[calc(100vh-115px)] max-w-4xl mx-auto w-full px-4 sm:px-6 transition-all duration-300 overflow-hidden">
     
     <!-- Chat Message Stream -->
-    <div id="chat-stream" class="space-y-6 pb-6 overflow-y-auto">
+    <div id="chat-stream" class="flex-1 min-h-0 overflow-y-auto space-y-6 py-4 pr-1 scroll-smooth">
       <!-- Populated dynamically via renderChatHistory() -->
     </div>
 
@@ -1898,6 +1979,47 @@ def render_ui_html():
       const stream = document.getElementById('chat-stream');
       stream.innerHTML = '';
 
+      if (!history || history.length === 0) {
+        stream.innerHTML = `
+          <div class="flex-1 flex flex-col items-center justify-center min-h-[380px] text-center px-4 py-8 animate-fadeIn">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/25 mb-4 agent-pulse">
+              <i class="fa-solid fa-sparkles text-2xl"></i>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-semibold text-zinc-100 tracking-tight mb-2">How can I guide your bureaucratic paperwork today?</h2>
+            <p class="text-xs text-zinc-400 max-w-lg mb-8 leading-relaxed">
+              Autonomous legal-administrative navigator grounded in official Indian statutory frameworks. Ask any commercial, residential, or citizen goal below to begin autonomous execution.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl text-left">
+              <button onclick="sendQuickChip('I want to open a small bakery shop in Barrackpore with 5 stools')" class="p-3.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800/90 border border-zinc-800 hover:border-orange-500/40 transition shadow-sm group">
+                <div class="flex items-center space-x-2 text-xs font-semibold text-zinc-200 mb-1">
+                  <span>🥖</span>
+                  <span class="group-hover:text-orange-400 transition">Bakery in Barrackpore</span>
+                </div>
+                <p class="text-[11px] text-zinc-400 line-clamp-2">Trade License, WB Shops & Est, FSSAI Registration, Fire NOC.</p>
+              </button>
+
+              <button onclick="sendQuickChip('I want to add a 450 sq ft first-floor extension to my house in Salt Lake')" class="p-3.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800/90 border border-zinc-800 hover:border-orange-500/40 transition shadow-sm group">
+                <div class="flex items-center space-x-2 text-xs font-semibold text-zinc-200 mb-1">
+                  <span>🏢</span>
+                  <span class="group-hover:text-orange-400 transition">Extension in Salt Lake</span>
+                </div>
+                <p class="text-[11px] text-zinc-400 line-clamp-2">BMC Building Sanction, FAR calculation, setback clearance.</p>
+              </button>
+
+              <button onclick="sendQuickChip('I want to apply for a solar irrigation pump grant for my 3-acre farm in Nadia')" class="p-3.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800/90 border border-zinc-800 hover:border-orange-500/40 transition shadow-sm group">
+                <div class="flex items-center space-x-2 text-xs font-semibold text-zinc-200 mb-1">
+                  <span>🌾</span>
+                  <span class="group-hover:text-orange-400 transition">Solar Pump in Nadia</span>
+                </div>
+                <p class="text-[11px] text-zinc-400 line-clamp-2">PM-KUSUM Component-B 60% capital subsidy, WBADMIP.</p>
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
       history.forEach((msg, idx) => {
         if (msg.role === 'user') {
           const div = document.createElement('div');
@@ -2041,8 +2163,10 @@ def render_ui_html():
       try {
         const res = await fetch('/api/state');
         currentState = await res.json();
-        if (currentState.chat_history && currentState.chat_history.length > 0) {
-          try { renderChatHistory(currentState.chat_history); } catch (e) { console.error('Chat history render error:', e); }
+        try { 
+          renderChatHistory(currentState.chat_history || []); 
+        } catch (e) { 
+          console.error('Chat history render error:', e); 
         }
         try { renderDashboard(currentState); } catch (e) { console.error('Dashboard render error:', e); }
         try { renderArtifactsDrawer(currentState); } catch (e) { console.error('Artifacts render error:', e); }

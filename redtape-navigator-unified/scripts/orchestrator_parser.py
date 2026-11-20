@@ -110,7 +110,7 @@ def parse_intent(goal_text: str, api_key: str = None) -> dict:
     if not key:
         raise ValueError("Gemini API key not found in environment or .env file.")
 
-    model = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
+    model = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
     payload = {
         "contents": [
