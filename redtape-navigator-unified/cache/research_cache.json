@@ -437,13 +437,6 @@
       {
         "tier": "state",
         "query": "West Bengal Shops and Establishments Form B SilpaSathi registration",
-        "title": "West Bengal - Silpasathi",
-        "snippet": "Verification by Third Party Online System for search unit wise establishment information and track Registration/License Details.",
-        "url": "https://silpasathi.wb.gov.in/"
-      },
-      {
-        "tier": "state",
-        "query": "West Bengal Shops and Establishments Form B SilpaSathi registration",
         "title": "Labour Department: Registration under The Shops and ... - West Bengal",
         "snippet": "This document is intended to serve as a User Manual for grant of the service \"Registration under The Shops and Establishment Act\" by Labour Department, Govt. of West Bengal through Single window of the State, 'SilpaSathi'. The service is integrated with the Single Window (SilpaSathi) and can be accessed through the SilpaSathi portal.",
         "url": "https://silpasathi.wb.gov.in/read-bytea-file-all/aWQ%3D/MjAx/NDQ%3D/ZW9kYl9zdGF0aWNfcGFnZV9wZGZfbWFuYWdl/cGRmX2NvbnRlbnQ%3D/MTAtUmVnaXN0cmF0aW9uIHVuZGVyIFRoZSBTaG9wcyBhbmQgRXN0YWJsaXNobWVudCBBY3QsIDE5NjMtdXNlci1tYW51YWwucGRm"
@@ -454,9 +447,16 @@
         "title": "PDF FORM B Application for Registration - West Bengal",
         "snippet": "Prescribed Under Sub-Rule (2) & (3) of Rule 4 of the West Bengal Shops and Establishment Rules, 1964",
         "url": "https://bsk.wb.gov.in/download/33.pdf"
+      },
+      {
+        "tier": "state",
+        "query": "West Bengal Shops and Establishments Form B SilpaSathi registration",
+        "title": "West Bengal - Silpasathi",
+        "snippet": "Verification by Third Party Online System for search unit wise establishment information and track Registration/License Details.",
+        "url": "https://silpasathi.wb.gov.in/"
       }
     ],
-    "timestamp": "2026-11-21T05:36:39+00:00"
+    "timestamp": "2026-11-21T06:43:05+00:00"
   },
   "c48f928918128816": {
     "query": "West Bengal Professional Tax Form II enrolment retail trader",
@@ -478,12 +478,12 @@
       {
         "tier": "state",
         "query": "West Bengal Professional Tax Form II enrolment retail trader",
-        "title": "West Bengal PT Forms: Which One to Use & When to File | Keka HR",
-        "snippet": "Choose the correct West Bengal PT Forms for professional tax: which form applies, correct formats, and due dates. Keep PT filings accurate and on time.",
-        "url": "https://www.keka.com/compliance/forms/west-bengal-pt-forms"
+        "title": "Profession Tax",
+        "snippet": "A person liable to pay tax shall apply for enrolment on-line through PT_Enrolment module. Where an applicant has more than one branch or office or place of work in West Bengal, he may, at his option, make a single application for the principal & the branches/offices.",
+        "url": "https://professiontax.wb.gov.in/new-enrol/enrolment"
       }
     ],
-    "timestamp": "2026-11-21T05:36:43+00:00"
+    "timestamp": "2026-11-21T06:43:07+00:00"
   },
   "2dd60c6661aa826c": {
     "query": "FSSAI FoSCoS registration Form A Form B turnover threshold Restaurant",
@@ -518,16 +518,16 @@
       {
         "tier": "state",
         "query": "West Bengal Fire Emergency Services NOC bakery restaurant seating threshold",
-        "title": "Act And Rules - wbfes.gov.in",
-        "snippet": "Act And Rules Fire and Emergency Services Department Newtown Fire Station Building (2nd & 3rd Floor) CF-7, Street Number 175, Action Area 1C, New Town, West Bengal - 700156",
-        "url": "https://wbfes.gov.in/act_and_rules?language=en"
+        "title": "Department of Fire and Emergency Services",
+        "snippet": "Fire and Emergency Services Department, Govt. of West Bengal will not be responsible for any loss/damage to any person caused by inaccuracy in the information available on this Website.",
+        "url": "https://wbfes.gov.in/"
       },
       {
         "tier": "state",
         "query": "West Bengal Fire Emergency Services NOC bakery restaurant seating threshold",
-        "title": "Department of Fire and Emergency Services",
-        "snippet": "Fire and Emergency Services Department, Govt. of West Bengal will not be responsible for any loss/damage to any person caused by inaccuracy in the information available on this Website.",
-        "url": "https://wbfes.gov.in/"
+        "title": "Act And Rules - wbfes.gov.in",
+        "snippet": "Act And Rules Fire and Emergency Services Department Newtown Fire Station Building (2nd & 3rd Floor) CF-7, Street Number 175, Action Area 1C, New Town, West Bengal - 700156",
+        "url": "https://wbfes.gov.in/act_and_rules?language=en"
       },
       {
         "tier": "state",
@@ -537,7 +537,7 @@
         "url": "https://www.obpsudma.wb.gov.in/help/guideline_booklet_for_fire_noc.pdf"
       }
     ],
-    "timestamp": "2026-11-21T05:36:48+00:00"
+    "timestamp": "2026-11-21T06:43:10+00:00"
   },
   "8fa160a99a5956c9": {
     "query": "Sodepur West Bengal Municipality Certificate of Enlistment Form J trade license Restaurant",
@@ -565,5 +565,86 @@
       }
     ],
     "timestamp": "2026-11-21T05:36:36+00:00"
+  },
+  "773c48766e924a24": {
+    "query": "Kolkata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+    "results": [
+      {
+        "tier": "municipal",
+        "query": "Kolkata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+        "title": "Official Website Of Kolkata Municipal Corporation",
+        "snippet": "(a) If owned by petitioner, tax bill to be produced; (b) If a tenant, rent bill to be produced; (c) If a lessee, lease-deed to be produced; (d) If relative/person granted rent free accommodation by the premises owner, consent letter from the owner to be produced; (e) If a person is granted rent free accommodation by any bonafied tenant, consent letter along with the current CE of the tenant to ...",
+        "url": "https://www.kmcgov.in/KMCPortal/jsp/KMCTradeLicenseHome.jsp"
+      },
+      {
+        "tier": "municipal",
+        "query": "Kolkata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+        "title": "Department of Urban Development & Municipal Affairs",
+        "snippet": "Issuance of Trade License (Certificate of Enlistment) in real-time in Municipal Areas About the Service Procedure (with Step-by-step details) Comprehensive List of Documents",
+        "url": "https://udma.wb.gov.in/page/cms/trade_license_procedure_44b32d"
+      },
+      {
+        "tier": "municipal",
+        "query": "Kolkata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+        "title": "Official Website Of Kolkata Municipal Corporation",
+        "snippet": "*** Counter payment can only be made on week days and not on Holidays/Sundays. Even if,the last date for payment without late fine falls on any Holiday/Sunday, licencees can make payment only through KMC website. ***",
+        "url": "https://www.kmcgov.in/KMCPortal/jsp/KMCCEHome.jsp"
+      }
+    ],
+    "timestamp": "2026-11-21T06:25:39+00:00"
+  },
+  "90c9f76fedd5fe31": {
+    "query": "FSSAI FoSCoS registration Form A Form B turnover threshold Retail",
+    "results": [
+      {
+        "tier": "central",
+        "query": "FSSAI FoSCoS registration Form A Form B turnover threshold Retail",
+        "title": "PDF Form 'B' - FoSCoS - FSSAI",
+        "snippet": "[See Regulation 2.1.2, Regulation 2.1.3 and Regulation2.1.7] Application for License / Renewal of license except importing under Food Safety and Standards Act, 2006 Kind of business (Please tick more than one, if applicable):",
+        "url": "https://foscos.fssai.gov.in/assets/docs/centralForm_b.pdf"
+      },
+      {
+        "tier": "central",
+        "query": "FSSAI FoSCoS registration Form A Form B turnover threshold Retail",
+        "title": "FSSAI Registration Process: Step by Step (Form A & Form B)",
+        "snippet": "The FSSAI registration process runs on the FoSCoS portal. Small businesses under ₹1.5 crore turnover file Form A for a Basic Registration; those from ₹1.5 crore to ₹50 crore file Form B for a State Licence, and those above ₹50 crore or trading across states file Form B for a Central Licence, attaching documents and paying the government ...",
+        "url": "https://foodlicence.in/fssai-registration-process/"
+      },
+      {
+        "tier": "central",
+        "query": "FSSAI FoSCoS registration Form A Form B turnover threshold Retail",
+        "title": "FSSAI Registration Online 2026: FoSCoS Process Step by Step",
+        "snippet": "How to apply for FSSAI registration or licence on FoSCoS: Form A vs Form B, fees, inspection, timelines, Tatkal route and certificate download.",
+        "url": "https://sschandak.com/insights/fssai-registration-online-foscos-process-step-by-step/"
+      }
+    ],
+    "timestamp": "2026-11-21T06:43:07+00:00"
+  },
+  "36fef9aed002d577": {
+    "query": "Beleghata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+    "results": [
+      {
+        "tier": "municipal",
+        "query": "Beleghata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+        "title": "Department of Urban Development & Municipal Affairs",
+        "snippet": "Issuance of Trade License (Certificate of Enlistment) in real-time in Municipal Areas About the Service Procedure (with Step-by-step details) Comprehensive List of Documents",
+        "url": "https://udma.wb.gov.in/page/cms/trade_license_procedure_44b32d"
+      },
+      {
+        "tier": "municipal",
+        "query": "Beleghata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+        "title": "Department of Urban Development & Municipal Affairs",
+        "snippet": "Issuance of Trade License (Certificate of Enlistment) and Registration under Shops and Establishment",
+        "url": "https://udma.wb.gov.in/page/cms/e-service"
+      },
+      {
+        "tier": "municipal",
+        "query": "Beleghata West Bengal Municipality Certificate of Enlistment Form J trade license Retail",
+        "title": "PDF [Clause 3(1)] FORM - J (under Rule 81) Application for Permanent ...",
+        "snippet": "In exercise of the power conferred by Section 118 of the West Bengal Municipal Act, 1993 (West Ben. Act XXII of 1993) the Governor is pleased hereby to make the following guidelines in relation to enlistment of profession, trade and calling in the Municipalities:",
+        "url": "https://silpasathi.wb.gov.in/sites/default/files/upload/static_page_pdf/569-ma_2015-2016.pdf"
+      }
+    ],
+    "timestamp": "2026-11-21T06:43:02+00:00"
   }
 }

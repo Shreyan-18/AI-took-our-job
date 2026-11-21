@@ -38,29 +38,21 @@ def export():
             shutil.copy2(fav, PUBLIC_DIR / "favicon.ico")
             shutil.copy2(fav, ROOT / "favicon.ico")
 
-    # 3. Create vercel.json if not present
+    # 3. Create vercel.json
     vercel_cfg_path = ROOT / "vercel.json"
     vercel_cfg = {
-        "version": 2,
+        "outputDirectory": "public",
         "cleanUrls": True,
         "trailingSlash": False,
         "rewrites": [
             {
-                "source": "/static/(.*)",
-                "destination": "/static/$1"
-            },
-            {
-                "source": "/favicon.ico",
-                "destination": "/favicon.ico"
-            },
-            {
-                "source": "/((?!static|favicon.ico).*)",
+                "source": "/(.*)",
                 "destination": "/index.html"
             }
         ]
     }
     vercel_cfg_path.write_text(json.dumps(vercel_cfg, indent=2), encoding="utf-8")
-    print(f"✓ Generated vercel.json for SPA history routing")
+    print(f"✓ Generated clean vercel.json for static SPA routing")
 
 
 if __name__ == "__main__":

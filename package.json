@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "RedTape Navigator — Official AcroForm Compliance Engine & Local Inference",
   "scripts": {
-    "build": "python3 export_frontend.py || echo 'Using pre-built static bundle'",
+    "build": "node build.js",
     "export": "python3 export_frontend.py"
   },
   "dependencies": {

@@ -293,9 +293,9 @@
     "semantic_hash": ""
   },
   "demo_server.py": {
-    "mtime": 1795235035.334539,
-    "seen": 1795241348.3435001,
-    "ast_hash": "3de962ccdd075f5e7444bf75fe103d25",
+    "mtime": 1795246650.5150237,
+    "seen": 1795246810.418528,
+    "ast_hash": "88aeeb6db8f9b116e067bbe0d7858f3b",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/fssai_form_a_map.json": {
@@ -1037,9 +1037,9 @@
     "semantic_hash": ""
   },
   "ui_template.py": {
-    "mtime": 1795244037.2126713,
-    "seen": 1795244086.9660711,
-    "ast_hash": "75667e2cef86e38d696f0f949c7b0392",
+    "mtime": 1795246495.2362485,
+    "seen": 1795246810.4186041,
+    "ast_hash": "e347fc8b40514a6085783de752988a14",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/drafts/benchmark_test/draft_landlord_noc.md": {
@@ -1145,9 +1145,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1795226077.7100432,
-    "seen": 1795226236.331321,
-    "ast_hash": "5e79f9b3729aa75da3e8e9788d9b352b",
+    "mtime": 1795246540.4294744,
+    "seen": 1795246810.4185338,
+    "ast_hash": "4ce2b1efdb577a07167a4a55e6906848",
     "semantic_hash": ""
   },
   "test_neon_auth.js": {
@@ -1181,9 +1181,9 @@
     "semantic_hash": ""
   },
   "auth_store.py": {
-    "mtime": 1795235027.2222338,
-    "seen": 1795241348.343492,
-    "ast_hash": "88f2323a2799a85ad8096975eda12a2f",
+    "mtime": 1795246119.3192716,
+    "seen": 1795246810.4185212,
+    "ast_hash": "07d46f8d635cf1756b4f79c8676939a2",
     "semantic_hash": ""
   },
   "download_official_pdfs.py": {
@@ -1285,6 +1285,72 @@
   "static/redtape-logo.png": {
     "mtime": 1795241851.9870648,
     "seen": 1795242754.920584,
+    "ast_hash": "0e235a7c766dc815e6889b9421a7e8d9",
+    "semantic_hash": ""
+  },
+  "export_frontend.py": {
+    "mtime": 1795246515.9358428,
+    "seen": 1795246810.418529,
+    "ast_hash": "a468d367b524dd03bb5ba4afbfc15f18",
+    "semantic_hash": ""
+  },
+  "start_tunnel.py": {
+    "mtime": 1795246555.314704,
+    "seen": 1795246810.4185998,
+    "ast_hash": "0d5a331991d92a0602c3e7ca1f4b82c9",
+    "semantic_hash": ""
+  },
+  "vercel.json": {
+    "mtime": 1795246682.2731357,
+    "seen": 1795246810.4186041,
+    "ast_hash": "8f7832a76795bc137022a02bdd8ade4f",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1795246682.269805,
+    "seen": 1795246810.418606,
+    "ast_hash": "c89c15d225761f9afd263a2c96dbe8a3",
+    "semantic_hash": ""
+  },
+  "public/index.html": {
+    "mtime": 1795246682.269652,
+    "seen": 1795246810.418607,
+    "ast_hash": "c89c15d225761f9afd263a2c96dbe8a3",
+    "semantic_hash": ""
+  },
+  "public/static/favicon.png": {
+    "mtime": 1795241851.9887922,
+    "seen": 1795246810.418664,
+    "ast_hash": "c7637656b07d990eef91c2a3d118289d",
+    "semantic_hash": ""
+  },
+  "public/static/logo-full.png": {
+    "mtime": 1795207494.890563,
+    "seen": 1795246810.418665,
+    "ast_hash": "308931c05ff4b2b5b0b4e8ce8a779efa",
+    "semantic_hash": ""
+  },
+  "public/static/logo-horizontal.png": {
+    "mtime": 1795207494.8963094,
+    "seen": 1795246810.418666,
+    "ast_hash": "4137f0424b4f428e77fa26bf25891ba4",
+    "semantic_hash": ""
+  },
+  "public/static/logo-icon.png": {
+    "mtime": 1795207494.7742531,
+    "seen": 1795246810.418666,
+    "ast_hash": "2154945559896b5894cb4b97c8b7b7f8",
+    "semantic_hash": ""
+  },
+  "public/static/logo-squircle.png": {
+    "mtime": 1795207494.871739,
+    "seen": 1795246810.418667,
+    "ast_hash": "f00bcd5cd6088dd7a70e9794088e0413",
+    "semantic_hash": ""
+  },
+  "public/static/redtape-logo.png": {
+    "mtime": 1795241851.9870648,
+    "seen": 1795246810.418667,
     "ast_hash": "0e235a7c766dc815e6889b9421a7e8d9",
     "semantic_hash": ""
   },
