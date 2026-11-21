@@ -1,7 +1,7 @@
 # Graph Report - red-tape  (2026-11-21)
 
 ## Corpus Check
-- 168 files · ~73,034 words
+- 168 files · ~73,816 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .example 1, .prisma 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 29,931 input · 1,939 output
 
 ## Graph Freshness
-- Built from commit: `bde5d7a6`
+- Built from commit: `34f2e39e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -178,8 +178,8 @@
 1. `RedTapeSession` - 36 edges
 2. `load_json()` - 30 edges
 3. `save_json()` - 23 edges
-4. `call_ollama()` - 20 edges
-5. `effective_value()` - 20 edges
+4. `effective_value()` - 20 edges
+5. `call_ollama()` - 20 edges
 6. `is_blank()` - 17 edges
 7. `build_workflow()` - 16 edges
 8. `RedTape Navigator Unified Skill` - 15 edges
@@ -195,8 +195,8 @@
   interview_engine_v2.py → redtape-navigator-unified/scripts/document_engine.py
 - `evaluate_with_gemini()` --calls--> `call_ollama()`  [EXTRACTED]
   redtape-navigator-unified/scripts/compliance_engine.py → ollama_client.py
-- `call_gemini_interview()` --calls--> `call_ollama()`  [EXTRACTED]
-  redtape-navigator-unified/scripts/interview_engine.py → ollama_client.py
+- `parse_intent()` --calls--> `call_ollama()`  [EXTRACTED]
+  redtape-navigator-unified/scripts/orchestrator_parser.py → ollama_client.py
 
 ## Import Cycles
 - None detected.
@@ -600,13 +600,13 @@ Nodes (4): inspect(), main(), render_page(), main()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `RedTapeSession` connect `interview_engine_v2.py` to `json`, `demo_server.py`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Applicant Profile Schema` be split into smaller, more focused modules?**
   _Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected._
 - **Why does `properties` connect `Project Configuration Schema` to `Applicant Profile Schema`, `Workflow State Flags`, `Schema References`, `Validation Results Schema`, `Research and Findings`, `domain`, `overrides`, `Project State Schema`, `Data Provenance Schema`, `Metadata Fields`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Should `Compliance Matrix Schema` be split into smaller, more focused modules?**
   _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
 - **Why does `load_json()` connect `load_json` to `test_phase6_review_overrides.py`, `Workflow Orchestration Testing`, `compliance_engine.py`, `interview_engine_v2.py`, `_common.py`, `interview_engine.py`, `os`, `argparse`, `json`?**

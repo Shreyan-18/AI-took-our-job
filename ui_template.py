@@ -585,13 +585,28 @@ def render_ui() -> str:
     .qcard-option:hover .qcard-num { background: var(--accent-soft); border-color: rgba(217, 119, 87, 0.4); color: #f0b097; }
     .qcard-custom-row {
       margin-top: 12px; display: flex; align-items: center; gap: 10px;
-      background: #1d1c1a; border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px; padding: 8px 10px 8px 14px;
+      background: #1d1c1a; border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px; padding: 7px 8px 7px 14px;
     }
     .qcard-custom-row:focus-within { border-color: rgba(255, 255, 255, 0.22); }
-    .qcard-custom-input { flex: 1; background: transparent; border: none; color: var(--text-primary); font-size: 13.5px; font-family: inherit; outline: none; }
+    .qcard-custom-input { flex: 1; background: transparent; border: none; color: var(--text-primary); font-size: 13.5px; font-family: inherit; outline: none; min-width: 0; }
     .qcard-custom-input::placeholder { color: #787671; }
-    .qcard-skip-btn { padding: 6px 14px; border-radius: 8px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.14); color: #d4d2cd; font-size: 12.5px; font-weight: 500; cursor: pointer; }
-    .qcard-skip-btn:hover { background: rgba(255, 255, 255, 0.07); color: #ffffff; }
+    .qcard-btn-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .qcard-skip-btn {
+      padding: 6px 13px; border-radius: 8px; background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.14); color: #b5b3ad; font-size: 12.5px;
+      font-weight: 500; cursor: pointer; transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .qcard-skip-btn:hover { background: rgba(255, 255, 255, 0.08); color: #ffffff; border-color: rgba(255, 255, 255, 0.25); }
+    .qcard-send-btn {
+      padding: 6px 15px; border-radius: 8px; background: var(--accent);
+      border: 1px solid var(--accent); color: #ffffff; font-size: 12.5px;
+      font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .qcard-send-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .qcard-send-btn:active { transform: scale(0.97); }
+    .qcard-send-btn:disabled, .qcard-skip-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* Rich Human-Readable Prose */
     .prose h2 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 18px 0 10px; letter-spacing: -0.01em; }
@@ -1198,12 +1213,24 @@ def render_ui() -> str:
       return html;
     }
 
+    function sendQCardCustom(inputId) {
+      if (isBusy) return;
+      const el = document.getElementById(inputId);
+      const val = (el?.value || '').trim();
+      if (!val) {
+        if (el) {
+          el.focus();
+          el.placeholder = 'Please type your answer here...';
+        }
+        return;
+      }
+      sendMessage(val);
+    }
+
     function handleQCardKeydown(e, inputId) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        const el = document.getElementById(inputId);
-        const val = (el?.value || '').trim();
-        if (val && !isBusy) sendMessage(val);
+        sendQCardCustom(inputId);
       }
     }
     function selectQCardOption(text) { if (!isBusy) sendMessage(text); }
@@ -1432,7 +1459,16 @@ def render_ui() -> str:
                     <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
                   </svg>
                   <input id="${inputId}" type="text" class="qcard-custom-input" placeholder="${escapeHtml(turn.custom_placeholder || 'Something else')}" onkeydown="handleQCardKeydown(event, '${inputId}')" />
-                  <button onclick="skipQCard()" class="qcard-skip-btn">Skip</button>
+                  <div class="qcard-btn-group">
+                    <button onclick="skipQCard()" class="qcard-skip-btn" title="Skip this field">Skip</button>
+                    <button onclick="sendQCardCustom('${inputId}')" class="qcard-send-btn" title="Send answer">
+                      <span>Send</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             `;

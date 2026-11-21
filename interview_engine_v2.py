@@ -1515,26 +1515,43 @@ class RedTapeSession:
         m_ward = re.search(r"\bward\s*(?:no\.?|number|#)?\s*[:\-]?\s*(\d{1,3}[A-Za-z]?)\b", user_message, re.I)
         if m_ward:
             self.applicant_profile["location"]["ward_no"] = m_ward.group(1).upper()
-        elif "applicant_profile.location.ward_no" in targeted_fields and re.fullmatch(r"\d{1,3}[A-Za-z]?", user_message.strip()):
-            self.applicant_profile["location"]["ward_no"] = user_message.strip().upper()
+        elif "applicant_profile.location.ward_no" in targeted_fields:
+            m_digits = re.search(r"\b(\d{1,3}[A-Za-z]?)\b", user_message.strip())
+            if m_digits:
+                self.applicant_profile["location"]["ward_no"] = m_digits.group(1).upper()
+            elif re.fullmatch(r"\d{1,3}[A-Za-z]?", user_message.strip()):
+                self.applicant_profile["location"]["ward_no"] = user_message.strip().upper()
 
         # Optional Holding Number (ONLY if explicitly provided by client)
         m_hold = re.search(r"\bholding\s*(?:no\.?|number)?\s*[:\-]?\s*([A-Za-z0-9/\-]{1,20})", user_message, re.I)
         if m_hold:
             self.applicant_profile["location"]["holding_no"] = m_hold.group(1).strip()
+        elif "applicant_profile.location.holding_no" in targeted_fields and user_message.strip() != "__SKIP__":
+            clean_hold = re.sub(r"^(?:holding\s*(?:no\.?|number)?[:\s]*)", "", user_message.strip(), flags=re.I).strip()
+            if clean_hold:
+                self.applicant_profile["location"]["holding_no"] = clean_hold
 
         # Proprietor Residential Address (explicitly captured, NEVER fabricated)
         m_res = re.search(r"(?:residential\s+address|home\s+address|residence|residing\s+at)[:\s]+([^·\n]+?)(?:\s*·|\s*,\s*phone|\s*phone[:\s]|$)", user_message, re.I)
         if m_res:
             self.applicant_profile["applicant"]["residential_address"] = m_res.group(1).strip(" ,.")
+        elif "applicant_profile.applicant.residential_address" in targeted_fields:
+            clean_res = user_message.strip()
+            if clean_res and clean_res != "__SKIP__":
+                clean_res = re.sub(r"^(?:residential\s+address|home\s+address|residence)[:\s]+", "", clean_res, flags=re.I).strip(" ,.")
+                if clean_res:
+                    self.applicant_profile["applicant"]["residential_address"] = clean_res
 
         # Weekly Closing Day (for WB Shops & Establishments Form B)
         m_close = re.search(r"(?:weekly\s+closing\s+day|closing\s+day|closed\s+on)[:\s]+([^·\n]+)", user_message, re.I)
         if m_close:
             self.applicant_profile["domain_attributes"]["weekly_closing_day"] = m_close.group(1).strip(" ,.")
         elif "applicant_profile.domain_attributes.weekly_closing_day" in targeted_fields:
-            if any(d in msg_l for d in ("open all 7", "no closing", "7 days", "none", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")):
-                self.applicant_profile["domain_attributes"]["weekly_closing_day"] = user_message.strip()
+            clean_close = user_message.strip()
+            if clean_close and clean_close != "__SKIP__":
+                clean_close = re.sub(r"^(?:weekly\s+closing\s+day|closing\s+day|closed\s+on)[:\s]+", "", clean_close, flags=re.I).strip(" ,.")
+                if clean_close:
+                    self.applicant_profile["domain_attributes"]["weekly_closing_day"] = clean_close
 
         phone = parse_phone(user_message)
         pan = parse_pan(user_message)
