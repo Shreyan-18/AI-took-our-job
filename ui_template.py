@@ -1,4 +1,5 @@
-"""Self-contained Claude-style dark conversational UI with Interactive Question Cards for RedTape Navigator.
+"""Self-contained Claude-style dark conversational UI with Login/Sign-Up, /chat/:id navigation,
+Interactive Question Cards, and live Official PDF Artifacts panel for RedTape Navigator.
 Zero external CDN dependencies for reliable offline/hackathon-WiFi rendering.
 """
 
@@ -51,6 +52,133 @@ def render_ui() -> str:
     ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.24); }
 
     .hidden { display: none !important; }
+
+    /* Auth Screen (/login & /signup) */
+    .auth-shell {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: radial-gradient(circle at top center, #2a2521 0%, #171717 55%, #121212 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: #212121;
+      border: 1px solid var(--border-strong);
+      border-radius: 20px;
+      padding: 32px 28px 28px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    }
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      margin-bottom: 10px;
+    }
+    .auth-brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(217, 119, 87, 0.35);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-brand-title { font-size: 26px; font-weight: 400; letter-spacing: -0.02em; color: #f5f4f0; }
+    .auth-sub { text-align: center; font-size: 13.5px; color: var(--text-secondary); margin-bottom: 22px; line-height: 1.5; }
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #171717;
+      padding: 4px;
+      border-radius: 11px;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+    .auth-tab {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .auth-tab.active { background: #2c2b28; color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+    .auth-field { margin-bottom: 14px; }
+    .auth-label { display: block; font-size: 12px; font-weight: 500; color: #c8c6c0; margin-bottom: 6px; }
+    .auth-input {
+      width: 100%;
+      padding: 10px 13px;
+      border-radius: 10px;
+      background: #181818;
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .auth-input:focus { border-color: var(--accent); }
+    .auth-submit {
+      width: 100%;
+      margin-top: 6px;
+      padding: 11px 16px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .auth-submit:hover { background: var(--accent-hover); }
+    .auth-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+    .auth-error {
+      margin-bottom: 14px;
+      padding: 9px 12px;
+      border-radius: 9px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      font-size: 12.5px;
+    }
+    .auth-demo-box {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .auth-demo-btn {
+      padding: 5px 10px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: #d4d2cd;
+      font-size: 11.5px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .auth-demo-btn:hover { background: rgba(255, 255, 255, 0.09); color: #ffffff; }
+
+    /* App Shell */
+    .app-shell { display: flex; width: 100%; height: 100%; min-width: 0; }
 
     /* Sidebar */
     .sidebar {
@@ -181,23 +309,24 @@ def render_ui() -> str:
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 8px;
     }
-    .user-pill { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .user-pill { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
     .avatar {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: #363532;
-      color: var(--text-primary);
+      background: var(--accent);
+      color: #fff;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .user-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
-    .user-sub { font-size: 11px; color: var(--text-muted); }
+    .user-name { font-size: 13px; font-weight: 500; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .user-sub { font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     /* Main Split Container */
     .workspace { flex: 1; display: flex; min-width: 0; height: 100%; }
@@ -327,7 +456,7 @@ def render_ui() -> str:
     .artifact-toggle-btn:hover { background: rgba(255, 255, 255, 0.09); }
     .artifact-count { color: var(--text-secondary); font-size: 11.5px; }
 
-    /* Welcome View */
+    /* Welcome View (Home /) */
     .welcome-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 20px 72px; }
     .welcome-inner { width: 100%; max-width: 680px; display: flex; flex-direction: column; align-items: center; }
     .greeting-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
@@ -372,7 +501,7 @@ def render_ui() -> str:
     .send-btn:hover { background: var(--accent-hover); }
     .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* Active Chat Stream */
+    /* Active Chat Stream (/chat/:id) */
     .chat-view { flex: 1; display: flex; flex-direction: column; min-height: 0; }
     .chat-stream { flex: 1; overflow-y: auto; padding: 8px 24px 32px; }
     .chat-inner { max-width: 740px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
@@ -422,29 +551,64 @@ def render_ui() -> str:
     @keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
     .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulseDot 1.3s ease-in-out infinite; }
 
-    /* Quick Action Pill */
-    .quick-gen-pill {
-      font-size: 11.5px;
-      color: #f0b097;
-      background: var(--accent-soft);
-      border: 1px solid rgba(217, 119, 87, 0.35);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
+    /* Claude Interactive Question Card */
+    .qcard {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 16px;
+      padding: 18px 20px 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+      width: 100%;
     }
-    .quick-gen-pill:hover {
-      background: rgba(217, 119, 87, 0.28);
-      color: #fff;
+    .qcard-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+    .qcard-title { font-family: Georgia, Cambria, "Times New Roman", serif; font-size: 18px; font-weight: 400; color: #f2f1ed; line-height: 1.4; }
+    .qcard-nav { display: flex; align-items: center; gap: 12px; font-size: 12.5px; color: #8e8c86; white-space: nowrap; padding-top: 3px; }
+    .qcard-options { display: flex; flex-direction: column; }
+    .qcard-option {
+      display: flex; align-items: center; gap: 14px; padding: 12px 8px;
+      background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: #d6d5cf; font-size: 14px; text-align: left; cursor: pointer; border-radius: 8px;
+      transition: background 0.14s ease, color 0.14s ease;
     }
+    .qcard-option:last-child { border-bottom: none; }
+    .qcard-option:hover { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
+    .qcard-num {
+      width: 24px; height: 24px; border-radius: 6px; background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08); color: #a8a6a1; font-size: 12px; font-weight: 500;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .qcard-option:hover .qcard-num { background: var(--accent-soft); border-color: rgba(217, 119, 87, 0.4); color: #f0b097; }
+    .qcard-custom-row {
+      margin-top: 12px; display: flex; align-items: center; gap: 10px;
+      background: #1d1c1a; border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px; padding: 8px 10px 8px 14px;
+    }
+    .qcard-custom-row:focus-within { border-color: rgba(255, 255, 255, 0.22); }
+    .qcard-custom-input { flex: 1; background: transparent; border: none; color: var(--text-primary); font-size: 13.5px; font-family: inherit; outline: none; }
+    .qcard-custom-input::placeholder { color: #787671; }
+    .qcard-skip-btn { padding: 6px 14px; border-radius: 8px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.14); color: #d4d2cd; font-size: 12.5px; font-weight: 500; cursor: pointer; }
+    .qcard-skip-btn:hover { background: rgba(255, 255, 255, 0.07); color: #ffffff; }
 
-    /* Prose */
-    .prose p { margin: 0 0 12px; line-height: 1.68; font-size: 15px; color: var(--text-primary); }
+    /* Rich Human-Readable Prose */
+    .prose h2 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 18px 0 10px; letter-spacing: -0.01em; }
+    .prose h3 { font-size: 16px; font-weight: 600; color: #f5f4f0; margin: 16px 0 8px; letter-spacing: -0.01em; }
+    .prose h4 { font-size: 14.5px; font-weight: 600; color: #e2e1dc; margin: 14px 0 6px; }
+    .prose p { margin: 0 0 11px; line-height: 1.68; font-size: 14.5px; color: var(--text-primary); }
     .prose p:last-child { margin-bottom: 0; }
-    .prose ul { margin: 4px 0 12px 20px; }
+    .prose ul, .prose ol { margin: 4px 0 12px 20px; }
     .prose li { margin-bottom: 6px; line-height: 1.6; font-size: 14.5px; color: #e2e1dc; }
     .prose strong { color: #ffffff; font-weight: 600; }
+    .prose em { color: #c8c6c0; font-style: italic; }
+    .prose a { color: #e89172; text-decoration: none; border-bottom: 1px solid rgba(232, 145, 114, 0.35); }
+    .prose a:hover { color: #f5b49c; border-bottom-color: #f5b49c; }
+    .prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.09); margin: 16px 0; }
+    .prose blockquote {
+      margin: 10px 0 14px; padding: 10px 14px; border-left: 3px solid var(--accent);
+      background: rgba(217, 119, 87, 0.08); border-radius: 0 10px 10px 0; font-size: 13.5px; color: #dedcd6;
+    }
+    .prose table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 13px; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+    .prose th { text-align: left; padding: 9px 11px; background: rgba(255,255,255,0.05); color: #f2f1ed; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose td { padding: 8px 11px; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d6d5cf; vertical-align: top; }
+    .prose tr:last-child td { border-bottom: none; }
     .prose code {
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -465,7 +629,7 @@ def render_ui() -> str:
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 460px;
+      max-width: 480px;
       cursor: pointer;
     }
     .artifact-card:hover { background: #313131; }
@@ -567,230 +731,367 @@ def render_ui() -> str:
 </head>
 <body>
 
-  <!-- LEFT SIDEBAR -->
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-top">
-      <button onclick="startNewChat()" class="brand-btn">
-        <span class="brand-icon">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+  <!-- AUTH VIEW (/login & /signup) — Name, Email & Password ONLY -->
+  <div id="auth-view" class="auth-shell hidden">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="auth-brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
             <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
           </svg>
         </span>
-        <span class="brand-title serif">RedTape</span>
-      </button>
-      <button onclick="toggleSidebar()" title="Close sidebar" class="icon-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="new-chat-wrap">
-      <button onclick="startNewChat()" class="new-chat-btn">
-        <span class="plus-circle">+</span>
-        <span>New chat</span>
-      </button>
-    </div>
-
-    <div class="recents-wrap">
-      <div class="recents-label">Recents</div>
-      <div id="sessions-list"></div>
-    </div>
-
-    <div class="sidebar-footer">
-      <div class="user-pill" title="Better Auth & Neon Connected">
-        <div class="avatar" style="background:#d97757; color:#fff; font-weight:700;">TG</div>
-        <div style="min-width:0;">
-          <div class="user-name" style="display:flex; align-items:center; gap:5px;">
-            <span>Tamajit Ghosh</span>
-            <span style="font-size:9px; background:rgba(34,197,94,0.18); color:#4ade80; border:1px solid rgba(34,197,94,0.3); border-radius:4px; padding:1px 4px; font-weight:600;">VERIFIED</span>
-          </div>
-          <div class="user-sub" style="font-size:10.5px; color:#8e8c86;">Citizen #WB-700144 · Baruipur</div>
-        </div>
+        <span class="auth-brand-title serif">RedTape</span>
       </div>
-      <a href="https://console.neon.tech" target="_blank" title="Neon Database & pgvector" class="icon-btn" style="text-decoration:none;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-        </svg>
-      </a>
+      <div class="auth-sub">Sign in to navigate municipal & state compliance and auto-fill official government PDFs.</div>
+
+      <div class="auth-tabs">
+        <button id="tab-login" type="button" onclick="setAuthMode('login')" class="auth-tab active">Sign In</button>
+        <button id="tab-signup" type="button" onclick="setAuthMode('signup')" class="auth-tab">Create Account</button>
+      </div>
+
+      <div id="auth-error" class="auth-error hidden"></div>
+
+      <form id="auth-form" onsubmit="submitAuth(event)">
+        <div id="auth-name-group" class="auth-field hidden">
+          <label class="auth-label" for="auth-name">Full Name</label>
+          <input id="auth-name" type="text" class="auth-input" placeholder="e.g. Tamajit Ghosh" autocomplete="name" />
+        </div>
+        <div class="auth-field">
+          <label class="auth-label" for="auth-email">Email</label>
+          <input id="auth-email" type="email" class="auth-input" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="auth-field">
+          <label class="auth-label" for="auth-password">Password</label>
+          <input id="auth-password" type="password" class="auth-input" placeholder="Enter your password" autocomplete="current-password" required />
+        </div>
+        <button id="auth-submit-btn" type="submit" class="auth-submit">Continue</button>
+      </form>
+
+      <div class="auth-demo-box">
+        <span>Demo: <strong style="color:#d4d2cd;">tamajit@redtape.app</strong> / <strong style="color:#d4d2cd;">redtape123</strong></span>
+        <button type="button" onclick="fillDemoLogin()" class="auth-demo-btn">Use Demo</button>
+      </div>
     </div>
-  </aside>
+  </div>
 
-  <!-- MAIN WORKSPACE -->
-  <div class="workspace">
-    <main class="chat-column">
-      <header class="topbar">
-        <div class="topbar-left">
-          <button id="open-sidebar-btn" onclick="toggleSidebar()" title="Open sidebar" class="icon-btn hidden">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
+  <!-- MAIN APP SHELL (Home / & /chat/:id) -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- LEFT SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <button onclick="navigateHome()" class="brand-btn" title="Home">
+          <span class="brand-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
             </svg>
-          </button>
-          <span id="chat-header-title" class="header-title"></span>
-          <button onclick="startNewChat()" class="topbar-new-chat-btn" title="Start a fresh consultation">
-            <span class="plus-circle" style="width:16px;height:16px;font-size:12px;">+</span>
-            <span>New Chat</span>
-          </button>
-          <div style="margin-left:8px; display:inline-flex; align-items:center; gap:6px; font-size:11px; padding:3px 8px; border-radius:6px; background:rgba(217,119,87,0.1); border:1px solid rgba(217,119,87,0.25); color:#d97757;">
-            <span style="width:6px; height:6px; border-radius:50%; background:#22c55e;"></span>
-            <span>Better Auth & pgvector Active</span>
+          </span>
+          <span class="brand-title serif">RedTape</span>
+        </button>
+        <button onclick="toggleSidebar()" title="Close sidebar" class="icon-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="new-chat-wrap">
+        <button onclick="startNewChat()" class="new-chat-btn">
+          <span class="plus-circle">+</span>
+          <span>New chat</span>
+        </button>
+      </div>
+
+      <div class="recents-wrap">
+        <div class="recents-label">Recents</div>
+        <div id="sessions-list"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-pill">
+          <div id="sidebar-user-avatar" class="avatar">U</div>
+          <div style="min-width:0;">
+            <div id="sidebar-user-name" class="user-name">User</div>
+            <div id="sidebar-user-email" class="user-sub">user@redtape.app</div>
           </div>
         </div>
-        <div class="topbar-right">
-          <div class="model-switcher-wrap">
-            <button id="model-pill" onclick="toggleModelDropdown(event)" class="model-pill-btn" title="Switch local Ollama model">
-              <span class="ollama-dot"></span>
-              <span id="active-model-name">llama3.1:8b</span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div id="model-dropdown" class="model-dropdown hidden">
-              <!-- populated dynamically from /api/model -->
-            </div>
-          </div>
-          <button id="header-artifact-btn" onclick="toggleArtifactsPanel()" class="artifact-toggle-btn hidden">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-            </svg>
-            <span>Artifacts</span>
-            <span id="artifact-count-pill" class="artifact-count">0</span>
-          </button>
-        </div>
-      </header>
+        <button onclick="handleLogout()" title="Sign out" class="icon-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+      </div>
+    </aside>
 
-      <!-- WELCOME VIEW -->
-      <section id="welcome-view" class="welcome-view">
-        <div class="welcome-inner">
-          <div class="greeting-row">
-            <span style="color:var(--accent); display:flex;">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+    <!-- MAIN WORKSPACE -->
+    <div class="workspace">
+      <main class="chat-column">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button id="open-sidebar-btn" onclick="toggleSidebar()" title="Open sidebar" class="icon-btn hidden">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
               </svg>
-            </span>
-            <h1 id="welcome-greeting" class="greeting-text serif">Good evening</h1>
+            </button>
+            <span id="chat-header-title" class="header-title"></span>
+            <button onclick="startNewChat()" class="topbar-new-chat-btn" title="Start a fresh consultation">
+              <span class="plus-circle" style="width:16px;height:16px;font-size:12px;">+</span>
+              <span>New Chat</span>
+            </button>
           </div>
+          <div class="topbar-right">
+            <div class="model-switcher-wrap">
+              <button id="model-pill" onclick="toggleModelDropdown(event)" class="model-pill-btn" title="Switch local Ollama model">
+                <span class="ollama-dot"></span>
+                <span id="active-model-name">llama3.1:8b</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div id="model-dropdown" class="model-dropdown hidden"></div>
+            </div>
+            <button id="header-artifact-btn" onclick="toggleArtifactsPanel()" class="artifact-toggle-btn hidden">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span>Artifacts</span>
+              <span id="artifact-count-pill" class="artifact-count">0</span>
+            </button>
+          </div>
+        </header>
 
-          <div class="composer-box">
-            <textarea id="welcome-input" rows="3" placeholder="How can I help you today? (e.g. I wanna open a restaurant in Beleghata, Kolkata)" class="composer-textarea" onkeydown="handleComposerKeydown(event, 'welcome')"></textarea>
-            <div class="composer-footer">
-              <span class="model-tag" id="welcome-model-tag">RedTape · llama3.1:8b</span>
-              <button onclick="sendFromComposer('welcome')" class="send-btn" title="Send">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+        <!-- HOME / WELCOME VIEW (/) -->
+        <section id="welcome-view" class="welcome-view">
+          <div class="welcome-inner">
+            <div class="greeting-row">
+              <span style="color:var(--accent); display:flex;">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
                 </svg>
-              </button>
+              </span>
+              <h1 id="welcome-greeting" class="greeting-text serif">Good evening</h1>
             </div>
-          </div>
 
-          <div class="welcome-suggestions">
-            <div class="suggestions-label">Explore official regulatory filings in West Bengal:</div>
-            <div class="suggestion-chips">
-              <button onclick="fillAndSendGoal('i wanna have a house colour painting shop in baruipur, west bengal')" class="suggestion-chip">
-                <span class="chip-icon">🎨</span>
-                <span class="chip-text">Paint Shop in Baruipur, WB</span>
-              </button>
-              <button onclick="fillAndSendGoal('i wanna open a restaurant in beleghata, kolkata')" class="suggestion-chip">
-                <span class="chip-icon">🍽️</span>
-                <span class="chip-text">Restaurant in Beleghata, Kolkata</span>
-              </button>
-              <button onclick="fillAndSendGoal('open a stationary book stall in sodpur')" class="suggestion-chip">
-                <span class="chip-icon">📚</span>
-                <span class="chip-text">Stationery Stall in Sodpur</span>
-              </button>
-              <button onclick="fillAndSendGoal('open a clothes shop in barrackpore')" class="suggestion-chip">
-                <span class="chip-icon">👗</span>
-                <span class="chip-text">Clothes Shop in Barrackpore</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ACTIVE CHAT VIEW -->
-      <section id="chat-view" class="chat-view hidden">
-        <div id="chat-stream" class="chat-stream">
-          <div id="chat-messages-inner" class="chat-inner"></div>
-        </div>
-
-        <div class="bottom-bar">
-          <div class="bottom-inner">
             <div class="composer-box">
-              <textarea id="chat-input" rows="2" placeholder="Reply to RedTape..." class="composer-textarea" onkeydown="handleComposerKeydown(event, 'chat')"></textarea>
+              <textarea id="welcome-input" rows="3" placeholder="How can I help you today? (e.g. Open a bakery shop in Park Circus, Kolkata)" class="composer-textarea" onkeydown="handleComposerKeydown(event, 'welcome')"></textarea>
               <div class="composer-footer">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="model-tag" id="chat-model-tag">RedTape · llama3.1:8b</span>
-                  <button onclick="finalizeAndGeneratePacks()" class="quick-gen-pill" title="Generate filled official PDFs now">⚡ Generate Forms</button>
-                </div>
-                <button id="chat-send-btn" onclick="sendFromComposer('chat')" class="send-btn" title="Send">
+                <span class="model-tag" id="welcome-model-tag">RedTape · llama3.1:8b</span>
+                <button onclick="sendFromComposer('welcome')" class="send-btn" title="Send">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
                   </svg>
                 </button>
               </div>
             </div>
-            <div class="disclaimer">Autonomous Administrative Intelligence for West Bengal · Powered by local Ollama & Neon PostgreSQL</div>
+
+            <div class="welcome-suggestions">
+              <div class="suggestions-label">Start a compliance consultation:</div>
+              <div class="suggestion-chips">
+                <button onclick="fillAndSendGoal('open a bakery shop in kolkata park circus, kolkata')" class="suggestion-chip">
+                  <span class="chip-icon">🥐</span>
+                  <span class="chip-text">Bakery Shop in Park Circus, Kolkata</span>
+                </button>
+                <button onclick="fillAndSendGoal('open a stationary book stall in sodpur')" class="suggestion-chip">
+                  <span class="chip-icon">📚</span>
+                  <span class="chip-text">Stationery &amp; Book Stall in Sodpur</span>
+                </button>
+                <button onclick="fillAndSendGoal('open a clothes shop in barrackpore')" class="suggestion-chip">
+                  <span class="chip-icon">👗</span>
+                  <span class="chip-text">Clothes Shop in Barrackpore</span>
+                </button>
+                <button onclick="fillAndSendGoal('i wanna have a house colour painting shop in baruipur, west bengal')" class="suggestion-chip">
+                  <span class="chip-icon">🎨</span>
+                  <span class="chip-text">Paint Shop in Baruipur, WB</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ACTIVE CHAT VIEW (/chat/:id) -->
+        <section id="chat-view" class="chat-view hidden">
+          <div id="chat-stream" class="chat-stream">
+            <div id="chat-messages-inner" class="chat-inner"></div>
+          </div>
+
+          <div class="bottom-bar">
+            <div class="bottom-inner">
+              <div class="composer-box">
+                <textarea id="chat-input" rows="2" placeholder="Reply to RedTape..." class="composer-textarea" onkeydown="handleComposerKeydown(event, 'chat')"></textarea>
+                <div class="composer-footer">
+                  <span class="model-tag" id="chat-model-tag">RedTape · llama3.1:8b</span>
+                  <button id="chat-send-btn" onclick="sendFromComposer('chat')" class="send-btn" title="Send">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="disclaimer">RedTape Navigator · Verifies official government forms and fills PDFs locally</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- RIGHT SLIDE-OUT ARTIFACTS PANEL -->
+      <aside id="artifacts-panel" class="artifacts-panel hidden">
+        <div class="artifacts-header">
+          <div id="artifact-panel-title" class="artifacts-title">Official Forms</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="tab-group">
+              <button id="art-tab-pdfs" onclick="switchArtifactTab('pdfs')" class="tab-btn active">PDFs</button>
+              <button id="art-tab-review" onclick="switchArtifactTab('review')" class="tab-btn">Review</button>
+              <button id="art-tab-portals" onclick="switchArtifactTab('portals')" class="tab-btn">Portals</button>
+            </div>
+            <button onclick="closeArtifactsPanel()" title="Close" class="icon-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
           </div>
         </div>
-      </section>
-    </main>
 
-    <!-- RIGHT SLIDE-OUT ARTIFACTS PANEL -->
-    <aside id="artifacts-panel" class="artifacts-panel hidden">
-      <div class="artifacts-header">
-        <div id="artifact-panel-title" class="artifacts-title">Compliance Pack</div>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <div class="tab-group">
-            <button id="art-tab-pdfs" onclick="switchArtifactTab('pdfs')" class="tab-btn active">PDFs</button>
-            <button id="art-tab-review" onclick="switchArtifactTab('review')" class="tab-btn">Review</button>
-            <button id="art-tab-portals" onclick="switchArtifactTab('portals')" class="tab-btn">Portals</button>
+        <!-- PDFs Tab -->
+        <div id="art-body-pdfs" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+          <div id="pdf-selector-bar" class="pdf-bar"></div>
+          <div class="pdf-meta">
+            <span id="pdf-meta-status"></span>
+            <a id="pdf-download-link" href="#" target="_blank" class="pdf-link">Open / Download PDF ↗</a>
           </div>
-          <button onclick="closeArtifactsPanel()" title="Close" class="icon-btn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
+          <div class="pdf-viewer-wrap">
+            <object id="pdf-preview-obj" type="application/pdf" class="pdf-object"></object>
+          </div>
         </div>
-      </div>
 
-      <!-- PDFs Tab -->
-      <div id="art-body-pdfs" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-        <div id="pdf-selector-bar" class="pdf-bar"></div>
-        <div class="pdf-meta">
-          <span id="pdf-meta-status"></span>
-          <a id="pdf-download-link" href="#" target="_blank" class="pdf-link">Open / Download PDF ↗</a>
+        <!-- Review Tab -->
+        <div id="art-body-review" class="panel-scroll hidden">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-size:12px; color:#8e8c86; font-family:monospace;">review.md</span>
+            <button onclick="copyReview()" class="pdf-pill">Copy</button>
+          </div>
+          <pre id="review-md-content" class="review-pre"></pre>
         </div>
-        <div class="pdf-viewer-wrap">
-          <object id="pdf-preview-obj" type="application/pdf" class="pdf-object"></object>
-        </div>
-      </div>
 
-      <!-- Review Tab -->
-      <div id="art-body-review" class="panel-scroll hidden">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <span style="font-size:12px; color:#8e8c86; font-family:monospace;">review.md</span>
-          <button onclick="copyReview()" class="pdf-pill">Copy</button>
+        <!-- Portals Tab -->
+        <div id="art-body-portals" class="panel-scroll hidden">
+          <div id="portals-list"></div>
         </div>
-        <pre id="review-md-content" class="review-pre"></pre>
-      </div>
-
-      <!-- Portals Tab -->
-      <div id="art-body-portals" class="panel-scroll hidden">
-        <div id="portals-list"></div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   </div>
 
   <script>
+    let currentUser = null;
+    let authMode = 'login';
     let appState = null;
     let isBusy = false;
     let activePdfIndex = 0;
 
+    function pushRoute(path) {
+      if (window.location.pathname !== path) {
+        window.history.pushState({}, '', path);
+      }
+    }
+
+    function getChatIdFromPath() {
+      const m = window.location.pathname.match(/^\/chat\/([^/]+)$/);
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    function getInitials(name) {
+      const parts = String(name || 'U').trim().split(/\s+/);
+      if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      return String(name || 'U').slice(0, 2).toUpperCase();
+    }
+
     function setTimeGreeting() {
       const hr = new Date().getHours();
       const greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+      const first = currentUser?.name ? `, ${currentUser.name.split(' ')[0]}` : '';
       const el = document.getElementById('welcome-greeting');
-      if (el) el.textContent = greet;
+      if (el) el.textContent = greet + first;
+    }
+
+    function updateUserChrome(user) {
+      currentUser = user;
+      if (!user) return;
+      document.getElementById('sidebar-user-avatar').textContent = getInitials(user.name);
+      document.getElementById('sidebar-user-name').textContent = user.name || 'User';
+      document.getElementById('sidebar-user-email').textContent = user.email || '';
+      setTimeGreeting();
+    }
+
+    function showAuthScreen(mode = 'login', updateUrl = true) {
+      document.getElementById('auth-view').classList.remove('hidden');
+      document.getElementById('app-shell').classList.add('hidden');
+      setAuthMode(mode, updateUrl);
+    }
+
+    function showAppShell() {
+      document.getElementById('auth-view').classList.add('hidden');
+      document.getElementById('app-shell').classList.remove('hidden');
+    }
+
+    function setAuthMode(mode, updateUrl = true) {
+      authMode = mode === 'signup' ? 'signup' : 'login';
+      document.getElementById('tab-login').classList.toggle('active', authMode === 'login');
+      document.getElementById('tab-signup').classList.toggle('active', authMode === 'signup');
+      document.getElementById('auth-name-group').classList.toggle('hidden', authMode !== 'signup');
+      document.getElementById('auth-submit-btn').textContent = authMode === 'signup' ? 'Create Account' : 'Sign In';
+      const errBox = document.getElementById('auth-error');
+      errBox.classList.add('hidden');
+      errBox.textContent = '';
+      if (updateUrl) pushRoute(authMode === 'signup' ? '/signup' : '/login');
+    }
+
+    function fillDemoLogin() {
+      setAuthMode('login', false);
+      document.getElementById('auth-email').value = 'tamajit@redtape.app';
+      document.getElementById('auth-password').value = 'redtape123';
+    }
+
+    async function submitAuth(e) {
+      e.preventDefault();
+      const errBox = document.getElementById('auth-error');
+      const btn = document.getElementById('auth-submit-btn');
+      errBox.classList.add('hidden');
+      btn.disabled = true;
+
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const name = document.getElementById('auth-name').value.trim();
+
+      const url = authMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
+      const body = authMode === 'signup' ? { name, email, password } : { email, password };
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.authenticated) {
+          errBox.textContent = data.error || 'Authentication failed. Please check your details.';
+          errBox.classList.remove('hidden');
+          return;
+        }
+        updateUserChrome(data.user);
+        showAppShell();
+        pushRoute('/');
+        await bootWorkspace();
+      } catch (err) {
+        errBox.textContent = 'Could not reach the server. Please try again.';
+        errBox.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function handleLogout() {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch (e) {}
+      currentUser = null;
+      appState = null;
+      showAuthScreen('login', true);
     }
 
     function toggleSidebar() {
@@ -830,31 +1131,104 @@ def render_ui() -> str:
         .replace(/"/g, '&quot;');
     }
 
+    function formatInlineMd(str) {
+      let s = escapeHtml(str);
+      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+      s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+      return s;
+    }
+
     function renderMarkdown(md) {
       if (!md) return '';
       const lines = md.split('\n');
       let html = '';
-      let inList = false;
-      for (const rawLine of lines) {
-        const line = rawLine.trim();
-        if (!line) {
-          if (inList) { html += '</ul>'; inList = false; }
+      let inUl = false, inOl = false, inQuote = false, inTable = false;
+
+      const closeAll = () => {
+        if (inUl) { html += '</ul>'; inUl = false; }
+        if (inOl) { html += '</ol>'; inOl = false; }
+        if (inQuote) { html += '</blockquote>'; inQuote = false; }
+        if (inTable) { html += '</tbody></table>'; inTable = false; }
+      };
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) { closeAll(); continue; }
+
+        if (/^---+$/.test(line)) { closeAll(); html += '<hr />'; continue; }
+
+        if (line.startsWith('|') && line.endsWith('|')) {
+          if (inUl) { html += '</ul>'; inUl = false; }
+          if (inOl) { html += '</ol>'; inOl = false; }
+          if (inQuote) { html += '</blockquote>'; inQuote = false; }
+          const cells = line.slice(1, -1).split('|').map(c => c.trim());
+          if (cells.every(c => /^:?-{2,}:?$/.test(c))) continue;
+          if (!inTable) {
+            html += '<table><thead><tr>' + cells.map(c => `<th>${formatInlineMd(c)}</th>`).join('') + '</tr></thead><tbody>';
+            inTable = true;
+          } else {
+            html += '<tr>' + cells.map(c => `<td>${formatInlineMd(c)}</td>`).join('') + '</tr>';
+          }
+          continue;
+        } else if (inTable) {
+          html += '</tbody></table>'; inTable = false;
+        }
+
+        if (line.startsWith('>')) {
+          if (inUl) { html += '</ul>'; inUl = false; }
+          if (inOl) { html += '</ol>'; inOl = false; }
+          let qtxt = line.replace(/^>+\s*/, '').replace(/^\[!(NOTE|TIP|IMPORTANT|WARNING)\]\s*/i, '');
+          if (!qtxt) continue;
+          if (!inQuote) { html += '<blockquote>'; inQuote = true; }
+          else { html += '<br />'; }
+          html += formatInlineMd(qtxt);
+          continue;
+        } else if (inQuote) {
+          html += '</blockquote>'; inQuote = false;
+        }
+
+        const hm = line.match(/^(#{2,4})\s+(.+)$/);
+        if (hm) {
+          closeAll();
+          const lvl = hm[1].length;
+          html += `<h${lvl}>${formatInlineMd(hm[2])}</h${lvl}>`;
           continue;
         }
-        let fmt = escapeHtml(line)
-          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-          .replace(/`([^`]+)`/g, '<code>$1</code>');
-        if (fmt.startsWith('- ') || fmt.startsWith('• ')) {
-          if (!inList) { html += '<ul>'; inList = true; }
-          html += `<li>${fmt.slice(2)}</li>`;
-        } else {
-          if (inList) { html += '</ul>'; inList = false; }
-          html += `<p>${fmt}</p>`;
+
+        if (line.startsWith('- ') || line.startsWith('• ') || line.startsWith('* ')) {
+          if (inOl) { html += '</ol>'; inOl = false; }
+          if (!inUl) { html += '<ul>'; inUl = true; }
+          html += `<li>${formatInlineMd(line.slice(2))}</li>`;
+          continue;
         }
+
+        const olm = line.match(/^\d+\.\s+(.+)$/);
+        if (olm) {
+          if (inUl) { html += '</ul>'; inUl = false; }
+          if (!inOl) { html += '<ol>'; inOl = true; }
+          html += `<li>${formatInlineMd(olm[1])}</li>`;
+          continue;
+        }
+
+        closeAll();
+        html += `<p>${formatInlineMd(line)}</p>`;
       }
-      if (inList) html += '</ul>';
+      closeAll();
       return html;
     }
+
+    function handleQCardKeydown(e, inputId) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const el = document.getElementById(inputId);
+        const val = (el?.value || '').trim();
+        if (val && !isBusy) sendMessage(val);
+      }
+    }
+    function selectQCardOption(text) { if (!isBusy) sendMessage(text); }
+    function skipQCard() { if (!isBusy) sendMessage('__SKIP__'); }
 
     function toggleThoughtBlock(id) {
       const body = document.getElementById(id);
@@ -922,7 +1296,6 @@ def render_ui() -> str:
       const container = document.getElementById('chat-messages-inner');
       const streamEl = document.getElementById('chat-stream');
 
-      // CRITICAL FIX: If starting a fresh chat or a new goal, clear previous messages from DOM!
       if (!appState || appState.is_empty || !appState.session_id || isNewGoalText(text)) {
         container.innerHTML = '';
       }
@@ -940,7 +1313,7 @@ def render_ui() -> str:
       liveDiv.innerHTML = `
         <div style="display:inline-flex; align-items:center; gap:8px; font-size:13px; color:#a8a6a1;">
           <span class="live-dot"></span>
-          <span id="${liveId}-label">Synthesizing statutory context...</span>
+          <span id="${liveId}-label">Researching statutory requirements...</span>
         </div>
         <div id="${liveId}-steps" class="thought-list"></div>
       `;
@@ -974,12 +1347,15 @@ def render_ui() -> str:
             stepsBox.appendChild(item);
             streamEl.scrollTop = streamEl.scrollHeight;
           }
-          await sleep(340);
+          await sleep(280);
         }
 
         liveDiv.remove();
         if (data.state) {
           appState = data.state;
+          if (appState.session_id) {
+            pushRoute(`/chat/${encodeURIComponent(appState.session_id)}`);
+          }
           renderApp(appState);
           if (data.open_artifacts && appState.form_artifacts && appState.form_artifacts.length > 0) {
             openArtifactsPanel('pdfs');
@@ -1044,18 +1420,58 @@ def render_ui() -> str:
 
           const proseHtml = msg.content ? `<div class="prose">${renderMarkdown(msg.content)}</div>` : '';
 
+          // Claude Interactive Question Card (shown on latest active interview step)
+          let qcardHtml = '';
+          const isLast = idx === history.length - 1;
+          const turn = msg.interview_turn;
+          if (isLast && turn && !turn.complete && turn.question) {
+            const opts = turn.options || turn.quick_replies || [];
+            const optsHtml = opts.map((opt, i) => `
+              <button onclick='selectQCardOption(${JSON.stringify(opt)})' class="qcard-option">
+                <span class="qcard-num">${i + 1}</span>
+                <span>${escapeHtml(opt)}</span>
+              </button>
+            `).join('');
+            const inputId = `qcard-custom-${idx}`;
+            qcardHtml = `
+              <div class="qcard">
+                <div class="qcard-header">
+                  <div class="qcard-title">${escapeHtml(turn.question)}</div>
+                  <div class="qcard-nav">
+                    <span>‹</span>
+                    <span>${turn.step || 1} of ${turn.total_steps || 4}</span>
+                    <span>›</span>
+                    <button onclick="skipQCard()" title="Skip" style="background:none;border:none;color:#8e8c86;cursor:pointer;font-size:15px;line-height:1;">✕</button>
+                  </div>
+                </div>
+                <div class="qcard-options">${optsHtml}</div>
+                <div class="qcard-custom-row">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8e8c86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                  </svg>
+                  <input id="${inputId}" type="text" class="qcard-custom-input" placeholder="${escapeHtml(turn.custom_placeholder || 'Something else')}" onkeydown="handleQCardKeydown(event, '${inputId}')" />
+                  <button onclick="skipQCard()" class="qcard-skip-btn">Skip</button>
+                </div>
+              </div>
+            `;
+          }
+
           // Inline Artifact Card
           let artifactCardHtml = '';
           if (msg.has_artifacts && state.form_artifacts && state.form_artifacts.length > 0) {
             const pdfCount = state.form_artifacts.length;
+            const officialCount = state.form_artifacts.filter(f => f.is_official_pdf).length;
             const portalCount = (state.portal_artifacts || []).length;
+            const subText = officialCount > 0
+              ? `${officialCount} Official Govt PDFs Filled · ${pdfCount} Total PDFs · ${portalCount} Portal Packs`
+              : `${pdfCount} Filled PDFs · ${portalCount} Portal Packs · Click to Inspect`;
             artifactCardHtml = `
               <div onclick="openArtifactsPanel('pdfs')" class="artifact-card">
                 <div class="artifact-card-left">
                   <div class="artifact-card-icon">PDF</div>
                   <div style="min-width:0;">
                     <div class="artifact-card-title">${escapeHtml(state.applicant_profile?.entity_name || state.title)} — Official Forms</div>
-                    <div class="artifact-card-sub">${pdfCount} Fillable AcroForm PDFs · ${portalCount} Portal Packs · Click to Inspect</div>
+                    <div class="artifact-card-sub">${subText}</div>
                   </div>
                 </div>
                 <span style="color:#787671;">›</span>
@@ -1063,7 +1479,7 @@ def render_ui() -> str:
             `;
           }
 
-          div.innerHTML = `${thoughtHtml}${proseHtml}${artifactCardHtml}`;
+          div.innerHTML = `${thoughtHtml}${proseHtml}${qcardHtml}${artifactCardHtml}`;
           container.appendChild(div);
         }
       });
@@ -1082,7 +1498,7 @@ def render_ui() -> str:
       headerBtn.classList.toggle('hidden', total === 0);
 
       document.getElementById('artifact-panel-title').textContent =
-        (state.applicant_profile?.entity_name || state.title || 'Compliance Pack') + ' · Artifacts';
+        (state.applicant_profile?.entity_name || state.title || 'Official Forms') + ' · Artifacts';
 
       const selBar = document.getElementById('pdf-selector-bar');
       selBar.innerHTML = '';
@@ -1091,19 +1507,21 @@ def render_ui() -> str:
         pdfs.forEach((fa, i) => {
           const btn = document.createElement('button');
           btn.className = 'pdf-pill' + (i === activePdfIndex ? ' active' : '');
-          btn.textContent = fa.form_name.replace('.pdf', '').replace(/_/g, ' ');
+          const badge = fa.is_official_pdf ? '🏛 ' : '';
+          btn.textContent = badge + fa.form_name.replace('.pdf', '').replace(/_/g, ' ');
           btn.onclick = () => { activePdfIndex = i; renderArtifactsData(appState); };
           selBar.appendChild(btn);
         });
 
         const cur = pdfs[activePdfIndex];
-        const rawPath = (cur.pdf_path || cur.file_path || '').replace(/\\/g, '/');
-        const relUrl = rawPath.includes('drafts/') ? '/drafts/' + rawPath.split('drafts/')[1] : '/' + rawPath.replace(/^\//, '');
-        document.getElementById('pdf-meta-status').textContent = `${cur.form_name} · ${cur.completion_percentage || 0}% filled`;
+        const rawPath = cur.pdf_path || cur.file_path || '';
+        const relUrl = rawPath.includes('drafts/') ? '/drafts/' + rawPath.split('drafts/')[1] : '/' + rawPath;
+        const kindLabel = cur.is_official_pdf ? 'Official Govt PDF' : 'AcroForm Draft';
+        document.getElementById('pdf-meta-status').textContent = `${cur.form_name} · ${kindLabel} · ${cur.completion_percentage || 0}% filled`;
         document.getElementById('pdf-download-link').href = relUrl;
         document.getElementById('pdf-preview-obj').data = relUrl + '?t=' + Date.now();
       } else {
-        selBar.innerHTML = '<span style="font-size:12px; color:#787671;">Complete the interview to generate fillable PDFs.</span>';
+        selBar.innerHTML = '<span style="font-size:12px; color:#787671;">Complete the interview to fill official PDFs.</span>';
       }
 
       document.getElementById('review-md-content').textContent =
@@ -1115,9 +1533,8 @@ def render_ui() -> str:
         portalsList.innerHTML = '<div style="font-size:13px; color:#787671;">No portal packs generated yet.</div>';
       } else {
         portals.forEach(pa => {
-          const rawCs = (pa.copy_sheet_path || '').replace(/\\/g, '/');
-          const mdRel = rawCs.includes('drafts/')
-            ? '/drafts/' + rawCs.split('drafts/')[1]
+          const mdRel = pa.copy_sheet_path && pa.copy_sheet_path.includes('drafts/')
+            ? '/drafts/' + pa.copy_sheet_path.split('drafts/')[1]
             : '#';
           const card = document.createElement('div');
           card.className = 'portal-card';
@@ -1146,7 +1563,7 @@ def render_ui() -> str:
         const data = await res.json();
         const list = document.getElementById('sessions-list');
         const sessions = data.sessions || [];
-        const activeId = data.active_id || appState?.session_id;
+        const activeId = appState?.session_id || getChatIdFromPath();
         if (sessions.length === 0) {
           list.innerHTML = '<div style="padding:16px 10px; font-size:12px; color:#6a6864; text-align:center;">No recent chats</div>';
           return;
@@ -1174,23 +1591,29 @@ def render_ui() -> str:
       } catch (e) { console.error(e); }
     }
 
-    async function openSession(id) {
+    async function openSession(id, updateUrl = true) {
       try {
-        const res = await fetch(`/api/session/${id}`);
+        const res = await fetch(`/api/session/${encodeURIComponent(id)}`);
         if (!res.ok) return;
         appState = await res.json();
         activePdfIndex = 0;
+        if (updateUrl) pushRoute(`/chat/${encodeURIComponent(id)}`);
         document.getElementById('chat-messages-inner').innerHTML = '';
         renderApp(appState);
         loadSessions();
       } catch (e) { console.error(e); }
     }
 
-    async function startNewChat() {
+    function navigateHome() {
+      startNewChat();
+    }
+
+    async function startNewChat(updateUrl = true) {
       try {
         const res = await fetch('/api/new_chat', { method: 'POST' });
         appState = await res.json();
         activePdfIndex = 0;
+        if (updateUrl) pushRoute('/');
         document.getElementById('chat-messages-inner').innerHTML = '';
         showWelcomeMode();
         loadSessions();
@@ -1212,14 +1635,11 @@ def render_ui() -> str:
         });
         if (appState && appState.session_id === id) {
           appState = null;
+          pushRoute('/');
           showWelcomeMode();
         }
         loadSessions();
       } catch (e) { console.error(e); }
-    }
-
-    async function finalizeAndGeneratePacks() {
-      await sendMessage('Please finalize my submission packs and generate all official PDFs now.');
     }
 
     function toggleModelDropdown(e) {
@@ -1234,6 +1654,30 @@ def render_ui() -> str:
         dd.classList.add('hidden');
       }
     });
+
+    function populateModelDropdown(models, activeModel) {
+      const dd = document.getElementById('model-dropdown');
+      if (!dd) return;
+      if (!models || models.length === 0) {
+        models = ['llama3.1:8b', 'llama3.2:3b'];
+      }
+      dd.innerHTML = models.map(m => {
+        const isActive = m === activeModel;
+        const tag = m.includes('8b') ? '<span class="model-rec-tag">Recommended</span>' : (m.includes('3b') ? '<span class="model-fast-tag">Fast</span>' : '');
+        const desc = m.includes('8b')
+          ? 'Deep legal & compliance reasoning on local Ollama'
+          : (m.includes('3b') ? 'Fast token generation for rapid consultation' : 'Local Ollama endpoint model');
+        return `
+          <div class="model-option ${isActive ? 'active' : ''}" onclick="switchModel('${m}')">
+            <div class="model-opt-title">
+              <span>${m}</span>
+              ${tag}
+            </div>
+            <div class="model-opt-sub">${desc}</div>
+          </div>
+        `;
+      }).join('');
+    }
 
     async function switchModel(modelName) {
       try {
@@ -1251,17 +1695,6 @@ def render_ui() -> str:
       if (dd) dd.classList.add('hidden');
     }
 
-    function renderModelDropdown(models, activeModel) {
-      const dd = document.getElementById('model-dropdown');
-      if (!dd) return;
-      dd.innerHTML = models.map(m => `
-        <div class="model-opt ${m === activeModel ? 'active' : ''}" onclick="switchModel('${m}')" style="padding: 8px 10px; border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; gap: 2px;">
-          <div style="font-weight: 500; font-size: 13px; color: ${m === activeModel ? 'var(--accent)' : 'var(--text-primary)'};">${m}</div>
-          <div style="font-size: 11px; color: var(--text-muted);">${m.includes('8b') ? 'Balanced local reasoning & legal extraction' : 'Ultra-fast low-latency local inference'}</div>
-        </div>
-      `).join('');
-    }
-
     function updateModelUI(modelName) {
       const pillName = document.getElementById('active-model-name');
       if (pillName) pillName.textContent = modelName;
@@ -1271,41 +1704,84 @@ def render_ui() -> str:
       if (cTag) cTag.textContent = `RedTape · ${modelName}`;
 
       const dd = document.getElementById('model-dropdown');
-      if (dd) {
-        dd.querySelectorAll('.model-opt').forEach(el => {
-          const title = el.querySelector('div')?.textContent;
-          if (title === modelName) {
+      if (dd && dd.children.length > 0) {
+        Array.from(dd.children).forEach(el => {
+          const titleSpan = el.querySelector('.model-opt-title span');
+          if (titleSpan && titleSpan.textContent.trim() === modelName) {
             el.classList.add('active');
-            el.querySelector('div').style.color = 'var(--accent)';
           } else {
             el.classList.remove('active');
-            const d = el.querySelector('div');
-            if (d) d.style.color = 'var(--text-primary)';
           }
         });
       }
     }
 
-    async function init() {
+    async function bootWorkspace() {
       setTimeGreeting();
-      try {
-        const [stRes, mRes] = await Promise.all([
-          fetch('/api/state'),
-          fetch('/api/model').catch(() => null)
-        ]);
-        appState = await stRes.json();
-        renderApp(appState);
-        loadSessions();
-        if (mRes && mRes.ok) {
-          const mData = await mRes.json();
-          if (mData.available_models) {
-            renderModelDropdown(mData.available_models, mData.active_model || 'llama3.1:8b');
-          }
-          if (mData.active_model) updateModelUI(mData.active_model);
-        }
-      } catch (e) { console.error(e); }
+      const chatId = getChatIdFromPath();
+      const [mRes] = await Promise.all([
+        fetch('/api/model').catch(() => null),
+        loadSessions(),
+      ]);
+      if (mRes && mRes.ok) {
+        const mData = await mRes.json();
+        if (mData.available_models) populateModelDropdown(mData.available_models, mData.active_model);
+        if (mData.active_model) updateModelUI(mData.active_model);
+      }
+      if (chatId) {
+        await openSession(chatId, false);
+      } else {
+        appState = null;
+        showWelcomeMode();
+      }
     }
 
+    async function syncRoute() {
+      const path = window.location.pathname;
+      if (!currentUser) {
+        showAuthScreen(path === '/signup' ? 'signup' : 'login', false);
+        return;
+      }
+      if (path === '/login' || path === '/signup') {
+        showAppShell();
+        pushRoute('/');
+        appState = null;
+        showWelcomeMode();
+        return;
+      }
+      showAppShell();
+      const chatId = getChatIdFromPath();
+      if (chatId) {
+        await openSession(chatId, false);
+      } else {
+        appState = null;
+        showWelcomeMode();
+        loadSessions();
+      }
+    }
+
+    async function init() {
+      try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        const path = window.location.pathname;
+        if (data && data.authenticated && data.user) {
+          updateUserChrome(data.user);
+          showAppShell();
+          if (path === '/login' || path === '/signup') {
+            pushRoute('/');
+          }
+          await bootWorkspace();
+        } else {
+          showAuthScreen(path === '/signup' ? 'signup' : 'login', path !== '/login' && path !== '/signup');
+        }
+      } catch (e) {
+        console.error(e);
+        showAuthScreen('login', false);
+      }
+    }
+
+    window.addEventListener('popstate', syncRoute);
     window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>

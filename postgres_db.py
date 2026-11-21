@@ -24,7 +24,7 @@ def _get_database_url():
     from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
     url = os.environ.get("DATABASE_URL")
     if not url and os.path.exists(".env"):
-        with open(".env", "r", encoding="utf-8") as f:
+        with open(".env", "r") as f:
             for line in f:
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:
@@ -33,13 +33,19 @@ def _get_database_url():
                         url = v.strip().strip('"').strip("'")
                         break
     if url:
-        url = url.strip().strip('"').strip("'")
+        url = str(url).strip().strip('"').strip("'")
         # psycopg2 does not support channel_binding - rebuild query string without it
-        parsed = urlparse(url)
-        params = parse_qs(parsed.query, keep_blank_values=True)
-        params.pop("channel_binding", None)
-        new_query = urlencode({k: v[0] for k, v in params.items()})
-        url = urlunparse(parsed._replace(query=new_query))
+        try:
+            parsed = urlparse(url)
+            params = parse_qs(parsed.query, keep_blank_values=True)
+            params.pop("channel_binding", None)
+            new_query = urlencode({k: v[0] for k, v in params.items()})
+            url = urlunparse(parsed._replace(query=new_query))
+        except Exception:
+            import re
+            url = re.sub(r'[&?]channel_binding=[^&]*', '', url)
+            url = re.sub(r'\?&', '?', url)
+            url = re.sub(r'\?$', '', url)
     return url
 
 DATABASE_URL = _get_database_url()
@@ -67,7 +73,7 @@ def get_connection():
         if not url:
             return None
         try:
-            conn = psycopg2.connect(url, connect_timeout=10)
+            conn = psycopg2.connect(url, connect_timeout=4)
             conn.autocommit = True
             _SHARED_CONN = conn
             return conn

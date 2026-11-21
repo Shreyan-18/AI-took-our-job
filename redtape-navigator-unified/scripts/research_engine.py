@@ -118,22 +118,61 @@ Return a JSON array of objects with this schema:
 """
 
 
+def _is_food_activity(text: str) -> bool:
+    t = (text or "").lower()
+    return any(w in t for w in (
+        "food", "bakery", "baker", "cake", "pastry", "confectionery", "restaurant",
+        "cafe", "dhaba", "eatery", "catering", "canteen", "sweet", "biryani", "kitchen"
+    ))
+
+
+def _is_flammable_activity(text: str) -> bool:
+    t = (text or "").lower()
+    return any(w in t for w in ("paint", "colour", "color", "varnish", "chemical", "hardware", "thinner", "solvent", "lacquer"))
+
+
+def _is_garment_activity(text: str) -> bool:
+    t = (text or "").lower()
+    return any(w in t for w in ("cloth", "clothes", "garment", "apparel", "textile", "boutique", "fashion", "saree"))
+
+
+def _is_book_activity(text: str) -> bool:
+    t = (text or "").lower()
+    return any(w in t for w in ("book", "books", "bookstore", "stationery", "stationary", "notebook", "textbook", "paper"))
+
+
 def build_search_queries(state: dict) -> list[tuple[str, str]]:
-    """Build targeted search queries across Municipal, State, and Central tiers."""
+    """Build strictly sector-aware search queries across Municipal, State, and Central tiers.
+    NEVER queries FSSAI for non-food retail (bookstores, clothing shops, paint/hardware shops).
+    """
     domain = state.get("domain", "business")
     profile = state.get("applicant_profile", {})
     loc = profile.get("location", {})
     city = loc.get("city_or_village") or loc.get("district") or "Kolkata"
     state_name = loc.get("state") or "West Bengal"
-    activity = profile.get("activity_type") or state.get("goal") or "business"
+    activity = profile.get("activity_type") or state.get("goal") or "retail business"
+    combined = f"{activity} {state.get('goal', '')}"
 
     queries = []
     if domain == "business":
-        queries.append(("municipal", f"{city} Municipal Corporation Certificate of Enlistment trade license"))
-        queries.append(("state", f"{state_name} shops and establishments registration portal"))
-        queries.append(("state", f"{state_name} fire emergency services NOC commercial"))
-        queries.append(("central", f"FSSAI FoSCoS basic registration turnover limit {activity}"))
-        queries.append(("central", f"GST registration threshold requirements India goods services"))
+        queries.append(("municipal", f"{city} {state_name} Municipality Certificate of Enlistment Form J trade license {activity}"))
+        queries.append(("state", f"{state_name} Shops and Establishments Form B SilpaSathi registration"))
+        queries.append(("state", f"{state_name} Professional Tax Form II enrolment retail trader"))
+        if _is_food_activity(combined):
+            queries.append(("central", f"FSSAI FoSCoS registration Form A Form B turnover threshold {activity}"))
+            queries.append(("state", f"{state_name} Fire Emergency Services NOC bakery restaurant seating threshold"))
+        elif _is_flammable_activity(combined):
+            queries.append(("state", f"{state_name} WBPCB Green Category paint hardware chemical storage clearance"))
+            queries.append(("state", f"{state_name} Fire Services IS 2190 extinguisher paint solvent shop"))
+            queries.append(("central", "GST REG-01 registration threshold paint hardware shop India"))
+        elif _is_garment_activity(combined):
+            queries.append(("state", f"{state_name} Fire Services textile garment showroom safety guidelines"))
+            queries.append(("central", "GST REG-01 registration threshold readymade garments clothes shop India"))
+        elif _is_book_activity(combined):
+            queries.append(("municipal", f"{city} Municipality commercial signboard display license shop"))
+            queries.append(("central", "Udyam MSME registration NIC 47611 bookstore stationery India"))
+        else:
+            queries.append(("central", f"Udyam MSME and GST registration threshold {activity} India"))
     elif domain == "zoning":
         queries.append(("municipal", f"{city} municipal residential building plan sanction zoning permit"))
         queries.append(("state", f"{state_name} urban development building rules FAR setback"))
@@ -294,71 +333,78 @@ Output only the JSON array of findings adhering to the schema.
     return None
 
 
-def get_jurisdiction_baseline_findings(domain: str, city: str = "Kolkata") -> list[dict]:
-    """Curated statutory baseline for demonstration and pitch shield fallback."""
+def get_jurisdiction_baseline_findings(domain: str, city: str = "Kolkata", activity: str = "") -> list[dict]:
+    """Sector-aware statutory baseline fallback (NEVER injects FSSAI for non-food retail)."""
     if domain == "business":
-        return [
+        is_kmc = any(k in (city or "").lower() for k in ("kolkata", "park circus", "beleghata", "beliaghata"))
+        findings = [
             {
-                "id": "lic_kmc_certificate_of_enlistment",
-                "name": "Certificate of Enlistment (Trade License)",
-                "authority": "Kolkata Municipal Corporation",
+                "id": "lic_kmc_ce" if is_kmc else "lic_municipal_form_j",
+                "name": "KMC Certificate of Enlistment (Trade License)" if is_kmc else f"{city} Municipality Certificate of Enlistment (Form J)",
+                "authority": "Kolkata Municipal Corporation" if is_kmc else f"{city} Municipality (WB e-District)",
                 "tier": "municipal",
-                "triggers": "Required for operating any trade, business, or commercial establishment within the municipal corporation.",
-                "statutory_fee": None,
+                "triggers": "Mandatory for operating any commercial trade within municipal limits.",
+                "statutory_fee": "₹1,500 – ₹2,500 / yr" if is_kmc else "₹800 – ₹1,500 / yr",
                 "renewal_period": "Annual",
                 "submission_channel": "web_portal",
-                "form_version": None,
-                "official_source_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCTradeLicenseHome.jsp",
+                "form_version": "Section 199 CE" if is_kmc else "Form J (Section 118)",
+                "official_source_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCCEHome.jsp" if is_kmc else "https://edistrict.wb.gov.in/",
                 "source_verified_at": None,
                 "source_fallback": True,
                 "conflicts": [],
-                "required_documents": [
-                    "Rent Agreement or Landlord NOC",
-                    "Government Photo ID (Aadhaar / PAN / Voter ID)",
-                    "Assessee Number details",
-                ],
+                "required_documents": ["Rent Agreement or Landlord NOC", "Government Photo ID", "Recent Electricity Bill"],
             },
             {
                 "id": "lic_wb_shops_and_establishments",
-                "name": "Registration under The Shops and Establishments Act",
-                "authority": "Labour Commissionerate, Government of West Bengal",
+                "name": "WB Shops & Establishments Registration (Form B)",
+                "authority": "Labour Commissionerate, Government of West Bengal (SilpaSathi)",
                 "tier": "state",
-                "triggers": "Required for running a commercial shop or establishment in West Bengal, administered through SilpaSathi.",
-                "statutory_fee": None,
-                "renewal_period": None,
+                "triggers": "Mandatory within 30 days of starting commercial shop operations in West Bengal.",
+                "statutory_fee": "₹300",
+                "renewal_period": "Auto-renewed (Notif. 175)",
                 "submission_channel": "web_portal",
                 "form_version": "Form B",
                 "official_source_url": "https://silpasathi.wb.gov.in/",
                 "source_verified_at": None,
                 "source_fallback": True,
                 "conflicts": [],
-                "required_documents": [
-                    "Establishment address proof",
-                    "Details of workers on site",
-                    "Property Tax or Trade License data linkage",
-                ],
+                "required_documents": ["Establishment address proof", "Staff count declaration"],
             },
             {
-                "id": "lic_fssai_basic_registration",
-                "name": "FSSAI Basic Food Safety Registration",
-                "authority": "Food Safety and Standards Authority of India",
-                "tier": "central",
-                "triggers": "Required for small food business operators and bakeries with anticipated annual turnover up to ₹1.5 Crore.",
-                "statutory_fee": "₹100",
-                "renewal_period": "Annual or Multi-year (1-5 years)",
+                "id": "lic_wb_ptax",
+                "name": "WB Professional Tax Enrolment (Form II)",
+                "authority": "Directorate of Commercial Taxes, West Bengal",
+                "tier": "state",
+                "triggers": "Mandatory for traders exceeding ₹5 Lakh annual gross turnover.",
+                "statutory_fee": "Slab-based (up to ₹2,500 / yr)",
+                "renewal_period": "Annual (by 31 July)",
                 "submission_channel": "web_portal",
-                "form_version": "FoSCoS Application Form",
-                "official_source_url": "https://foscos.fssai.gov.in",
+                "form_version": "Form II",
+                "official_source_url": "https://egov.wbcomtax.gov.in/PT_Admin",
                 "source_verified_at": None,
                 "source_fallback": True,
                 "conflicts": [],
-                "required_documents": [
-                    "Passport-size photo of food business operator",
-                    "Proof of possession of premises (Rent Agreement / Electricity Bill)",
-                    "List of food category desired to be manufactured/processed",
-                ],
+                "required_documents": ["PAN Card", "Trade License Copy"],
             },
         ]
+        if _is_food_activity(activity):
+            findings.append({
+                "id": "lic_fssai_basic_registration",
+                "name": "FSSAI Basic Food Safety Registration (Form A)",
+                "authority": "Food Safety and Standards Authority of India (FSSAI)",
+                "tier": "central",
+                "triggers": "Required for food business operators up to ₹1.5 Crore annual turnover (effective 01.04.2026).",
+                "statutory_fee": "₹100 / yr",
+                "renewal_period": "Annual",
+                "submission_channel": "web_portal",
+                "form_version": "Form A (FoSCoS)",
+                "official_source_url": "https://foscos.fssai.gov.in/assets/docs/Revised_31thMarch2026KindofBusinessEligibility.pdf",
+                "source_verified_at": None,
+                "source_fallback": True,
+                "conflicts": [],
+                "required_documents": ["Photo ID", "Premises Proof", "Schedule 4 Hygiene Self-Declaration"],
+            })
+        return findings
 
     # Generic / other domains fallback
     return [
@@ -414,7 +460,8 @@ def research(state: dict, demo_mode: bool = False) -> dict:
         used_fallback = True
         research_mode = "offline_jurisdictional_baseline"
         city = state.get("applicant_profile", {}).get("location", {}).get("city_or_village", "Kolkata")
-        findings = get_jurisdiction_baseline_findings(state.get("domain", "business"), city)
+        activity = f"{state.get('applicant_profile', {}).get('activity_type', '')} {state.get('goal', '')}"
+        findings = get_jurisdiction_baseline_findings(state.get("domain", "business"), city, activity=activity)
         notice = "Notice: Live Gemini research synthesis was unavailable; loaded verified statutory baseline for jurisdiction."
         if notice not in state.setdefault("errors", []):
             state["errors"].append(notice)

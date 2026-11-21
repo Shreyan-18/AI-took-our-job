@@ -1,0 +1,63 @@
+{
+  "form": "FSSAI_Form_B_Official.pdf",
+  "licence_id": "lic_fssai_state",
+  "official_url": "https://foscos.fssai.gov.in/assets/docs/stateForm_b.pdf",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "page": 1,
+        "x": 220,
+        "y": 150,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 220,
+        "y": 188,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 220,
+        "y": 235,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.location.address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 220,
+        "y": 310,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 220,
+        "y": 355,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+      "transform": "inr_words",
+      "mandatory": true
+    }
+  ]
+}

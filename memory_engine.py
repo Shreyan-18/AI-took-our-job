@@ -18,32 +18,46 @@ def get_db_url() -> str:
     global _DATABASE_URL
     if _DATABASE_URL:
         return _DATABASE_URL
-    
-    # Try reading from .env
+
+    # Try reading from .env (handle quoted values and any key=value format)
     env_path = os.path.join(os.path.dirname(__file__), ".env")
+    url = None
     if os.path.exists(env_path):
-        with open(env_path, "r", encoding="utf-8") as f:
+        with open(env_path) as f:
             for line in f:
-                if line.startswith("DATABASE_URL="):
-                    _DATABASE_URL = line.strip().split("=", 1)[1].strip("\"'")
-                    break
-    if not _DATABASE_URL:
-        _DATABASE_URL = os.environ.get("DATABASE_URL")
-    if _DATABASE_URL:
-        _DATABASE_URL = _DATABASE_URL.strip().strip('"').strip("'")
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    if k.strip() == "DATABASE_URL":
+                        url = v.strip().strip('"').strip("'")
+                        break
+    if not url:
+        url = os.environ.get("DATABASE_URL", "")
+
+    # psycopg2 doesn't support channel_binding — use urlparse to safely strip it
+    if url:
+        url = str(url).strip().strip('"').strip("'")
         from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
-        parsed = urlparse(_DATABASE_URL)
-        params = parse_qs(parsed.query, keep_blank_values=True)
-        params.pop("channel_binding", None)
-        new_query = urlencode({k: v[0] for k, v in params.items()})
-        _DATABASE_URL = urlunparse(parsed._replace(query=new_query))
+        try:
+            parsed = urlparse(url)
+            params = parse_qs(parsed.query, keep_blank_values=True)
+            params.pop("channel_binding", None)
+            new_query = urlencode({k: v[0] for k, v in params.items()})
+            url = urlunparse(parsed._replace(query=new_query))
+        except Exception:
+            # Fallback: regex strip
+            url = re.sub(r'[&?]channel_binding=[^&]*', '', url)
+            url = re.sub(r'\?&', '?', url)
+            url = re.sub(r'\?$', '', url)
+
+    _DATABASE_URL = url
     return _DATABASE_URL or ""
 
 def get_connection():
     url = get_db_url()
     if not url:
         raise ValueError("DATABASE_URL is not set.")
-    return psycopg2.connect(url, connect_timeout=10)
+    return psycopg2.connect(url)
 
 # Deterministic 768-dimensional feature projection
 _SEED = 42

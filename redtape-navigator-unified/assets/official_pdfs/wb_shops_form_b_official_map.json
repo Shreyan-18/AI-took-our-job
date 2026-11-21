@@ -1,0 +1,126 @@
+{
+  "form": "WB_Shops_Establishment_Form_B_Official.pdf",
+  "licence_id": "lic_wb_shops_and_establishments",
+  "official_url": "https://storage.googleapis.com/firebase-greythr-website.appspot.com/flamelink/media/compliances/SE_AOR/Form%20B%20-%20Application%20for%20Registration.pdf?GoogleAccessId=firebase-adminsdk-jpzmh%40firebase-greythr-website.iam.gserviceaccount.com&Expires=16725205800&Signature=Wu3cR4i2mUSqaCcCNBc%2Ftk%2B8QIq9gNcCaa44ztpb5GcRWSC5uD5G4%2BWzXgzADovmQ8fm1eHBhBB08xGHE2mU6X5E6slPZ%2BaZCaUDFEOmOkXAdsgxWSgb7nZqQnscGY%2FxJCheLFyKvpk7LkzLeRYjqX%2B2QpcNtfNKNGz9kD9k3PBPj7EMvwmnBGoPv63gykOPM8htm8lVnE8DmtkWitAN7XoYDsa3yKgALilqm7GA8unvmjmBqgYbQ5i%2Bw%2FNEFbEQl0SYZn7SHScHNGBYXG2Q%2FnKNDwbtj7mUnHdVYvtVrZptUtrp0XDmwAvQTHXKzWaoeGULsqg7%2BurPjmFVpoEpmw%3D%3D",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "page": 0,
+        "x": 200,
+        "y": 326,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 248,
+        "y": 535,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 72,
+        "y": 568,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.location.address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 248,
+        "y": 621,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 72,
+        "y": 654,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.applicant.residential_address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 72,
+        "y": 106,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.activity_type",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 180,
+        "y": 134,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.activity_type",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 250,
+        "y": 152,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.commencement_date",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 418,
+        "y": 468,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.domain_attributes.workers_on_site",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 72,
+        "y": 519,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.weekly_closing_day",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 96,
+        "y": 631,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.commencement_date",
+      "mandatory": false
+    }
+  ]
+}

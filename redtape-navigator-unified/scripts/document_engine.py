@@ -1,23 +1,21 @@
 #!/usr/bin/env python3
 """Unified Document & Digital Web Portal Generation Engine for RedTape Navigator.
-Implements Phase 5:
-1. Dual-channel generation:
-   - Channel A: Official PDF Forms (AcroForm + flat overlay, dual backend fitz/pypdf)
-   - Channel B: Digital Web Portals (FoSCoS, KMC, SilpaSathi copy-sheets & Playwright manifests)
-2. Strict Zero Fabrication: Stamps [PENDING_USER_INPUT] on missing fields for preview; never invents values.
-3. Supporting Document Pre-Check: Evaluates required attachments and supplies draft legal templates (NOC, Hygiene).
-4. Full audit linkage to state.json form_artifacts[] and portal_artifacts[].
+Strictly separates:
+- Channel A (Offline Submittable Official PDFs): Real government PDFs in assets/official_pdfs/
+  filled one-by-one after inspecting their required fields and collecting missing values.
+- Channel B (Online Portal-Only Clearances): Digital-only portals (KMC, SilpaSathi, Udyam, FoSCoS)
+  where no offline PDF exists — generates field-by-field copy-sheets & manifests.
+Zero arbitrary synthetic PDFs for portal-only clearances.
 """
 import argparse
 import os
 import sys
 from pathlib import Path
 
-# Add scripts directory to path for common imports
 SCRIPTS_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPTS_DIR.parent
 ASSETS_DIR = ROOT_DIR / "assets"
-FORMS_DIR = ASSETS_DIR / "forms"
+OFFICIAL_DIR = ASSETS_DIR / "official_pdfs"
 PORTALS_DIR = ASSETS_DIR / "portals"
 TEMPLATES_DIR = ASSETS_DIR / "templates"
 
@@ -26,108 +24,48 @@ from _common import effective_value, is_blank, load_json, save_json
 from fill_pdf import fill
 from generate_portal_pack import build_portal_pack
 
+# Registry of REAL downloadable offline government PDFs & their calibrated coordinate maps
+OFFICIAL_PDF_MAPS = {
+    "lic_municipal_form_j": OFFICIAL_DIR / "wb_municipal_form_j_official_map.json",
+    "lic_wb_shops_and_establishments": OFFICIAL_DIR / "wb_shops_form_b_official_map.json",
+    "lic_fssai_basic_registration": OFFICIAL_DIR / "fssai_form_a_official_map.json",
+    "lic_fssai_state": OFFICIAL_DIR / "fssai_form_b_official_map.json",
+    "lic_wb_ptax": OFFICIAL_DIR / "wb_ptax_form_ii_official_map.json",
+    "lic_gst_reg": OFFICIAL_DIR / "gst_reg_01_official_map.json",
+}
 
-def precheck_supporting_documents(state: dict, draft_dir: Path) -> list[dict]:
-    """Inspect required attachments, annotate precheck_status, and stage legal templates."""
-    raw_docs = state.get("required_supporting_documents", [])
-    updated_docs = []
+PORTAL_MAPS = {
+    "lic_fssai_basic_registration": PORTALS_DIR / "foscos_portal_map.json",
+    "lic_fssai_state": PORTALS_DIR / "foscos_portal_map.json",
+    "lic_kmc_ce": PORTALS_DIR / "kmc_trade_license_portal_map.json",
+    "lic_wb_shops_and_establishments": PORTALS_DIR / "silpasathi_portal_map.json",
+    "lic_municipal_building_sanction": PORTALS_DIR / "bmc_building_plan_portal_map.json",
+    "grant_pmksy_micro_irrigation": PORTALS_DIR / "banglar_krishi_portal_map.json",
+}
 
-    ap = state.get("applicant_profile", {})
-    applicant = ap.get("applicant", {})
-    location = ap.get("location", {})
-
-    for item in raw_docs:
-        doc = dict(item) if isinstance(item, dict) else {"name": str(item), "needed_for": []}
-        name_lower = doc.get("name", "").lower()
-
-        # 1. Rent Agreement / Landlord NOC
-        if any(term in name_lower for term in ("rent", "noc", "landlord", "possession")):
-            noc_tpl = TEMPLATES_DIR / "landlord_noc_template.md"
-            if noc_tpl.exists():
-                staged_path = draft_dir / "draft_landlord_noc.md"
-                # Render template with available facts
-                content = noc_tpl.read_text(encoding="utf-8")
-                content = content.replace("{applicant_name}", applicant.get("name") or "[APPLICANT_NAME]")
-                content = content.replace("{entity_name}", ap.get("entity_name") or "[BUSINESS_NAME]")
-                content = content.replace("{activity_type}", ap.get("activity_type") or "commercial operations")
-                content = content.replace("{city_or_village}", location.get("city_or_village") or "Kolkata")
-                staged_path.write_text(content, encoding="utf-8")
-                doc["precheck_status"] = "Template_Available"
-                doc["template_path"] = str(staged_path)
-            else:
-                doc["precheck_status"] = "Action_Required"
-
-        # 2. Food Safety & Hygiene Declaration
-        elif any(term in name_lower for term in ("food category", "hygiene", "sanitary", "schedule 4")):
-            hygiene_tpl = TEMPLATES_DIR / "food_safety_hygiene_declaration.md"
-            if hygiene_tpl.exists():
-                staged_path = draft_dir / "draft_food_hygiene_declaration.md"
-                content = hygiene_tpl.read_text(encoding="utf-8")
-                content = content.replace("{applicant_name}", applicant.get("name") or "[APPLICANT_NAME]")
-                content = content.replace("{entity_name}", ap.get("entity_name") or "[BUSINESS_NAME]")
-                content = content.replace("{activity_type}", ap.get("activity_type") or "bakery operations")
-                content = content.replace("{premises_address}", location.get("address") or location.get("municipal_ward_or_block") or "[PREMISES_ADDRESS]")
-                content = content.replace("{city_or_village}", location.get("city_or_village") or "Kolkata")
-                staged_path.write_text(content, encoding="utf-8")
-                doc["precheck_status"] = "Template_Available"
-                doc["template_path"] = str(staged_path)
-            else:
-                doc["precheck_status"] = "Action_Required"
-
-        # 3. Structural Stability Certificate (Zoning)
-        elif any(term in name_lower for term in ("structural", "stability", "engineer")):
-            struct_tpl = TEMPLATES_DIR / "structural_stability_declaration.md"
-            if struct_tpl.exists():
-                staged_path = draft_dir / "draft_structural_stability.md"
-                content = struct_tpl.read_text(encoding="utf-8")
-                content = content.replace("{applicant_name}", applicant.get("name") or "[APPLICANT_NAME]")
-                content = content.replace("{plot_address}", location.get("address") or location.get("municipal_ward_or_block") or "[PLOT_ADDRESS]")
-                content = content.replace("{city_or_village}", location.get("city_or_village") or "Bidhannagar")
-                content = content.replace("{proposed_floors}", str(ap.get("domain_attributes", {}).get("proposed_floors") or "1"))
-                staged_path.write_text(content, encoding="utf-8")
-                doc["precheck_status"] = "Template_Available"
-                doc["template_path"] = str(staged_path)
-            else:
-                doc["precheck_status"] = "Action_Required"
-
-        # 4. Land Possession / RoR / Khatian (Agriculture)
-        elif any(term in name_lower for term in ("khatian", "ror", "landholding", "cultivat", "passbook")):
-            land_tpl = TEMPLATES_DIR / "land_possession_self_declaration.md"
-            if land_tpl.exists():
-                staged_path = draft_dir / "draft_land_possession.md"
-                content = land_tpl.read_text(encoding="utf-8")
-                content = content.replace("{farmer_name}", applicant.get("name") or "[FARMER_NAME]")
-                content = content.replace("{farm_location}", location.get("address") or location.get("city_or_village") or "[FARM_LOCATION]")
-                content = content.replace("{district}", location.get("district") or location.get("city_or_village") or "Nadia")
-                content = content.replace("{landholding_acres}", str(ap.get("domain_attributes", {}).get("landholding_acres") or "2.5"))
-                content = content.replace("{crop_types}", str(ap.get("domain_attributes", {}).get("crop_types") or "Vegetables / Horticulture"))
-                content = content.replace("{mobile_number}", applicant.get("phone") or "[MOBILE_NUMBER]")
-                staged_path.write_text(content, encoding="utf-8")
-                doc["precheck_status"] = "Template_Available"
-                doc["template_path"] = str(staged_path)
-            else:
-                doc["precheck_status"] = "Action_Required"
-
-        # 5. Government ID / PAN / Photo
-        elif any(term in name_lower for term in ("id", "photo", "pan", "aadhaar")):
-            pan_val = effective_value(state, "applicant_profile.applicant.pan")
-            if not is_blank(pan_val):
-                doc["precheck_status"] = "Document_On_File"
-            else:
-                doc["precheck_status"] = "Action_Required"
-
-        # 6. General / Property tax / Assessee details
-        else:
-            doc["precheck_status"] = "Action_Required"
-
-        updated_docs.append(doc)
-
-    return updated_docs
+FIELD_HUMAN_LABELS = {
+    "applicant_profile.applicant.name": "Proprietor / Applicant Full Name",
+    "applicant_profile.entity_name": "Shop / Business Name",
+    "applicant_profile.location.address": "Shop Full Street Address",
+    "applicant_profile.location.ward_no": "Municipal Ward Number (e.g. Ward 12)",
+    "applicant_profile.applicant.phone": "10-Digit Mobile Number",
+    "applicant_profile.applicant.pan": "PAN Number (10 characters, e.g. ABCDE1234F)",
+    "applicant_profile.applicant.residential_address": "Proprietor Residential Address",
+    "applicant_profile.location.municipal_ward_or_block": "Municipality / Local Body",
+    "applicant_profile.location.district": "District",
+    "applicant_profile.location.holding_no": "Premises Holding Number",
+    "applicant_profile.activity_type": "Nature of Trade / Business",
+    "applicant_profile.domain_attributes.expected_annual_turnover_inr": "Expected Annual Turnover (INR)",
+    "applicant_profile.domain_attributes.floor_area_sqft": "Shop Floor Area (sq ft)",
+    "applicant_profile.domain_attributes.workers_on_site": "Number of Staff on Site",
+    "applicant_profile.domain_attributes.weekly_closing_day": "Weekly Closing Day (e.g. Sunday / Open 7 Days)",
+    "applicant_profile.location.premises_type": "Premises Ownership (Rented or Owned)",
+}
 
 
-def resolve_permit_target(lic_id: str, name: str) -> str:
+def resolve_permit_target(lic_id: str, name: str = "") -> str:
     combined = f"{lic_id} {name}".lower()
-    if lic_id == "lic_fssai_state" or "state food license" in combined or "form b" in combined and "fssai" in combined:
+    if lic_id == "lic_fssai_state" or "state food license" in combined or ("form b" in combined and "fssai" in combined):
         return "lic_fssai_state"
     if "fssai" in combined or "food" in combined:
         return "lic_fssai_basic_registration"
@@ -143,7 +81,7 @@ def resolve_permit_target(lic_id: str, name: str) -> str:
         return "lic_gst_reg"
     if lic_id == "lic_udyam_msme" or "udyam" in combined or "msme" in combined:
         return "lic_udyam_msme"
-    if lic_id == "lic_wb_fire_advisory" or "textile" in combined and "fire" in combined:
+    if lic_id == "lic_wb_fire_advisory" or ("textile" in combined and "fire" in combined):
         return "lic_wb_fire_advisory"
     if lic_id == "lic_wb_fire" or "fire" in combined:
         return "lic_wb_fire"
@@ -158,112 +96,215 @@ def resolve_permit_target(lic_id: str, name: str) -> str:
     return lic_id
 
 
-def generate_documents(state: dict, output_dir: str = None) -> dict:
-    """Generate both PDF forms and Web Portal submission packs for all Required permits."""
+def has_offline_official_pdf(lic_id: str, permit_name: str = "") -> bool:
+    """Returns True iff a real downloadable offline official PDF exists for this permit."""
+    canon = resolve_permit_target(lic_id, permit_name)
+    mp = OFFICIAL_PDF_MAPS.get(canon)
+    if not mp or not mp.exists():
+        return False
+    fmap = load_json(mp)
+    return (OFFICIAL_DIR / fmap["form"]).exists()
+
+
+def get_official_pdf_entry(lic_id: str, permit_name: str = "") -> dict | None:
+    """Loads metadata and field map for a single offline official government PDF."""
+    canon = resolve_permit_target(lic_id, permit_name)
+    mp = OFFICIAL_PDF_MAPS.get(canon)
+    if not mp or not mp.exists():
+        return None
+    fmap = load_json(mp)
+    pdf_path = OFFICIAL_DIR / fmap["form"]
+    if not pdf_path.exists():
+        return None
+    return {
+        "canon_id": canon,
+        "licence_id": lic_id,
+        "permit_name": permit_name or fmap["form"],
+        "form_name": fmap["form"],
+        "official_url": fmap.get("official_url"),
+        "pdf_path": str(pdf_path),
+        "map_path": str(mp),
+        "field_map": fmap,
+    }
+
+
+def get_required_offline_pdfs(state: dict) -> list[dict]:
+    """Returns ordered list of offline official PDFs applicable to Required permits in state."""
+    queue = []
+    seen = set()
+    for permit in state.get("compliance_matrix", []):
+        if permit.get("status") != "Required":
+            continue
+        lic_id = permit.get("id", "")
+        permit_name = permit.get("name", lic_id)
+        entry = get_official_pdf_entry(lic_id, permit_name)
+        if entry and entry["form_name"] not in seen:
+            seen.add(entry["form_name"])
+            queue.append(entry)
+    return queue
+
+
+def inspect_pdf_fields(pdf_entry: dict, state: dict) -> tuple[list[dict], list[dict]]:
+    """Inspects a specific official PDF's required fields against current state.
+    Returns (known_fields, missing_fields) where each item has {'source', 'label', 'value'}.
+    """
+    fmap = pdf_entry.get("field_map") or load_json(pdf_entry["map_path"])
+    known, missing = [], []
+    seen_sources = set()
+    for f in fmap.get("fields", []):
+        if not f.get("mandatory"):
+            continue
+        src = f["source"]
+        if src in seen_sources:
+            continue
+        seen_sources.add(src)
+        val = effective_value(state, src)
+        label = FIELD_HUMAN_LABELS.get(src, src.split(".")[-1].replace("_", " ").title())
+        if is_blank(val):
+            missing.append({"source": src, "label": label, "value": None})
+        else:
+            known.append({"source": src, "label": label, "value": val})
+    return known, missing
+
+
+def fill_single_official_pdf(pdf_entry: dict, state: dict, output_dir: str = None) -> dict:
+    """Stamps user details directly onto ONE real official government PDF and returns its artifact dict."""
     proj_id = state.get("project_id", "default_project")
     base_out = Path(output_dir) if output_dir else ROOT_DIR / "drafts" / proj_id
     base_out.mkdir(parents=True, exist_ok=True)
 
-    matrix = state.get("compliance_matrix", [])
-    # Evaluate permits marked Required or Conditional
-    active_permits = [r for r in matrix if r.get("status") in ("Required", "Conditional")]
+    fmap = pdf_entry.get("field_map") or load_json(pdf_entry["map_path"])
+    out_pdf_path = base_out / f"filled_{fmap['form']}"
+    report_path = base_out / f"filled_{fmap['form']}.report.json"
 
-    # Catalog existing + sector-specific official AcroForm maps
-    form_maps = {
-        "lic_kmc_ce": FORMS_DIR / "kmc_section199_map.json",
-        "lic_municipal_form_j": FORMS_DIR / "wb_municipal_form_j_map.json",
-        "lic_fssai_basic_registration": FORMS_DIR / "fssai_form_a_map.json",
-        "lic_fssai_state": FORMS_DIR / "fssai_form_b_map.json",
-        "lic_wb_shops_and_establishments": FORMS_DIR / "wb_shops_form_b_map.json",
-        "lic_wb_ptax": FORMS_DIR / "wb_ptax_form_ii_map.json",
-        "lic_gst_reg": FORMS_DIR / "gst_reg_01_map.json",
-        "lic_udyam_msme": FORMS_DIR / "udyam_msme_map.json",
-        "lic_wb_fire": FORMS_DIR / "wb_fire_noc_map.json",
-        "lic_wb_fire_advisory": FORMS_DIR / "wb_textile_fire_map.json",
-        "lic_wb_signage": FORMS_DIR / "panihati_signboard_map.json",
-        "lic_municipal_building_sanction": FORMS_DIR / "building_plan_form_map.json",
-        "grant_pmksy_micro_irrigation": FORMS_DIR / "pmksy_grant_form_map.json",
-    }
-    portal_maps = {
-        "lic_fssai_basic_registration": PORTALS_DIR / "foscos_portal_map.json",
-        "lic_fssai_state": PORTALS_DIR / "foscos_portal_map.json",
-        "lic_kmc_ce": PORTALS_DIR / "kmc_trade_license_portal_map.json",
-        "lic_wb_shops_and_establishments": PORTALS_DIR / "silpasathi_portal_map.json",
-        "lic_municipal_building_sanction": PORTALS_DIR / "bmc_building_plan_portal_map.json",
-        "grant_pmksy_micro_irrigation": PORTALS_DIR / "banglar_krishi_portal_map.json",
+    report = fill(pdf_entry["pdf_path"], fmap, state, str(out_pdf_path), stamp_pending=True)
+    save_json(str(report_path), report)
+
+    completion = report.get("completion_percentage", 0)
+    return {
+        "form_name": fmap["form"],
+        "permit_name": pdf_entry.get("permit_name", fmap["form"]),
+        "licence_id": pdf_entry.get("licence_id"),
+        "official_source_url": fmap.get("official_url"),
+        "is_official_pdf": True,
+        "status": "Official_PDF_Filled",
+        "completion_percentage": completion,
+        "fields_filled": f"{completion}%",
+        "missing_fields": report.get("missing_fields", []),
+        "file_path": str(out_pdf_path),
+        "pdf_path": str(out_pdf_path),
+        "report_path": str(report_path),
     }
 
-    form_artifacts = []
+
+def precheck_supporting_documents(state: dict, draft_dir: Path) -> list[dict]:
+    """Inspect required attachments, annotate precheck_status, and stage legal templates."""
+    raw_docs = state.get("required_supporting_documents", [])
+    updated_docs = []
+    ap = state.get("applicant_profile", {})
+    applicant = ap.get("applicant", {})
+    location = ap.get("location", {})
+
+    for item in raw_docs:
+        doc = dict(item) if isinstance(item, dict) else {"name": str(item), "needed_for": []}
+        name_lower = doc.get("name", "").lower()
+
+        if any(term in name_lower for term in ("rent", "noc", "landlord", "possession")):
+            noc_tpl = TEMPLATES_DIR / "landlord_noc_template.md"
+            if noc_tpl.exists():
+                staged_path = draft_dir / "draft_landlord_noc.md"
+                content = noc_tpl.read_text(encoding="utf-8")
+                content = content.replace("{applicant_name}", applicant.get("name") or "[APPLICANT_NAME]")
+                content = content.replace("{entity_name}", ap.get("entity_name") or "[BUSINESS_NAME]")
+                content = content.replace("{activity_type}", ap.get("activity_type") or "commercial operations")
+                content = content.replace("{city_or_village}", location.get("city_or_village") or "Kolkata")
+                staged_path.write_text(content, encoding="utf-8")
+                doc["precheck_status"] = "Template_Available"
+                doc["template_path"] = str(staged_path)
+            else:
+                doc["precheck_status"] = "Action_Required"
+        elif any(term in name_lower for term in ("food category", "hygiene", "sanitary", "schedule 4")):
+            hygiene_tpl = TEMPLATES_DIR / "food_safety_hygiene_declaration.md"
+            if hygiene_tpl.exists():
+                staged_path = draft_dir / "draft_food_hygiene_declaration.md"
+                content = hygiene_tpl.read_text(encoding="utf-8")
+                content = content.replace("{applicant_name}", applicant.get("name") or "[APPLICANT_NAME]")
+                content = content.replace("{entity_name}", ap.get("entity_name") or "[BUSINESS_NAME]")
+                content = content.replace("{activity_type}", ap.get("activity_type") or "bakery operations")
+                content = content.replace("{premises_address}", location.get("address") or location.get("municipal_ward_or_block") or "[PREMISES_ADDRESS]")
+                content = content.replace("{city_or_village}", location.get("city_or_village") or "Kolkata")
+                staged_path.write_text(content, encoding="utf-8")
+                doc["precheck_status"] = "Template_Available"
+                doc["template_path"] = str(staged_path)
+            else:
+                doc["precheck_status"] = "Action_Required"
+        elif any(term in name_lower for term in ("id", "photo", "pan", "aadhaar")):
+            pan_val = effective_value(state, "applicant_profile.applicant.pan")
+            doc["precheck_status"] = "Document_On_File" if not is_blank(pan_val) else "Action_Required"
+        else:
+            doc["precheck_status"] = "Action_Required"
+        updated_docs.append(doc)
+    return updated_docs
+
+
+def generate_portal_packs_only(state: dict, output_dir: str = None) -> list[dict]:
+    """Generates field-by-field copy-sheets for online-portal-only clearances."""
+    proj_id = state.get("project_id", "default_project")
+    base_out = Path(output_dir) if output_dir else ROOT_DIR / "drafts" / proj_id
+    base_out.mkdir(parents=True, exist_ok=True)
+
     portal_artifacts = []
-
-    print(f"\nGenerating Document Packs for {len(active_permits)} statutory permits...")
-
-    for permit in active_permits:
+    seen = set()
+    for permit in state.get("compliance_matrix", []):
+        if permit.get("status") != "Required":
+            continue
         lic_id = permit.get("id", "")
-        permit_name = permit.get("name", lic_id)
-        canon_target = resolve_permit_target(lic_id, permit_name)
+        canon = resolve_permit_target(lic_id, permit.get("name", ""))
+        pmap_path = PORTAL_MAPS.get(canon)
+        if not pmap_path or not pmap_path.exists() or pmap_path.name in seen:
+            continue
+        seen.add(pmap_path.name)
+        pmap = load_json(pmap_path)
+        clean_name = pmap_path.stem.replace("_portal_map", "")
+        out_md_path = base_out / f"{clean_name}_pack.md"
+        out_man_path = base_out / f"{clean_name}_manifest.json"
+        md_text, manifest = build_portal_pack(pmap, state)
+        out_md_path.write_text(md_text, encoding="utf-8")
+        save_json(str(out_man_path), manifest)
+        completion = manifest.get("completion_percentage", 0)
+        portal_artifacts.append({
+            "portal_name": pmap["portal_name"],
+            "licence_id": lic_id,
+            "portal_url": pmap["portal_url"],
+            "status": "Ready_For_User_Submit" if completion == 100 else "Pack_Generated",
+            "completion_percentage": completion,
+            "missing_fields": manifest.get("missing_fields", []),
+            "copy_sheet_path": str(out_md_path),
+            "file_path": str(out_md_path),
+            "manifest_path": str(out_man_path),
+            "human_gates": manifest.get("stop_before_gates", []),
+        })
+    state["required_supporting_documents"] = precheck_supporting_documents(state, base_out)
+    return portal_artifacts
 
-        # --- Channel A: PDF Form Generation ---
-        if canon_target in form_maps and form_maps[canon_target].exists():
-            fmap_path = form_maps[canon_target]
-            fmap = load_json(fmap_path)
-            pdf_source_path = FORMS_DIR / fmap["form"]
-            if pdf_source_path.exists():
-                out_pdf_path = base_out / f"draft_{fmap['form']}"
-                report_path = base_out / f"draft_{fmap['form']}.report.json"
-                report = fill(str(pdf_source_path), fmap, state, str(out_pdf_path), stamp_pending=True)
-                save_json(str(report_path), report)
 
-                completion = report.get("completion_percentage", 0)
-                status = "Ready_For_Signature" if completion == 100 else "Draft_Generated"
-                form_artifacts.append({
-                    "form_name": fmap["form"],
-                    "licence_id": lic_id,
-                    "status": status,
-                    "completion_percentage": completion,
-                    "missing_fields": report.get("missing_fields", []),
-                    "file_path": str(out_pdf_path),
-                    "report_path": str(report_path),
-                })
-                print(f"  [PDF Generated] {fmap['form']}: {completion}% complete -> {out_pdf_path.name}")
+def generate_documents(state: dict, output_dir: str = None) -> dict:
+    """Batch-fills all applicable REAL offline official PDFs + online portal copy-sheets."""
+    proj_id = state.get("project_id", "default_project")
+    base_out = Path(output_dir) if output_dir else ROOT_DIR / "drafts" / proj_id
+    base_out.mkdir(parents=True, exist_ok=True)
 
-        # --- Channel B: Web Portal Pack Generation ---
-        if canon_target in portal_maps and portal_maps[canon_target].exists():
-            pmap_path = portal_maps[canon_target]
-            pmap = load_json(pmap_path)
-            clean_name = pmap_path.stem.replace("_portal_map", "")
-            out_md_path = base_out / f"{clean_name}_pack.md"
-            out_man_path = base_out / f"{clean_name}_manifest.json"
+    pdf_queue = get_required_offline_pdfs(state)
+    form_artifacts = []
+    for entry in pdf_queue:
+        art = fill_single_official_pdf(entry, state, output_dir=str(base_out))
+        form_artifacts.append(art)
 
-            md_text, manifest = build_portal_pack(pmap, state)
-            out_md_path.write_text(md_text, encoding="utf-8")
-            save_json(str(out_man_path), manifest)
-
-            completion = manifest.get("completion_percentage", 0)
-            status = "Ready_For_User_Submit" if completion == 100 else "Pack_Generated"
-            portal_artifacts.append({
-                "portal_name": pmap["portal_name"],
-                "licence_id": lic_id,
-                "portal_url": pmap["portal_url"],
-                "status": status,
-                "completion_percentage": completion,
-                "missing_fields": manifest.get("missing_fields", []),
-                "copy_sheet_path": str(out_md_path),
-                "manifest_path": str(out_man_path),
-                "human_gates": manifest.get("stop_before_gates", []),
-            })
-            print(f"  [Portal Pack] {pmap['portal_name']}: {completion}% ready -> {out_md_path.name}")
-
-    # Stage supporting document templates & pre-checks
-    prechecked_docs = precheck_supporting_documents(state, base_out)
-    state["required_supporting_documents"] = prechecked_docs
+    portal_artifacts = generate_portal_packs_only(state, output_dir=str(base_out))
 
     state["form_artifacts"] = form_artifacts
     state["portal_artifacts"] = portal_artifacts
-    flags = state.setdefault("workflow_flags", {})
-    flags["documents_generated"] = True
-
-    print(f"\nDocument generation complete. Total PDF drafts: {len(form_artifacts)}, Portal packs: {len(portal_artifacts)}")
+    state.setdefault("workflow_flags", {})["documents_generated"] = True
     return state
 
 

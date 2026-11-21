@@ -1,0 +1,106 @@
+{
+  "form": "WB_Professional_Tax_Form_II_Official.pdf",
+  "licence_id": "lic_wb_ptax",
+  "official_url": "https://raniganjchamber.com/usefulforms/professional%20tax%20enrolment.pdf",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "page": 0,
+        "x": 42,
+        "y": 176,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.location.district",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 302,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 328,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 354,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 410,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.district",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 448,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.applicant.residential_address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 498,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.district",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 560,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.commencement_date",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 305,
+        "y": 682,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+      "transform": "inr_words",
+      "mandatory": false
+    }
+  ]
+}

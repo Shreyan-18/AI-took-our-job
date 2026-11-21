@@ -1,28 +1,28 @@
 # Graph Report - red-tape  (2026-11-21)
 
 ## Corpus Check
-- 159 files · ~66,770 words
+- 168 files · ~73,034 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .example 1, .prisma 1)
 
 ## Summary
-- 1116 nodes · 1580 edges · 158 communities (91 shown, 67 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 26 edges (avg confidence: 0.86)
+- 1225 nodes · 1735 edges · 160 communities (96 shown, 64 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.85)
 - Token cost: 29,931 input · 1,939 output
 
 ## Graph Freshness
-- Built from commit: `b1fac093`
+- Built from commit: `bde5d7a6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)
-- os
+- test_phase6_review_overrides.py
 - Applicant Profile Schema
 - Compliance Matrix Schema
 - Workflow Orchestration Testing
 - Portal Artifact Schema
-- RedTapeSession
+- interview_engine_v2.py
 - Form Artifact Schema
 - AI Agent Skills
 - Workflow State Flags
@@ -44,11 +44,11 @@
 - HITL KMC License
 - HITL SilpaSathi Pack
 - Project State Schema
-- postgres_db.py
+- FSSAI_Form_A_Official.pdf
 - Data Provenance Schema
 - Metadata Fields
 - json
-- interview_engine_v2.py
+- load_json
 - Landlord NOC Documents
 - Structural Stability Documents
 - Food Safety Declaration
@@ -149,10 +149,10 @@
 - sess_26c0566581/draft_landlord_noc.md
 - Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)
 - Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)
-- test_pipeline.py
-- test_e2e_v2.py
+- compliance_engine.py
+- _common.py
 - sess_51f5d75d1a/draft_landlord_noc.md
-- langfuse_tracer.py
+- 🏛️ RedTape Navigator
 - sess_bc057306de/draft_landlord_noc.md
 - Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)
 - Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)
@@ -171,30 +171,32 @@
 - sess_5f635b093c/draft_landlord_noc.md
 - sess_a8d1ad3f2c/draft_food_hygiene_declaration.md
 - sess_a8d1ad3f2c/draft_landlord_noc.md
+- os
+- argparse
 
 ## God Nodes (most connected - your core abstractions)
-1. `RedTapeSession` - 31 edges
-2. `load_json()` - 26 edges
-3. `save_json()` - 22 edges
+1. `RedTapeSession` - 36 edges
+2. `load_json()` - 30 edges
+3. `save_json()` - 23 edges
 4. `call_ollama()` - 20 edges
-5. `effective_value()` - 19 edges
-6. `is_blank()` - 16 edges
+5. `effective_value()` - 20 edges
+6. `is_blank()` - 17 edges
 7. `build_workflow()` - 16 edges
 8. `RedTape Navigator Unified Skill` - 15 edges
-9. `generate_documents()` - 14 edges
-10. `RedTapeState` - 13 edges
+9. `RedTapeState` - 13 edges
+10. `RedTapeHTTPHandler` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `benchmark_run()` --calls--> `generate_documents()`  [INFERRED]
   benchmark_pipeline_ollama.py → redtape-navigator-unified/scripts/document_engine.py
-- `call_gemini_interview()` --calls--> `call_ollama()`  [EXTRACTED]
-  redtape-navigator-unified/scripts/interview_engine.py → ollama_client.py
-- `get_active_session_fallback()` --uses--> `RedTapeSession`  [INFERRED]
-  demo_server.py → interview_engine_v2.py
-- `RedTapeHTTPHandler` --uses--> `RedTapeSession`  [INFERRED]
-  demo_server.py → interview_engine_v2.py
+- `generate_regulatory_briefing_markdown()` --calls--> `has_offline_official_pdf()`  [INFERRED]
+  interview_engine_v2.py → redtape-navigator-unified/scripts/document_engine.py
+- `generate_completed_filing_markdown()` --calls--> `has_offline_official_pdf()`  [INFERRED]
+  interview_engine_v2.py → redtape-navigator-unified/scripts/document_engine.py
 - `evaluate_with_gemini()` --calls--> `call_ollama()`  [EXTRACTED]
   redtape-navigator-unified/scripts/compliance_engine.py → ollama_client.py
+- `call_gemini_interview()` --calls--> `call_ollama()`  [EXTRACTED]
+  redtape-navigator-unified/scripts/interview_engine.py → ollama_client.py
 
 ## Import Cycles
 - None detected.
@@ -203,15 +205,15 @@
 - **Bakery Compliance Flow (Kolkata)** — drafts_demo_bakery_kolkata_foscos_pack, drafts_demo_bakery_kolkata_kmc_trade_license_pack, drafts_demo_bakery_kolkata_silpasathi_pack [INFERRED 0.90]
 - **BMC Building Sanction Flow** — drafts_demo_zoning_extension_bmc_building_plan_pack, drafts_demo_zoning_extension_draft_structural_stability [INFERRED 0.90]
 
-## Communities (158 total, 67 thin omitted)
+## Communities (160 total, 64 thin omitted)
 
 ### Community 0 - "Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A)"
 Cohesion: 0.33
 Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: FoSCoS FSSAI Basic Food Registration (Form A), Required Portal Uploads, Step 1: Applicant & Premises Details, Step 2: Kind of Business & Turnover
 
-### Community 1 - "os"
-Cohesion: 0.08
-Nodes (39): apply_transform(), effective_value(), get_path(), inr_to_indian_words(), is_blank(), load_json(), mask(), need() (+31 more)
+### Community 1 - "test_phase6_review_overrides.py"
+Cohesion: 0.21
+Nodes (12): effective_value(), get_path(), mask(), main(), render(), main(), test_dynamic_overrides_and_audit_trail(), test_review_markdown_rendering() (+4 more)
 
 ### Community 2 - "Applicant Profile Schema"
 Cohesion: 0.04
@@ -222,16 +224,16 @@ Cohesion: 0.05
 Nodes (43): type, items, type, items, type, type, items, type (+35 more)
 
 ### Community 4 - "Workflow Orchestration Testing"
-Cohesion: 0.09
+Cohesion: 0.11
 Nodes (18): main(), http_get(), http_post(), main(), start_test_server(), test_langgraph_routing_and_structure(), test_server_endpoints(), build_workflow() (+10 more)
 
 ### Community 5 - "Portal Artifact Schema"
 Cohesion: 0.06
 Nodes (31): maximum, minimum, type, type, description, items, type, type (+23 more)
 
-### Community 6 - "RedTapeSession"
-Cohesion: 0.16
-Nodes (8): build_dynamic_statutory_matrix(), generate_completed_filing_markdown(), get_ollama_model(), parse_identity_text(), parse_inr_amount(), parse_pan(), parse_phone(), RedTapeSession
+### Community 6 - "interview_engine_v2.py"
+Cohesion: 0.06
+Nodes (22): analyze_citizen_goal(), build_dynamic_statutory_matrix(), call_ollama_json(), call_ollama_local(), extract_location_heuristics(), generate_completed_filing_markdown(), generate_regulatory_briefing_markdown(), get_ollama_model() (+14 more)
 
 ### Community 7 - "Form Artifact Schema"
 Cohesion: 0.08
@@ -268,6 +270,10 @@ Nodes (7): 1. Compliance Matrix, 2. Audit Trail & Rule Reasoning, 3. Conflicts &
 ### Community 15 - "HITL Application Review"
 Cohesion: 0.25
 Nodes (7): 1. Compliance Matrix, 2. Audit Trail & Rule Reasoning, 3. Conflicts & System Notices, 4. Filled PDF Drafts & Digital Portal Packs, 5. Supporting Document Checklist, 6. Submission Readiness, Application Review Package: small bakery
+
+### Community 16 - "PDF Form Templates"
+Cohesion: 0.15
+Nodes (3): build_all(), build_official_wb_form_j(), _create_pdf_and_map()
 
 ### Community 17 - "FSSAI Registration Pack"
 Cohesion: 0.33
@@ -313,9 +319,9 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSat
 Cohesion: 0.33
 Nodes (5): description, required, $schema, title, type
 
-### Community 28 - "postgres_db.py"
-Cohesion: 0.12
-Nodes (9): add_message(), _bg_worker(), clear_all_chat_history(), get_connection(), _get_database_url(), get_session_details(), init_db(), list_sessions() (+1 more)
+### Community 28 - "FSSAI_Form_A_Official.pdf"
+Cohesion: 0.04
+Nodes (45): FSSAI_Form_A_Official.pdf, bytes, has_text, height, ok, pages, sample_text, widgets (+37 more)
 
 ### Community 29 - "Data Provenance Schema"
 Cohesion: 0.50
@@ -327,11 +333,11 @@ Nodes (3): format, type, created_at
 
 ### Community 31 - "json"
 Cohesion: 0.06
-Nodes (24): benchmark_run(), call_ollama(), get_active_model(), set_active_model(), evaluate_with_gemini(), call_ollama(), get_active_model(), set_active_model() (+16 more)
+Nodes (26): benchmark_run(), download_all(), write_maps(), call_ollama(), get_active_model(), set_active_model(), call_ollama(), get_active_model() (+18 more)
 
-### Community 32 - "interview_engine_v2.py"
-Cohesion: 0.20
-Nodes (5): analyze_citizen_goal(), call_ollama_json(), call_ollama_local(), extract_location_heuristics(), generate_regulatory_briefing_markdown()
+### Community 32 - "load_json"
+Cohesion: 0.17
+Nodes (10): load_json(), fill_single_official_pdf(), generate_documents(), generate_portal_packs_only(), get_official_pdf_entry(), get_required_offline_pdfs(), inspect_pdf_fields(), main() (+2 more)
 
 ### Community 52 - "Portal Submission Pack: KMC Certificate of Enlistment (Trade License)"
 Cohesion: 0.33
@@ -506,8 +512,8 @@ Cohesion: 0.33
 Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: KMC Certificate of Enlistment (Trade License), Required Portal Uploads, Step 1: Location & Premises Identification, Step 2: Business & Applicant Profile
 
 ### Community 127 - "demo_server.py"
-Cohesion: 0.12
-Nodes (6): get_active_session_fallback(), get_or_create_session(), RedTapeHTTPHandler, set_ollama_model(), delete_session(), render_ui()
+Cohesion: 0.05
+Nodes (22): get_user_from_cookie(), _hash_pw(), _load_users(), login(), logout(), _save_users(), signup(), _get_available_ollama_models() (+14 more)
 
 ### Community 128 - "Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)"
 Cohesion: 0.33
@@ -521,9 +527,17 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSat
 Cohesion: 0.33
 Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B), Required Portal Uploads, Step 1: Establishment Particulars, Step 2: Employment & Employer
 
-### Community 136 - "langfuse_tracer.py"
-Cohesion: 0.36
-Nodes (4): get_langfuse_client(), log_scenario_trace(), log_turn_trace(), _push_turn_trace_worker()
+### Community 133 - "compliance_engine.py"
+Cohesion: 0.14
+Nodes (7): catalog_supporting_documents(), compliance(), evaluate_deterministic(), evaluate_with_gemini(), main(), set_active_model(), find_api_key()
+
+### Community 134 - "_common.py"
+Cohesion: 0.20
+Nodes (7): apply_transform(), inr_to_indian_words(), need(), main(), make_state(), main(), parse_intent()
+
+### Community 136 - "🏛️ RedTape Navigator"
+Cohesion: 0.11
+Nodes (17): 1. Clone the Repository, 1. Run the Comprehensive End-to-End Verification Test, 2. Create and Activate a Virtual Environment, 2. Start the Live Interactive Web Application, 3. Install Dependencies, 4. Configure Environment Variables, 🏗️ Architecture & Multi-Agent Flow, 💻 Cross-Platform Quickstart Guide (+9 more)
 
 ### Community 138 - "Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B)"
 Cohesion: 0.33
@@ -569,25 +583,33 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: KMC Cert
 Cohesion: 0.33
 Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSathi West Bengal Shops & Establishments (Form B), Required Portal Uploads, Step 1: Establishment Particulars, Step 2: Employment & Employer
 
+### Community 156 - "os"
+Cohesion: 0.29
+Nodes (9): is_blank(), save_json(), fill(), _fill_pymupdf(), _fill_pypdf(), main(), build_portal_pack(), main() (+1 more)
+
+### Community 158 - "argparse"
+Cohesion: 0.31
+Nodes (4): inspect(), main(), render_page(), main()
+
 ## Knowledge Gaps
 - **31 isolated node(s):** `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction`, `India Residential Zoning Jurisdiction`, `Compliance System Prompt` (+26 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 707 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **67 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 771 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **64 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `properties` connect `Project Configuration Schema` to `Applicant Profile Schema`, `Workflow State Flags`, `Schema References`, `Validation Results Schema`, `Research and Findings`, `domain`, `overrides`, `Project State Schema`, `Data Provenance Schema`, `Metadata Fields`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Are the 2 inferred relationships involving `RedTapeSession` (e.g. with `get_active_session_fallback()` and `RedTapeHTTPHandler`) actually correct?**
-  _`RedTapeSession` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `RedTapeSession` connect `interview_engine_v2.py` to `json`, `demo_server.py`?**
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `os` be split into smaller, more focused modules?**
-  _Cohesion score 0.08191808191808192 - nodes in this community are weakly interconnected._
-- **Why does `RedTapeSession` connect `RedTapeSession` to `interview_engine_v2.py`, `json`, `test_e2e_v2.py`, `demo_server.py`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Should `Applicant Profile Schema` be split into smaller, more focused modules?**
   _Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected._
+- **Why does `properties` connect `Project Configuration Schema` to `Applicant Profile Schema`, `Workflow State Flags`, `Schema References`, `Validation Results Schema`, `Research and Findings`, `domain`, `overrides`, `Project State Schema`, `Data Provenance Schema`, `Metadata Fields`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Should `Compliance Matrix Schema` be split into smaller, more focused modules?**
   _Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected._
+- **Why does `load_json()` connect `load_json` to `test_phase6_review_overrides.py`, `Workflow Orchestration Testing`, `compliance_engine.py`, `interview_engine_v2.py`, `_common.py`, `interview_engine.py`, `os`, `argparse`, `json`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Should `Workflow Orchestration Testing` be split into smaller, more focused modules?**
+  _Cohesion score 0.10512820512820513 - nodes in this community are weakly interconnected._

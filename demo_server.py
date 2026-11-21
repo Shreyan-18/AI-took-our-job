@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""RedTape Navigator — Clean Zero-API Claude Replica Server.
-Serves the authentic Claude.ai-style interface on http://localhost:8765 backed by:
-- Local verified 2026 statutory knowledge base (data/scenarios_kb.json)
-- Stateful 4-turn conversational interview engine (interview_engine_v2.py)
-- Real local AcroForm PDF auto-filling per session
-- Neon PostgreSQL persistence (postgres_db.py)
-- Live asynchronous Langfuse multi-agent observability (langfuse_tracer.py)
+"""RedTape Navigator — Clean Claude-Style Server with Login/Sign-Up & /chat/:id Navigation.
+Serves on http://localhost:8765:
+- /login, /signup : Clean account login & sign-up (name, email, password only — zero PAN/Aadhaar)
+- /               : Home page for the chat interface
+- /chat/:id       : Direct URL navigation to any saved consultation session
 """
 import json
 import os
@@ -19,6 +17,7 @@ from urllib.parse import parse_qs, urlparse
 ROOT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT_DIR))
 
+import auth_store
 import postgres_db
 from interview_engine_v2 import RedTapeSession, get_ollama_model, set_ollama_model
 from ui_template import render_ui
@@ -26,25 +25,21 @@ from ui_template import render_ui
 
 def _get_available_ollama_models():
     try:
-        import urllib.request, json
-        with urllib.request.urlopen("http://127.0.0.1:11434/api/tags", timeout=3) as r:
+        import urllib.request
+        with urllib.request.urlopen("http://localhost:11434/api/tags", timeout=3) as r:
             data = json.loads(r.read())
             return [m["name"] for m in data.get("models", [])]
     except Exception:
         return ["llama3.1:8b", "llama3.2:3b"]
 
-AVAILABLE_MODELS = _get_available_ollama_models()
 
-# Ensure Neon Postgres schema exists asynchronously without blocking socket bind
 threading.Thread(target=postgres_db.init_db, daemon=True).start()
 
-# In-memory thread-safe session pool (backed by Neon PostgreSQL)
 _SESSION_CACHE: dict[str, RedTapeSession] = {}
 _CACHE_LOCK = threading.Lock()
 
 
-def get_or_create_session(session_id: str = None) -> RedTapeSession:
-    """Retrieves session from cache/Postgres, or instantiates a fresh session."""
+def get_or_create_session(session_id: str = None, user_id: str = None) -> RedTapeSession:
     with _CACHE_LOCK:
         if session_id and session_id in _SESSION_CACHE:
             return _SESSION_CACHE[session_id]
@@ -57,39 +52,26 @@ def get_or_create_session(session_id: str = None) -> RedTapeSession:
                 _SESSION_CACHE[session_id] = sess
                 return sess
 
-        # Create brand-new isolated session
         sess = RedTapeSession()
-        sess.user_id = "usr_tamajit_01"
-        if session_id:
-            sess.session_id = session_id
-        else:
-            sess.session_id = f"sess_{uuid.uuid4().hex[:10]}"
+        sess.user_id = user_id
+        sess.session_id = session_id or f"sess_{uuid.uuid4().hex[:10]}"
         _SESSION_CACHE[sess.session_id] = sess
         return sess
-
-
-def get_active_session_fallback() -> RedTapeSession:
-    """Returns the most recent session or an empty one."""
-    with _CACHE_LOCK:
-        if _SESSION_CACHE:
-            return list(_SESSION_CACHE.values())[-1]
-    sessions = postgres_db.list_sessions()
-    if sessions:
-        return get_or_create_session(sessions[0]["id"])
-    return get_or_create_session()
 
 
 class RedTapeHTTPHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         sys.stderr.write(f"[RedTape] {self.command} {self.path} - {args[0]}\n")
 
-    def send_json(self, data, code=200):
+    def send_json(self, data, code=200, set_cookie: str = None):
         body = json.dumps(data).encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        if set_cookie is not None:
+            self.send_header("Set-Cookie", set_cookie)
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
@@ -128,98 +110,77 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _serve_spa(self):
+        body = render_ui().encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self):
         parsed = urlparse(self.path)
         path = parsed.path
         qs = parse_qs(parsed.query)
 
         if path.startswith("/static/"):
-            rel_parts = [p for p in path.strip("/").split("/") if p]
-            self._serve_file(ROOT_DIR.joinpath(*rel_parts), cache_header="public, max-age=86400")
+            self._serve_file(ROOT_DIR / path.lstrip("/"), cache_header="public, max-age=86400")
             return
         if path == "/favicon.ico":
             self._serve_file(ROOT_DIR / "static" / "favicon.ico", cache_header="public, max-age=86400")
             return
         if path.startswith("/drafts/"):
-            rel_parts = [p for p in path.strip("/").split("/") if p]
-            fpath = ROOT_DIR.joinpath(*rel_parts)
+            rel = path.lstrip("/")
+            fpath = ROOT_DIR / rel
             if not fpath.exists():
-                fpath = ROOT_DIR.joinpath("redtape-navigator-unified", *rel_parts)
+                fpath = ROOT_DIR / "redtape-navigator-unified" / rel
             self._serve_file(fpath)
+            return
+
+        # Auth state (name + email ONLY — zero PAN/Aadhaar/address)
+        if path == "/api/auth/me":
+            user = auth_store.get_user_from_cookie(self.headers.get("Cookie", ""))
+            if user:
+                self.send_json({"authenticated": True, "user": user})
+            else:
+                self.send_json({"authenticated": False, "user": None})
             return
 
         if path == "/api/state":
             sid = qs.get("session_id", [None])[0]
-            sess = get_or_create_session(sid) if sid else get_active_session_fallback()
-            self.send_json(sess.to_dict())
-        elif path == "/api/model":
+            if sid:
+                sess = get_or_create_session(sid)
+                self.send_json(sess.to_dict())
+            else:
+                # Home page starts clean (empty welcome state)
+                self.send_json(RedTapeSession().to_dict())
+            return
+
+        if path == "/api/model":
             self.send_json({
                 "active_model": get_ollama_model(),
-                "available_models": AVAILABLE_MODELS,
+                "available_models": _get_available_ollama_models(),
             })
-        elif path == "/api/sessions":
+            return
+
+        if path == "/api/sessions":
             all_sessions = postgres_db.list_sessions()
-            self.send_json({
-                "sessions": all_sessions,
-                "count": len(all_sessions),
-            })
-        elif path.startswith("/api/session/"):
+            self.send_json({"sessions": all_sessions, "count": len(all_sessions)})
+            return
+
+        if path.startswith("/api/session/"):
             sid = path.split("/api/session/", 1)[1].strip()
             sess = get_or_create_session(sid)
             self.send_json(sess.to_dict())
-        elif path == "/api/auth/me":
-            try:
-                from memory_engine import get_citizen_profile
-                prof = get_citizen_profile("usr_tamajit_01")
-                self.send_json({
-                    "authenticated": True,
-                    "provider": "neon_better_auth",
-                    "user": {
-                        "id": prof["user_id"],
-                        "name": prof["name"],
-                        "email": prof["email"],
-                        "phone": prof["phone_number"],
-                        "role": prof["role"]
-                    },
-                    "citizen_profile": {
-                        "legal_name": prof["legal_name"],
-                        "pan": prof["pan_number"],
-                        "aadhaar_last4": prof["aadhaar_last4"],
-                        "primary_mobile": prof["primary_mobile"],
-                        "residential_address": prof["residential_address"],
-                        "district": prof["district"],
-                        "state": prof["state"],
-                        "pincode": prof["pincode"]
-                    },
-                    "business_entities": prof.get("business_entities", [])
-                })
-            except Exception as e:
-                self.send_json({"error": str(e), "authenticated": False}, code=500)
-        elif path == "/api/memory":
-            try:
-                from memory_engine import search_citizen_memory
-                query = qs.get("q", [""])[0]
-                hits = search_citizen_memory("usr_tamajit_01", query, limit=5) if query else []
-                self.send_json({"query": query, "memories": hits})
-            except Exception as e:
-                self.send_json({"error": str(e), "memories": []}, code=500)
-        elif path == "/api/new_chat":
-            sess = RedTapeSession()
-            sess.user_id = "usr_tamajit_01"
-            sess.session_id = f"sess_{uuid.uuid4().hex[:10]}"
-            with _CACHE_LOCK:
-                _SESSION_CACHE[sess.session_id] = sess
-            self.send_json(sess.to_dict())
-        elif path in ("/", "/index.html"):
-            body = render_ui().encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-        else:
-            self.send_response(404)
-            self.end_headers()
+            return
+
+        # SPA routes: Home (/), Login (/login, /signup), and Chat deep links (/chat, /chat/:id)
+        if path in ("/", "/index.html", "/login", "/signup", "/chat") or path.startswith("/chat/"):
+            self._serve_spa()
+            return
+
+        self.send_response(404)
+        self.end_headers()
 
     def do_DELETE(self):
         parsed = urlparse(self.path)
@@ -229,11 +190,6 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
             with _CACHE_LOCK:
                 _SESSION_CACHE.pop(sid, None)
             self.send_json({"success": True, "deleted_id": sid})
-        elif parsed.path == "/api/clear_history":
-            postgres_db.clear_all_chat_history()
-            with _CACHE_LOCK:
-                _SESSION_CACHE.clear()
-            self.send_json({"success": True})
         else:
             self.send_response(404)
             self.end_headers()
@@ -247,45 +203,76 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
         except Exception:
             payload = {}
 
+        if parsed.path == "/api/auth/login":
+            res, err = auth_store.login(payload.get("email", ""), payload.get("password", ""))
+            if err:
+                self.send_json({"authenticated": False, "error": err}, code=401)
+            else:
+                cookie = f"redtape_auth={res['token']}; Path=/; HttpOnly; SameSite=Lax"
+                self.send_json({"authenticated": True, "user": res["user"]}, set_cookie=cookie)
+            return
+
+        if parsed.path == "/api/auth/signup":
+            res, err = auth_store.signup(payload.get("name", ""), payload.get("email", ""), payload.get("password", ""))
+            if err:
+                self.send_json({"authenticated": False, "error": err}, code=400)
+            else:
+                cookie = f"redtape_auth={res['token']}; Path=/; HttpOnly; SameSite=Lax"
+                self.send_json({"authenticated": True, "user": res["user"]}, set_cookie=cookie)
+            return
+
+        if parsed.path == "/api/auth/logout":
+            auth_store.logout(self.headers.get("Cookie", ""))
+            self.send_json({"authenticated": False}, set_cookie="redtape_auth=; Path=/; Max-Age=0; HttpOnly")
+            return
+
         if parsed.path == "/api/chat":
+            user = auth_store.get_user_from_cookie(self.headers.get("Cookie", ""))
             sid = payload.get("session_id")
-            sess = get_or_create_session(sid)
+            sess = get_or_create_session(sid, user_id=user["id"] if user else None)
             res = sess.handle_chat(payload.get("message", ""))
+            # Ensure new session_id (if _start_new_scenario created one) is cached under its real ID
+            with _CACHE_LOCK:
+                if sess.session_id:
+                    _SESSION_CACHE[sess.session_id] = sess
             self.send_json(res)
-        elif parsed.path == "/api/model":
+            return
+
+        if parsed.path == "/api/model":
             req_model = payload.get("model", "")
             if req_model:
                 set_ollama_model(req_model)
             self.send_json({
                 "active_model": get_ollama_model(),
-                "available_models": AVAILABLE_MODELS,
+                "available_models": _get_available_ollama_models(),
             })
-        elif parsed.path == "/api/new_chat":
+            return
+
+        if parsed.path == "/api/new_chat":
             sess = RedTapeSession()
-            sess.user_id = "usr_tamajit_01"
             sess.session_id = f"sess_{uuid.uuid4().hex[:10]}"
             with _CACHE_LOCK:
                 _SESSION_CACHE[sess.session_id] = sess
             self.send_json(sess.to_dict())
-        elif parsed.path == "/api/clear_history":
-            postgres_db.clear_all_chat_history()
-            with _CACHE_LOCK:
-                _SESSION_CACHE.clear()
-            self.send_json({"success": True})
-        elif parsed.path == "/api/session/delete":
+            return
+
+        if parsed.path == "/api/session/delete":
             sid = payload.get("id", "")
             postgres_db.delete_session(sid)
             with _CACHE_LOCK:
                 _SESSION_CACHE.pop(sid, None)
             self.send_json({"success": True, "deleted_id": sid})
-        elif parsed.path == "/api/documents/generate":
+            return
+
+        if parsed.path == "/api/documents/generate":
             sid = payload.get("session_id")
             sess = get_or_create_session(sid)
             sess.generate_docs()
             self.send_json(sess.to_dict())
-        else:
-            self.send_response(404)
-            self.end_headers()
+            return
+
+        self.send_response(404)
+        self.end_headers()
 
 
 def main():
@@ -293,7 +280,8 @@ def main():
     server = HTTPServer(("0.0.0.0", port), RedTapeHTTPHandler)
     print(f"\n====================================================")
     print(f"  RedTape Navigator — Claude Interface Server")
-    print(f"  Listening on http://localhost:{port}")
+    print(f"  Home:  http://localhost:{port}/")
+    print(f"  Login: http://localhost:{port}/login")
     print(f"====================================================\n")
     try:
         server.serve_forever()

@@ -88,6 +88,189 @@ def _create_pdf_and_map(filename: str, map_name: str, licence_id: str, headers: 
     print(f"Built {filename} + {map_name} ({len(fields)} AcroForm fields)")
 
 
+def build_official_wb_form_j():
+    """Faithful 1:1 replica of the official West Bengal Municipal Act, 1993 — FORM J
+    (Application for certificate of enlistment, See section 118) matching trade_licence_application.pdf.
+    """
+    filename = "WB_Municipal_Form_J_CE.pdf"
+    map_name = "wb_municipal_form_j_map.json"
+    pdf_path = FORMS_DIR / filename
+    c = canvas.Canvas(str(pdf_path), pagesize=letter)
+    form = c.acroForm
+
+    # Top-left Serial No. / Rs. 30/- rounded box
+    c.setLineWidth(0.8)
+    c.roundRect(36, 705, 195, 62, 10, stroke=1, fill=0)
+    c.setFont("Helvetica", 9)
+    c.drawString(48, 748, "Serial No.")
+    c.setFont("Helvetica-Bold", 9.5)
+    c.drawString(178, 748, "Rs. 30/-")
+
+    # Top-right Official Header
+    c.setFont("Helvetica-Bold", 11)
+    c.drawCentredString(410, 756, "FORM  J")
+    c.setFont("Helvetica-Bold", 12)
+    c.drawCentredString(410, 741, "Application for certificate of enlistment")
+    c.setFont("Helvetica", 9.5)
+    c.drawCentredString(410, 726, "The West Bengal Municipal Act, 1993 [See section 118]")
+    c.setFont("Helvetica-BoldOblique", 8.5)
+    c.drawCentredString(410, 713, "(To be filled up in block letters)")
+
+    # Ward No. & Year right-aligned fields
+    c.setFont("Helvetica", 9)
+    c.drawString(430, 696, "Ward No.")
+    form.textfield(name="ward_no", x=474, y=691, width=98, height=15, borderStyle="underlined", fontSize=8.5)
+    c.drawString(448, 678, "Year")
+    form.textfield(name="enlistment_year", x=474, y=673, width=98, height=15, borderStyle="underlined", fontSize=8.5)
+
+    # Salutation
+    c.setFont("Helvetica", 9.5)
+    c.drawString(36, 682, "To")
+    c.setFont("Helvetica-Bold", 9.5)
+    c.drawString(56, 682, "The Chairman / Executive Officer,")
+    form.textfield(name="municipality_name", x=222, y=677, width=200, height=15, borderStyle="underlined", fontSize=9)
+
+    c.setFont("Helvetica", 9)
+    c.drawString(36, 663, "Sir,")
+    c.drawString(56, 649, "I/We hereby apply for a new/renewal of Certificate of Enlistment for carrying on Trade,")
+    c.drawString(36, 637, "Profession and Callings as stated below -")
+
+    lx, cx, fx, fw = 42, 232, 244, 328
+
+    def draw_row(num, label_lines, fname, y_pos, field_h=16):
+        c.setFont("Helvetica", 8.8)
+        c.drawString(lx, y_pos, f"{num}.")
+        for i, ltxt in enumerate(label_lines):
+            c.drawString(lx + 18, y_pos - i * 11, ltxt)
+        c.drawString(cx, y_pos, ":")
+        form.textfield(name=fname, x=fx, y=y_pos - 4, width=fw, height=field_h, borderStyle="underlined", fontSize=8.8)
+
+    draw_row("1", ["Name(s) of applicant"], "applicant_name", 614)
+    draw_row("2", ["Name of Firm or Company"], "enterprise_name", 590)
+    draw_row("3", ["Date/Expected date of", "commencement of business"], "commencement_date", 566)
+    draw_row("4", ["Residential address of the", "applicant(s)"], "residential_address", 538)
+
+    y5 = 506
+    c.setFont("Helvetica", 8.8)
+    c.drawString(lx, y5, "5.")
+    for i, ltxt in enumerate([
+        "Address of the place of business",
+        "where trade / profession / calling",
+        "is carried on including its Rent /",
+        "Annual Valuation",
+    ]):
+        c.drawString(lx + 18, y5 - i * 10.5, ltxt)
+    c.drawString(cx, y5, ":")
+    c.drawString(fx, y5, "Holding No")
+    form.textfield(name="holding_no", x=fx + 52, y=y5 - 4, width=85, height=15, borderStyle="underlined", fontSize=8.5)
+    c.drawString(fx + 144, y5, "Possession")
+    form.textfield(name="premises_type", x=fx + 196, y=y5 - 4, width=132, height=15, borderStyle="underlined", fontSize=8.5)
+
+    c.drawString(fx, y5 - 20, "Road / Street / Lane")
+    form.textfield(name="premises_address", x=fx + 92, y=y5 - 24, width=236, height=15, borderStyle="underlined", fontSize=8.5)
+
+    c.drawString(fx, y5 - 39, "Ward / Area")
+    form.textfield(name="business_ward", x=fx + 58, y=y5 - 43, width=270, height=15, borderStyle="underlined", fontSize=8.5)
+
+    draw_row("6", ["Nature of Trade / Profession /", "Calling"], "trade_nature", 442)
+    draw_row("7", ["(a) Address of workshop, if any"], "workshop_address", 412)
+    c.setFont("Helvetica", 8.8)
+    c.drawString(lx + 18, 392, "(b) Address of Godown, if any")
+    c.drawString(cx, 392, ":")
+    form.textfield(name="godown_address", x=fx, y=388, width=fw, height=15, borderStyle="underlined", fontSize=8.5)
+
+    draw_row("8", ["Particulars of immediate", "preceding year's certificate of", "enlistment under section 118 in", "case of renewal"], "previous_ce", 364)
+
+    y9 = 312
+    c.setFont("Helvetica", 8.8)
+    c.drawString(lx, y9, "9.")
+    c.drawString(lx + 18, y9, "Additional information, if any")
+    c.drawString(cx, y9, ":")
+    form.textfield(name="additional_info", x=fx, y=y9 - 4, width=175, height=15, borderStyle="underlined", fontSize=8.5)
+    c.drawString(fx + 182, y9, "Ph.No.")
+    form.textfield(name="mobile_number", x=fx + 216, y=y9 - 4, width=112, height=15, borderStyle="underlined", fontSize=8.5)
+
+    yd = 286
+    c.setFont("Helvetica-Bold", 8.8)
+    c.drawString(52, yd, "I/We solemnly declare that:-")
+    c.setFont("Helvetica", 8.5)
+    c.drawString(42, yd - 14, "(1) There is no litigation/Court case in my/our above mentioned premises where I/We are conducting business;")
+    c.drawString(42, yd - 26, "(2) All information and statements as made above are true to my/our knowledge and belief;")
+    c.drawString(42, yd - 38, "(3) Taxes/Fees under all other sections of the West Bengal Municipal Act, 1993 have been cleared by me/us.")
+    c.drawString(42, yd - 53, "I/We pray for issue/renewal of Certificate of Enlistment for the year 2026-27 on payment of requisite application fee.")
+
+    c.setFont("Helvetica", 9)
+    c.drawString(405, yd - 72, "Yours faithfully,")
+    c.drawString(42, yd - 96, "Date..............................")
+    c.setFont("Helvetica-Bold", 8.8)
+    c.drawString(330, yd - 98, "Signature of the applicant(s) with office seal")
+
+    ty = 172
+    c.setFont("Helvetica-Bold", 8.2)
+    c.drawString(36, ty + 4, "N.B. Documentary evidence in respect of the following is to be submitted:-")
+    c.setLineWidth(0.6)
+    c.rect(36, 46, 540, 122, stroke=1, fill=0)
+    c.line(306, 46, 306, 168)
+
+    c.setFont("Helvetica-Bold", 8)
+    c.drawString(42, 156, "A.  In case of New Enlistment firm,-")
+    c.drawString(312, 156, "B.  In case of Renewal Enlistment firm,-")
+
+    c.setFont("Helvetica", 7.8)
+    left_docs = [
+        "(a) Incorporation Certificate / Proprietorship Proof;",
+        "(b) Rent Bill / Lease Agreement;",
+        "(c) Up-to-date Municipal tax receipt;",
+        "(d) N.O.C / Consent letter of the owner;",
+        "(e) Memorandum & Article of Association (if applicable);",
+        "(f) Letter Head;",
+        "(g) Any Other Documents If Required.",
+    ]
+    right_docs = [
+        "(a) Previous Enlistment Certificate;",
+        "(b) Current Professional Tax receipt;",
+        "(c) Letter Head;",
+        "(d) Rent Bill / Up-to-date tax receipt;",
+        "(e) Consent letter of the owner;",
+        "(f) Fire license clearance certificate;",
+        "(g) Pollution Board Certificate;",
+        "(h) Any Other Documents If Required.",
+    ]
+    for i, item in enumerate(left_docs):
+        c.drawString(52, 143 - i * 12.5, item)
+    for i, item in enumerate(right_docs):
+        c.drawString(322, 143 - i * 12.5, item)
+
+    c.save()
+
+    fmap = {
+        "form": filename,
+        "licence_id": "lic_municipal_form_j",
+        "coord_origin": "top-left",
+        "fields": [
+            {"target": {"acroform": "municipality_name"}, "source": "applicant_profile.location.municipal_ward_or_block", "mandatory": True},
+            {"target": {"acroform": "ward_no"}, "source": "applicant_profile.location.city_or_village", "mandatory": False},
+            {"target": {"acroform": "enlistment_year"}, "source": "applicant_profile.domain_attributes.enlistment_year", "mandatory": False},
+            {"target": {"acroform": "applicant_name"}, "source": "applicant_profile.applicant.name", "transform": "upper", "mandatory": True},
+            {"target": {"acroform": "enterprise_name"}, "source": "applicant_profile.entity_name", "transform": "upper", "mandatory": True},
+            {"target": {"acroform": "commencement_date"}, "source": "applicant_profile.domain_attributes.commencement_date", "mandatory": False},
+            {"target": {"acroform": "residential_address"}, "source": "applicant_profile.applicant.residential_address", "mandatory": False},
+            {"target": {"acroform": "holding_no"}, "source": "applicant_profile.location.holding_no", "mandatory": False},
+            {"target": {"acroform": "premises_type"}, "source": "applicant_profile.location.premises_type", "transform": "upper", "mandatory": True},
+            {"target": {"acroform": "premises_address"}, "source": "applicant_profile.location.address", "transform": "upper", "mandatory": True},
+            {"target": {"acroform": "business_ward"}, "source": "applicant_profile.location.municipal_ward_or_block", "transform": "upper", "mandatory": True},
+            {"target": {"acroform": "trade_nature"}, "source": "applicant_profile.activity_type", "transform": "upper", "mandatory": True},
+            {"target": {"acroform": "workshop_address"}, "source": "applicant_profile.domain_attributes.workshop_address", "mandatory": False},
+            {"target": {"acroform": "godown_address"}, "source": "applicant_profile.domain_attributes.godown_address", "mandatory": False},
+            {"target": {"acroform": "previous_ce"}, "source": "applicant_profile.domain_attributes.application_type", "mandatory": False},
+            {"target": {"acroform": "additional_info"}, "source": "applicant_profile.domain_attributes.additional_info", "mandatory": False},
+            {"target": {"acroform": "mobile_number"}, "source": "applicant_profile.applicant.phone", "transform": "phone_10digit", "mandatory": True},
+        ],
+    }
+    (FORMS_DIR / map_name).write_text(json.dumps(fmap, indent=2), encoding="utf-8")
+    print(f"Built official 1:1 {filename} + {map_name} ({len(fmap['fields'])} AcroForm fields)")
+
+
 def build_all():
     # 1. KMC Section 199 Certificate of Enlistment (Park Circus Bakery)
     _create_pdf_and_map(
@@ -116,32 +299,8 @@ def build_all():
         ],
     )
 
-    # 2. WB Municipal Act 1993 Form J (Panihati & Barrackpore Municipality)
-    _create_pdf_and_map(
-        "WB_Municipal_Form_J_CE.pdf",
-        "wb_municipal_form_j_map.json",
-        "lic_municipal_form_j",
-        [
-            "GOVERNMENT OF WEST BENGAL — URBAN LOCAL BODY",
-            "FORM J — APPLICATION FOR CERTIFICATE OF ENLISTMENT",
-            "Under Section 118 of the West Bengal Municipal Act, 1993 (For Issue of Form 24 Permanent CE)",
-        ],
-        [
-            {"name": "municipality_ward", "label": "1. Name of Municipality & Ward No.:", "source": "applicant_profile.location.municipal_ward_or_block"},
-            {"name": "enterprise_name", "label": "2. Name of Shop / Enterprise (in Block Letters):", "source": "applicant_profile.entity_name", "transform": "upper"},
-            {"name": "applicant_name", "label": "3. Full Name of Proprietor / Applicant:", "source": "applicant_profile.applicant.name", "transform": "title"},
-            {"name": "trade_nature", "label": "4. Trade Category & Nature of Business:", "source": "applicant_profile.activity_type"},
-            {"name": "premises_address", "label": "5. Holding / Premises Address, P.O., P.S., PIN:", "source": "applicant_profile.location.address"},
-            {"name": "floor_area", "label": "6. Approximate Carpet / Floor Area (Sq. Ft.):", "source": "applicant_profile.domain_attributes.floor_area_sqft"},
-            {"name": "premises_type", "label": "7. Premises Possession (Rented / Owned):", "source": "applicant_profile.location.premises_type", "transform": "title"},
-            {"name": "workers_count", "label": "8. Total Staff Employed:", "source": "applicant_profile.domain_attributes.workers_on_site"},
-            {"name": "mobile_number", "label": "9. Applicant Mobile Number:", "source": "applicant_profile.applicant.phone", "transform": "phone_10digit"},
-        ],
-        [
-            "New municipal CE applications in West Bengal are submitted via e-District (https://edistrict.wb.gov.in/); renewals via SilpaSathi.",
-            "Missing mandatory fields are stamped with [PENDING_USER_INPUT] under zero-fabrication protocol.",
-        ],
-    )
+    # 2. Official 1:1 West Bengal Municipal Act 1993 — FORM J
+    build_official_wb_form_j()
 
     # 3. FSSAI State License Form B (Bakery > Rs 1.5 Crore)
     _create_pdf_and_map(

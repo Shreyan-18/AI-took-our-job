@@ -65,9 +65,9 @@
     "semantic_hash": "bfa6329907ce92468e008a50679c2b7f"
   },
   "redtape-navigator-unified/scripts/fill_pdf.py": {
-    "mtime": 1795226924.2419887,
-    "seen": 1795227880.256688,
-    "ast_hash": "7f87104e94612c50b9be3e4e2321d33d",
+    "mtime": 1795235395.195488,
+    "seen": 1795241348.343555,
+    "ast_hash": "b478ad4d5549a75f45124a240f37c01c",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/generate_portal_pack.py": {
@@ -83,8 +83,8 @@
     "semantic_hash": "a0bacc1b43ac9dbbe15df7d834f375dd"
   },
   "redtape-navigator-unified/scripts/inspect_pdf.py": {
-    "mtime": 1795226936.074326,
-    "seen": 1795227880.256691,
+    "mtime": 1795231949.0576267,
+    "seen": 1795241348.3435578,
     "ast_hash": "7cf9d3f92158f38baaa7dc95ce2af090",
     "semantic_hash": ""
   },
@@ -269,15 +269,15 @@
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/research_engine.py": {
-    "mtime": 1795217600.740068,
-    "seen": 1795218374.871008,
-    "ast_hash": "e44a9bafb8c76ff25c897aa1c3b25cdd",
+    "mtime": 1795233701.6811416,
+    "seen": 1795241348.343561,
+    "ast_hash": "f1a4b78ca793445d84fb3a265d6912e4",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/cache/research_cache.json": {
-    "mtime": 1795227011.938476,
-    "seen": 1795227880.2565591,
-    "ast_hash": "4ad77f7667f7507d1b94893eab60f974",
+    "mtime": 1795239408.9951336,
+    "seen": 1795241348.3435268,
+    "ast_hash": "cf9669ae82722993b18f4b2446bcd7ab",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/compliance_engine.py": {
@@ -293,9 +293,9 @@
     "semantic_hash": ""
   },
   "demo_server.py": {
-    "mtime": 1795228385.2862675,
-    "seen": 1795228638.173256,
-    "ast_hash": "b736100ca7423666f023096f80cf535d",
+    "mtime": 1795235035.334539,
+    "seen": 1795241348.3435001,
+    "ast_hash": "3de962ccdd075f5e7444bf75fe103d25",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/fssai_form_a_map.json": {
@@ -399,9 +399,9 @@
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/document_engine.py": {
-    "mtime": 1795215895.6261365,
-    "seen": 1795218374.8710022,
-    "ast_hash": "dfb95491bae8dd09c63af2a00de61676",
+    "mtime": 1795239009.4513938,
+    "seen": 1795241348.343555,
+    "ast_hash": "3821d998c6d35fc4d36a4148199a7354",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/generate_form_templates.py": {
@@ -904,28 +904,16 @@
     "ast_hash": "5e569d26956bcbaed621a990e9c4b759",
     "semantic_hash": ""
   },
-  "build_updated_demo_server.py": {
-    "mtime": 1795211745.6710546,
-    "seen": 1795212577.485155,
-    "ast_hash": "0b6975a9c0ced3669493a573cccf1c51",
-    "semantic_hash": ""
-  },
   "postgres_db.py": {
-    "mtime": 1795228510.5465968,
-    "seen": 1795228638.173263,
-    "ast_hash": "069809a24f75674c4595782ba7e0f656",
+    "mtime": 1795231145.2576385,
+    "seen": 1795241348.343507,
+    "ast_hash": "f1ecc0842d538c8b9844f7f4df2f36ae",
     "semantic_hash": ""
   },
   "test_pg_server.py": {
     "mtime": 1795212359.7775362,
     "seen": 1795212577.485205,
     "ast_hash": "237594905b3e069ef25fb128f503f846",
-    "semantic_hash": ""
-  },
-  "update_ui_pg.py": {
-    "mtime": 1795211922.9991403,
-    "seen": 1795212577.485207,
-    "ast_hash": "11a239671222bd3876d4aed3e0605688",
     "semantic_hash": ""
   },
   "benchmark_pipeline_ollama.py": {
@@ -935,9 +923,9 @@
     "semantic_hash": ""
   },
   "build_sector_pdfs.py": {
-    "mtime": 1795215858.4622264,
-    "seen": 1795218374.870904,
-    "ast_hash": "d24833241c5a4ee232f29b1a6588a0ed",
+    "mtime": 1795233706.0934083,
+    "seen": 1795241348.343497,
+    "ast_hash": "1005033a09f7b82914f0cca665d15fd4",
     "semantic_hash": ""
   },
   "data/scenarios_kb.json": {
@@ -947,68 +935,68 @@
     "semantic_hash": ""
   },
   "interview_engine_v2.py": {
-    "mtime": 1795228341.4172463,
-    "seen": 1795228638.1732569,
-    "ast_hash": "0758633a8878477f63670214823531e2",
+    "mtime": 1795239181.1092117,
+    "seen": 1795241348.343502,
+    "ast_hash": "3d1fb8bd91c7c31842ace82a3f17dd13",
     "semantic_hash": ""
   },
   "ollama_client.py": {
-    "mtime": 1795228351.7681658,
-    "seen": 1795228638.1732621,
-    "ast_hash": "8ecaba71b471a5cf8bda86bffd2aebed",
+    "mtime": 1795230571.0576003,
+    "seen": 1795241348.3435059,
+    "ast_hash": "ca260b464cf5920edeb19129bdc261bd",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/fssai_form_b_map.json": {
-    "mtime": 1795215892.5268846,
-    "seen": 1795218374.870917,
+    "mtime": 1795233738.2339504,
+    "seen": 1795241348.343511,
     "ast_hash": "87170ed5c8db23a1b701554e7c42dea5",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/gst_reg_01_map.json": {
-    "mtime": 1795215892.530286,
-    "seen": 1795218374.870917,
+    "mtime": 1795233738.2373288,
+    "seen": 1795241348.343512,
     "ast_hash": "14ff9babf0889f71c76fd90a4f157ac8",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/kmc_section199_map.json": {
-    "mtime": 1795215892.5235171,
-    "seen": 1795218374.8709178,
+    "mtime": 1795233738.2289596,
+    "seen": 1795241348.343512,
     "ast_hash": "2f4f34b119fcd5fc4086343ff696002d",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/panihati_signboard_map.json": {
-    "mtime": 1795215892.5364342,
-    "seen": 1795218374.870919,
+    "mtime": 1795233738.2432833,
+    "seen": 1795241348.343513,
     "ast_hash": "2b78deccd8d0c18474c564bb59912d53",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/udyam_msme_map.json": {
-    "mtime": 1795215892.5321708,
-    "seen": 1795218374.87092,
+    "mtime": 1795233738.2390316,
+    "seen": 1795241348.3435142,
     "ast_hash": "cdd73253de3dfac73360d3c38e7a98e1",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/wb_fire_noc_map.json": {
-    "mtime": 1795215892.53381,
-    "seen": 1795218374.870921,
+    "mtime": 1795233738.2406292,
+    "seen": 1795241348.343515,
     "ast_hash": "27783a6ec79243d4d3b7803aec774959",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/wb_municipal_form_j_map.json": {
-    "mtime": 1795215892.5253015,
-    "seen": 1795218374.870921,
-    "ast_hash": "85dcd5382c337a32dd0af8e4f4193d78",
+    "mtime": 1795233738.232305,
+    "seen": 1795241348.343515,
+    "ast_hash": "6ef91f1e91867f8d3b9f61461737c649",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/wb_ptax_form_ii_map.json": {
-    "mtime": 1795215892.5285444,
-    "seen": 1795218374.870923,
+    "mtime": 1795233738.2355742,
+    "seen": 1795241348.3435159,
     "ast_hash": "1e31f5edf7d31777213d2085b404df1a",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/wb_textile_fire_map.json": {
-    "mtime": 1795215892.5352018,
-    "seen": 1795218374.870924,
+    "mtime": 1795233738.241905,
+    "seen": 1795241348.3435168,
     "ast_hash": "0ab880e0a2f439d9ea689a72d779f0ae",
     "semantic_hash": ""
   },
@@ -1037,9 +1025,9 @@
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/ollama_client.py": {
-    "mtime": 1795228360.666556,
-    "seen": 1795228638.173315,
-    "ast_hash": "8ecaba71b471a5cf8bda86bffd2aebed",
+    "mtime": 1795230571.0573132,
+    "seen": 1795241348.343559,
+    "ast_hash": "ca260b464cf5920edeb19129bdc261bd",
     "semantic_hash": ""
   },
   "test_e2e_v2.py": {
@@ -1049,9 +1037,9 @@
     "semantic_hash": ""
   },
   "ui_template.py": {
-    "mtime": 1795228318.7564728,
-    "seen": 1795228638.173325,
-    "ast_hash": "85cadb52a5c5ff12d57fd5c52e912ef7",
+    "mtime": 1795235400.6438937,
+    "seen": 1795241348.3435678,
+    "ast_hash": "2d3b9863a1013676f9d566443f764275",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/drafts/benchmark_test/draft_landlord_noc.md": {
@@ -1073,57 +1061,57 @@
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/FSSAI_State_License_Form_B.pdf": {
-    "mtime": 1795215892.5267856,
-    "seen": 1795218374.871074,
-    "ast_hash": "1173448a30b0547766e9ee417ed909c0",
+    "mtime": 1795233738.2338338,
+    "seen": 1795241348.343603,
+    "ast_hash": "e6b3fbf001d15c3ba88809b39d436e2d",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/GST_REG_01_Application_Draft.pdf": {
-    "mtime": 1795215892.5301723,
-    "seen": 1795218374.871074,
-    "ast_hash": "36c84ccb1f196b2174ff9c962030fea5",
+    "mtime": 1795233738.2371292,
+    "seen": 1795241348.3436038,
+    "ast_hash": "5f9ef33c70465193e45dd195449b45e8",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/KMC_Section199_Trade_Enlistment.pdf": {
-    "mtime": 1795215892.523396,
-    "seen": 1795218374.8710752,
-    "ast_hash": "c28c61393fc6959fe54e43b059344a87",
+    "mtime": 1795233738.2286668,
+    "seen": 1795241348.3436038,
+    "ast_hash": "a442b114f0b7ce241777d61e5580c1b9",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/Panihati_Signboard_Clearance_Form.pdf": {
-    "mtime": 1795215892.536355,
-    "seen": 1795218374.871076,
-    "ast_hash": "4b0e3e08e625c783b87029a3e2196e66",
+    "mtime": 1795233738.2431095,
+    "seen": 1795241348.343605,
+    "ast_hash": "9cbcc13fad46821abaa9bd0439e8a064",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/Udyam_MSME_Registration_Draft.pdf": {
-    "mtime": 1795215892.5320466,
-    "seen": 1795218374.871076,
-    "ast_hash": "9cca37fdf5a99051c3a4419cb87020b1",
+    "mtime": 1795233738.2388396,
+    "seen": 1795241348.343606,
+    "ast_hash": "d297c08485233d0a17a90eaf2aef278b",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/WB_Fire_Safety_NOC_Form.pdf": {
-    "mtime": 1795215892.5337057,
-    "seen": 1795218374.871077,
-    "ast_hash": "9dadc929b57425bb2607fc739876219d",
+    "mtime": 1795233738.2404442,
+    "seen": 1795241348.343606,
+    "ast_hash": "5ef11e9db272d86703cee0b9ada5944a",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/WB_Municipal_Form_J_CE.pdf": {
-    "mtime": 1795215892.5252068,
-    "seen": 1795218374.871077,
-    "ast_hash": "171bf3f78a2d45f57f9cd709ee917792",
+    "mtime": 1795233738.232112,
+    "seen": 1795241348.343607,
+    "ast_hash": "c4c2a8c127e412da2028211319edbd38",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/WB_Professional_Tax_Form_II.pdf": {
-    "mtime": 1795215892.5284462,
-    "seen": 1795218374.871079,
-    "ast_hash": "df55cabc6e4df51bca338751be25663b",
+    "mtime": 1795233738.235371,
+    "seen": 1795241348.3436081,
+    "ast_hash": "ce2f62d7cb8a793c7dbd6b7867c14e99",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/assets/forms/WB_Textile_Fire_Safety_Declaration.pdf": {
-    "mtime": 1795215892.5351093,
-    "seen": 1795218374.87108,
-    "ast_hash": "4e7561a93b275c242b098a49bd9fbb0f",
+    "mtime": 1795233738.2417958,
+    "seen": 1795241348.343609,
+    "ast_hash": "03e4e07d8f617ddb9c91c4475e5f8e04",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/drafts/benchmark_test/draft_FSSAI_Registration_Form_A.pdf": {
@@ -1145,9 +1133,9 @@
     "semantic_hash": ""
   },
   "memory_engine.py": {
-    "mtime": 1795228561.2355387,
-    "seen": 1795228638.173259,
-    "ast_hash": "83adbf707d15aa534f8be93725f79396",
+    "mtime": 1795231154.6199746,
+    "seen": 1795241348.343503,
+    "ast_hash": "3dc44063857315a8bf29d15c0286d8ee",
     "semantic_hash": ""
   },
   "neon.ts": {
@@ -1175,9 +1163,9 @@
     "semantic_hash": ""
   },
   "test_system_e2e.py": {
-    "mtime": 1795227811.663028,
-    "seen": 1795227880.2566998,
-    "ast_hash": "55fc4e443a5394a797b973deca3fce32",
+    "mtime": 1795241269.8804793,
+    "seen": 1795241348.3435671,
+    "ast_hash": "5d4629d959ba19d02853b4522549db53",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/drafts/test_thread_bakery_hitl/draft_KMC_Section199_Trade_Enlistment.pdf": {
@@ -1187,9 +1175,111 @@
     "semantic_hash": ""
   },
   "requirements.txt": {
-    "mtime": 1795228411.987932,
-    "seen": 1795228638.173363,
+    "mtime": 1795241269.8801293,
+    "seen": 1795241348.343602,
     "ast_hash": "3862aa2066b81f84c17839cf0ce5114e",
+    "semantic_hash": ""
+  },
+  "auth_store.py": {
+    "mtime": 1795235027.2222338,
+    "seen": 1795241348.343492,
+    "ast_hash": "88f2323a2799a85ad8096975eda12a2f",
+    "semantic_hash": ""
+  },
+  "download_official_pdfs.py": {
+    "mtime": 1795234716.387319,
+    "seen": 1795241348.343501,
+    "ast_hash": "283e62876561465e3098c356ba7c7f88",
+    "semantic_hash": ""
+  },
+  "official_pdf_maps.py": {
+    "mtime": 1795238996.5866745,
+    "seen": 1795241348.343505,
+    "ast_hash": "bd5fd1a1b8340e12460cc7ad86777b3f",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/fssai_form_a_official_map.json": {
+    "mtime": 1795239025.7195559,
+    "seen": 1795241348.343518,
+    "ast_hash": "3431a753f052fb0a05132e113ab61821",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/fssai_form_b_official_map.json": {
+    "mtime": 1795239025.7200942,
+    "seen": 1795241348.343519,
+    "ast_hash": "ccd4b53cf5d7dd68e08133a9554193c1",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/gst_reg_01_official_map.json": {
+    "mtime": 1795239025.7204003,
+    "seen": 1795241348.343519,
+    "ast_hash": "afc8833f760c8cb3d4e6363ece00e3d5",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/manifest.json": {
+    "mtime": 1795234759.6369212,
+    "seen": 1795241348.34352,
+    "ast_hash": "36cf53330fc8acb98e04a44bdc291bd3",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/wb_municipal_form_j_official_map.json": {
+    "mtime": 1795239025.7192614,
+    "seen": 1795241348.34352,
+    "ast_hash": "44ad5b306d17c8736399ebdb253d55a3",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/wb_ptax_form_ii_official_map.json": {
+    "mtime": 1795239025.7202563,
+    "seen": 1795241348.343521,
+    "ast_hash": "15363d55c0c222696854021d425048b9",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/wb_shops_form_b_official_map.json": {
+    "mtime": 1795239025.7194033,
+    "seen": 1795241348.343521,
+    "ast_hash": "c09ff9d49930bbe3e01fee7d29cdc879",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1795241269.8798666,
+    "seen": 1795241348.3435688,
+    "ast_hash": "1f7d2f5c1e1faaf0876af40557d9615e",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/FSSAI_Form_A_Official.pdf": {
+    "mtime": 1795234750.7874172,
+    "seen": 1795241348.343609,
+    "ast_hash": "915247dd27dc9fe3d5c9f53b6d2346b6",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/FSSAI_Form_B_Official.pdf": {
+    "mtime": 1795234751.9385936,
+    "seen": 1795241348.34361,
+    "ast_hash": "d85f3aa0d50f18687009e23fe39aaff4",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/GST_REG_01_Official.pdf": {
+    "mtime": 1795234759.6105926,
+    "seen": 1795241348.34361,
+    "ast_hash": "9538ef49d16c448eb2ae9cb842048f38",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/WB_Municipal_Form_J_Official.pdf": {
+    "mtime": 1795234749.0904353,
+    "seen": 1795241348.3436108,
+    "ast_hash": "99db2440471b72a444a7a16c2f38c7f9",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/WB_Professional_Tax_Form_II_Official.pdf": {
+    "mtime": 1795234754.1783113,
+    "seen": 1795241348.3436108,
+    "ast_hash": "f0636030e24a39b09164fb1adcac4260",
+    "semantic_hash": ""
+  },
+  "redtape-navigator-unified/assets/official_pdfs/WB_Shops_Establishment_Form_B_Official.pdf": {
+    "mtime": 1795238784.9703624,
+    "seen": 1795241348.343612,
+    "ast_hash": "ac4656fe544355f4b54a66941e386bb6",
     "semantic_hash": ""
   },
   "package-lock.json": {

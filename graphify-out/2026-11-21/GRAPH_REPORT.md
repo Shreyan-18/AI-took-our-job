@@ -1,9 +1,9 @@
 # Graph Report - red-tape  (2026-11-21)
 
 ## Corpus Check
-- 399 files · ~98,466 words
+- 159 files · ~66,770 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 5 file(s) not represented in the graph (top: (none) 1, .bak 1, .pre_pg_bak 1)
+- Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .example 1, .prisma 1)
 
 ## Summary
 - 1116 nodes · 1580 edges · 158 communities (91 shown, 67 thin omitted)
@@ -578,7 +578,7 @@ Nodes (5): Human-Only Gates (Agent Stops Here), Portal Submission Pack: SilpaSat
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `properties` connect `Project Configuration Schema` to `Applicant Profile Schema`, `Workflow State Flags`, `Schema References`, `Validation Results Schema`, `Research and Findings`, `domain`, `overrides`, `Project State Schema`, `Data Provenance Schema`, `Metadata Fields`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+  _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `RedTapeSession` (e.g. with `get_active_session_fallback()` and `RedTapeHTTPHandler`) actually correct?**
   _`RedTapeSession` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Problem Statement`, `India Agricultural Grants Jurisdiction`, `India Food Business Jurisdiction` to the rest of the system?**
@@ -586,7 +586,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `os` be split into smaller, more focused modules?**
   _Cohesion score 0.08191808191808192 - nodes in this community are weakly interconnected._
 - **Why does `RedTapeSession` connect `RedTapeSession` to `interview_engine_v2.py`, `json`, `test_e2e_v2.py`, `demo_server.py`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Should `Applicant Profile Schema` be split into smaller, more focused modules?**
   _Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected._
 - **Should `Compliance Matrix Schema` be split into smaller, more focused modules?**

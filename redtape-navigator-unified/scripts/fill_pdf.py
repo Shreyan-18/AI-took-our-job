@@ -67,9 +67,9 @@ def _fill_pymupdf(pdf_path, field_map, state, out_path, stamp_pending):
             page = doc[tgt["page"]]
             if f.get("type") == "checkbox":
                 if val:
-                    page.insert_text((tgt["x"], tgt["y"]), "X", fontsize=tgt.get("fontsize", 11))
+                    page.insert_text((tgt["x"], tgt["y"]), "X", fontsize=tgt.get("fontsize", 11), color=(0.05, 0.16, 0.55))
             else:
-                page.insert_text((tgt["x"], tgt["y"]), str(val), fontsize=tgt.get("fontsize", 10), fontname="helv")
+                page.insert_text((tgt["x"], tgt["y"]), str(val), fontsize=tgt.get("fontsize", 10), fontname="helv", color=(0.05, 0.16, 0.55))
         report["filled"].append({"field": label, "source": src})
     report["unmapped"] = [n for n in widgets if n not in mapped_acro]
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)

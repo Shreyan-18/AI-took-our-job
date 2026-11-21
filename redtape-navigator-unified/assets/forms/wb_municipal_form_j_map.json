@@ -5,9 +5,31 @@
   "fields": [
     {
       "target": {
-        "acroform": "municipality_ward"
+        "acroform": "municipality_name"
       },
       "source": "applicant_profile.location.municipal_ward_or_block",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "ward_no"
+      },
+      "source": "applicant_profile.location.city_or_village",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "enlistment_year"
+      },
+      "source": "applicant_profile.domain_attributes.enlistment_year",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "applicant_name"
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
       "mandatory": true
     },
     {
@@ -15,22 +37,36 @@
         "acroform": "enterprise_name"
       },
       "source": "applicant_profile.entity_name",
-      "mandatory": true,
-      "transform": "upper"
+      "transform": "upper",
+      "mandatory": true
     },
     {
       "target": {
-        "acroform": "applicant_name"
+        "acroform": "commencement_date"
       },
-      "source": "applicant_profile.applicant.name",
-      "mandatory": true,
-      "transform": "title"
+      "source": "applicant_profile.domain_attributes.commencement_date",
+      "mandatory": false
     },
     {
       "target": {
-        "acroform": "trade_nature"
+        "acroform": "residential_address"
       },
-      "source": "applicant_profile.activity_type",
+      "source": "applicant_profile.applicant.residential_address",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "holding_no"
+      },
+      "source": "applicant_profile.location.holding_no",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "premises_type"
+      },
+      "source": "applicant_profile.location.premises_type",
+      "transform": "upper",
       "mandatory": true
     },
     {
@@ -38,37 +74,60 @@
         "acroform": "premises_address"
       },
       "source": "applicant_profile.location.address",
+      "transform": "upper",
       "mandatory": true
     },
     {
       "target": {
-        "acroform": "floor_area"
+        "acroform": "business_ward"
       },
-      "source": "applicant_profile.domain_attributes.floor_area_sqft",
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "transform": "upper",
       "mandatory": true
     },
     {
       "target": {
-        "acroform": "premises_type"
+        "acroform": "trade_nature"
       },
-      "source": "applicant_profile.location.premises_type",
-      "mandatory": true,
-      "transform": "title"
+      "source": "applicant_profile.activity_type",
+      "transform": "upper",
+      "mandatory": true
     },
     {
       "target": {
-        "acroform": "workers_count"
+        "acroform": "workshop_address"
       },
-      "source": "applicant_profile.domain_attributes.workers_on_site",
-      "mandatory": true
+      "source": "applicant_profile.domain_attributes.workshop_address",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "godown_address"
+      },
+      "source": "applicant_profile.domain_attributes.godown_address",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "previous_ce"
+      },
+      "source": "applicant_profile.domain_attributes.application_type",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "additional_info"
+      },
+      "source": "applicant_profile.domain_attributes.additional_info",
+      "mandatory": false
     },
     {
       "target": {
         "acroform": "mobile_number"
       },
       "source": "applicant_profile.applicant.phone",
-      "mandatory": true,
-      "transform": "phone_10digit"
+      "transform": "phone_10digit",
+      "mandatory": true
     }
   ]
 }

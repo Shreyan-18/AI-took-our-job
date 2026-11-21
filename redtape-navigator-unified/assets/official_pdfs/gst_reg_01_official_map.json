@@ -1,0 +1,84 @@
+{
+  "form": "GST_REG_01_Official.pdf",
+  "licence_id": "lic_gst_reg",
+  "official_url": "https://taxindiaonline.com/RC2/pdfnoti/gst/gst_forms/2017/GST%20REG-01.pdf",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "page": 0,
+        "x": 378,
+        "y": 248,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.state",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 470,
+        "y": 248,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.district",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 462,
+        "y": 276,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 462,
+        "y": 318,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.pan",
+      "transform": "pan",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 462,
+        "y": 356,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.applicant.email",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 462,
+        "y": 378,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 250,
+        "y": 474,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    }
+  ]
+}

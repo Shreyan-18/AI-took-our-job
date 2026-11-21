@@ -1,0 +1,52 @@
+{
+  "WB_Municipal_Form_J_Official.pdf": {
+    "ok": true,
+    "bytes": 156663,
+    "pages": 1,
+    "width": 595.0,
+    "height": 842.0,
+    "widgets": 0,
+    "has_text": false,
+    "sample_text": ""
+  },
+  "FSSAI_Form_A_Official.pdf": {
+    "ok": true,
+    "bytes": 173075,
+    "pages": 5,
+    "width": 595.3,
+    "height": 841.9,
+    "widgets": 0,
+    "has_text": true,
+    "sample_text": "Schedule 2  [See Regulation 2.1.1 and Regulation 2.1.7]  Form \u2018A\u2019  Application for Registration / Renewal of Registratio"
+  },
+  "FSSAI_Form_B_Official.pdf": {
+    "ok": true,
+    "bytes": 164018,
+    "pages": 5,
+    "width": 595.3,
+    "height": 841.9,
+    "widgets": 0,
+    "has_text": true,
+    "sample_text": "  Form \u2018B\u2019  [See Regulation 2.1.2, Regulation 2.1.3 and Regulation2.1.7]  Application for License / Renewal of license e"
+  },
+  "WB_Professional_Tax_Form_II_Official.pdf": {
+    "ok": true,
+    "bytes": 9786,
+    "pages": 3,
+    "width": 595.0,
+    "height": 842.0,
+    "widgets": 0,
+    "has_text": true,
+    "sample_text": "FORM II  [See rule 4(1)/6(2)]  [To be submitted by a person seeking enrolment under section 5(4)(b) or   amendment of a "
+  },
+  "GST_REG_01_Official.pdf": {
+    "ok": true,
+    "bytes": 1230063,
+    "pages": 12,
+    "width": 595.3,
+    "height": 841.9,
+    "widgets": 0,
+    "has_text": true,
+    "sample_text": "Form GST REG-01  [See rule 8(1)]  Application for Registration  (Other than a non-resident taxable person, a person requ"
+  }
+}

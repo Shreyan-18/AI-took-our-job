@@ -1,0 +1,106 @@
+{
+  "form": "FSSAI_Form_A_Official.pdf",
+  "licence_id": "lic_fssai_basic_registration",
+  "official_url": "https://foscos.fssai.gov.in/assets/docs/registrationForm_A.pdf",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "page": 0,
+        "x": 355,
+        "y": 496,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.activity_type",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 85,
+        "y": 572,
+        "fontsize": 10
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 73,
+        "y": 674,
+        "fontsize": 10
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 265,
+        "y": 82,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.pan",
+      "transform": "pan",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 70,
+        "y": 200,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.applicant.residential_address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 262,
+        "y": 300,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 235,
+        "y": 329,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.applicant.email",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 70,
+        "y": 474,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.location.address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 1,
+        "x": 110,
+        "y": 638,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.activity_type",
+      "transform": "upper",
+      "mandatory": false
+    }
+  ]
+}

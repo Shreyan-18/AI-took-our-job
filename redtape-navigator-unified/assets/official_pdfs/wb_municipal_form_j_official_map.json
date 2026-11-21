@@ -1,0 +1,168 @@
+{
+  "form": "WB_Municipal_Form_J_Official.pdf",
+  "licence_id": "lic_municipal_form_j",
+  "official_url": "https://sudawb.org/wbdma_oldversion_old/forms/trade_licence_application.pdf",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "page": 0,
+        "x": 482,
+        "y": 132,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.location.ward_no",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 468,
+        "y": 146,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.enlistment_year",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 242,
+        "y": 160,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 270,
+        "y": 236,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 270,
+        "y": 256,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 270,
+        "y": 276,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.commencement_date",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 270,
+        "y": 304,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.applicant.residential_address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 330,
+        "y": 335,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.holding_no",
+      "transform": "upper",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 268,
+        "y": 354,
+        "fontsize": 8.5
+      },
+      "source": "applicant_profile.location.address",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 316,
+        "y": 374,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.location.ward_no",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 270,
+        "y": 397,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.activity_type",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 270,
+        "y": 514,
+        "fontsize": 8
+      },
+      "source": "applicant_profile.domain_attributes.additional_info",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 428,
+        "y": 514,
+        "fontsize": 9.5
+      },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 415,
+        "y": 614,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.enlistment_year",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "page": 0,
+        "x": 70,
+        "y": 668,
+        "fontsize": 9
+      },
+      "source": "applicant_profile.domain_attributes.commencement_date",
+      "mandatory": false
+    }
+  ]
+}

@@ -1,7 +1,5 @@
 .env
-.env.local
-.env.*.local
-!.env.example
+.env.*
 *.pyc
 __pycache__/
 .DS_Store
@@ -11,3 +9,4 @@ graphify-out/cache/
 .neon
 node_modules/
 redtape-navigator-unified/drafts/sess_*/
+data/users.json
