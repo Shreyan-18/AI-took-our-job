@@ -548,8 +548,13 @@ def render_ui() -> str:
     .thought-step-url:hover { text-decoration: underline; }
     .thought-step-detail { font-size: 12px; color: #8e8c86; line-height: 1.5; margin-top: 2px; }
 
-    @keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulseDot 1.3s ease-in-out infinite; }
+    @keyframes logoThrob {
+      0%, 100% { transform: scale(1); opacity: 0.82; filter: drop-shadow(0 0 0px rgba(217, 119, 87, 0)); }
+      50% { transform: scale(1.16); opacity: 1; filter: drop-shadow(0 0 10px rgba(217, 119, 87, 0.72)); }
+    }
+    .logo-img { display: block; object-fit: contain; background: transparent; }
+    .logo-throbbing { animation: logoThrob 1.25s ease-in-out infinite; }
+    .live-logo { width: 22px; height: 22px; flex-shrink: 0; }
 
     /* Claude Interactive Question Card */
     .qcard {
@@ -735,10 +740,8 @@ def render_ui() -> str:
   <div id="auth-view" class="auth-shell hidden">
     <div class="auth-card">
       <div class="auth-brand">
-        <span class="auth-brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-            <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
-          </svg>
+        <span class="auth-brand-icon" style="background:transparent; border:none; width:38px; height:38px;">
+          <img src="/static/redtape-logo.png" alt="RedTape" class="logo-img" width="38" height="38" />
         </span>
         <span class="auth-brand-title serif">RedTape</span>
       </div>
@@ -780,10 +783,8 @@ def render_ui() -> str:
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-top">
         <button onclick="navigateHome()" class="brand-btn" title="Home">
-          <span class="brand-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-              <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
-            </svg>
+          <span class="brand-icon" style="background:transparent; border:none; width:28px; height:28px;">
+            <img id="sidebar-brand-logo" src="/static/redtape-logo.png" alt="RedTape" class="logo-img" width="28" height="28" />
           </span>
           <span class="brand-title serif">RedTape</span>
         </button>
@@ -861,10 +862,8 @@ def render_ui() -> str:
         <section id="welcome-view" class="welcome-view">
           <div class="welcome-inner">
             <div class="greeting-row">
-              <span style="color:var(--accent); display:flex;">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
-                </svg>
+              <span style="display:flex; align-items:center; justify-content:center;">
+                <img src="/static/redtape-logo.png" alt="RedTape" class="logo-img" width="44" height="44" />
               </span>
               <h1 id="welcome-greeting" class="greeting-text serif">Good evening</h1>
             </div>
@@ -881,27 +880,7 @@ def render_ui() -> str:
               </div>
             </div>
 
-            <div class="welcome-suggestions">
-              <div class="suggestions-label">Start a compliance consultation:</div>
-              <div class="suggestion-chips">
-                <button onclick="fillAndSendGoal('open a bakery shop in kolkata park circus, kolkata')" class="suggestion-chip">
-                  <span class="chip-icon">🥐</span>
-                  <span class="chip-text">Bakery Shop in Park Circus, Kolkata</span>
-                </button>
-                <button onclick="fillAndSendGoal('open a stationary book stall in sodpur')" class="suggestion-chip">
-                  <span class="chip-icon">📚</span>
-                  <span class="chip-text">Stationery &amp; Book Stall in Sodpur</span>
-                </button>
-                <button onclick="fillAndSendGoal('open a clothes shop in barrackpore')" class="suggestion-chip">
-                  <span class="chip-icon">👗</span>
-                  <span class="chip-text">Clothes Shop in Barrackpore</span>
-                </button>
-                <button onclick="fillAndSendGoal('i wanna have a house colour painting shop in baruipur, west bengal')" class="suggestion-chip">
-                  <span class="chip-icon">🎨</span>
-                  <span class="chip-text">Paint Shop in Baruipur, WB</span>
-                </button>
-              </div>
-            </div>
+
           </div>
         </section>
 
@@ -1292,6 +1271,8 @@ def render_ui() -> str:
 
     async function sendMessage(text) {
       isBusy = true;
+      const sbLogo = document.getElementById('sidebar-brand-logo');
+      if (sbLogo) sbLogo.classList.add('logo-throbbing');
       showChatMode();
       const container = document.getElementById('chat-messages-inner');
       const streamEl = document.getElementById('chat-stream');
@@ -1311,8 +1292,8 @@ def render_ui() -> str:
       liveDiv.id = liveId;
       liveDiv.className = 'assistant-block';
       liveDiv.innerHTML = `
-        <div style="display:inline-flex; align-items:center; gap:8px; font-size:13px; color:#a8a6a1;">
-          <span class="live-dot"></span>
+        <div style="display:inline-flex; align-items:center; gap:9px; font-size:13px; color:#a8a6a1;">
+          <img src="/static/redtape-logo.png" alt="RedTape" class="logo-img live-logo logo-throbbing" />
           <span id="${liveId}-label">Researching statutory requirements...</span>
         </div>
         <div id="${liveId}-steps" class="thought-list"></div>
@@ -1367,6 +1348,7 @@ def render_ui() -> str:
         liveDiv.remove();
       } finally {
         isBusy = false;
+        if (sbLogo) sbLogo.classList.remove('logo-throbbing');
       }
     }
 
