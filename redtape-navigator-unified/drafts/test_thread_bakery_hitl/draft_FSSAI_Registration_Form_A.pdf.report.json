@@ -3,19 +3,22 @@
   "backend": "pymupdf",
   "filled": [
     {
+      "field": "business_name",
+      "source": "applicant_profile.entity_name"
+    },
+    {
       "field": "annual_turnover_words",
       "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr"
+    },
+    {
+      "field": "owns_premises",
+      "source": "applicant_profile.location.premises_type"
     }
   ],
   "pending": [
     {
       "field": "applicant_name",
       "source": "applicant_profile.applicant.name",
-      "mandatory": true
-    },
-    {
-      "field": "business_name",
-      "source": "applicant_profile.entity_name",
       "mandatory": true
     },
     {
@@ -34,21 +37,15 @@
       "mandatory": true
     },
     {
-      "field": "owns_premises",
-      "source": "applicant_profile.location.premises_type",
-      "mandatory": false
-    },
-    {
       "field": "p0@(65,465)",
       "source": "applicant_profile.applicant.dob",
       "mandatory": false
     }
   ],
   "unmapped": [],
-  "completion_percentage": 12,
+  "completion_percentage": 38,
   "missing_fields": [
     "applicant_profile.applicant.name",
-    "applicant_profile.entity_name",
     "applicant_profile.location.address",
     "applicant_profile.applicant.phone",
     "applicant_profile.applicant.pan"

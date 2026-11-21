@@ -11,19 +11,27 @@
   "actions": [
     {
       "action": "fill",
-      "label": "Municipal Ward / Area",
-      "selector": "#wardArea",
-      "source": "applicant_profile.location.municipal_ward_or_block",
+      "label": "City",
+      "selector": "#cityName",
+      "source": "applicant_profile.location.city_or_village",
       "value_masked": false,
       "value": "Park Circus"
     },
     {
       "action": "fill",
-      "label": "City",
-      "selector": "#cityName",
-      "source": "applicant_profile.location.city_or_village",
+      "label": "Premises Tenancy Type",
+      "selector": "#tenancyType",
+      "source": "applicant_profile.location.premises_type",
       "value_masked": false,
-      "value": "Kolkata"
+      "value": "Owned"
+    },
+    {
+      "action": "fill",
+      "label": "Name of Enterprise / Trade",
+      "selector": "#businessName",
+      "source": "applicant_profile.entity_name",
+      "value_masked": false,
+      "value": "SMALL BAKERY"
     },
     {
       "action": "fill",
@@ -31,7 +39,7 @@
       "selector": "#tradeNature",
       "source": "applicant_profile.activity_type",
       "value_masked": false,
-      "value": "Bakery"
+      "value": "Opening"
     },
     {
       "action": "fill",
@@ -43,11 +51,10 @@
     }
   ],
   "missing_fields": [
+    "applicant_profile.location.municipal_ward_or_block",
     "applicant_profile.location.address",
-    "applicant_profile.location.premises_type",
-    "applicant_profile.entity_name",
     "applicant_profile.applicant.name",
     "applicant_profile.applicant.phone"
   ],
-  "completion_percentage": 44
+  "completion_percentage": 56
 }

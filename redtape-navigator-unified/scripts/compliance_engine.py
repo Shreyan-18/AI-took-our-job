@@ -72,12 +72,7 @@ Return a JSON array of objects matching this schema:
 
 
 def evaluate_with_gemini(state: dict, api_key: str = None) -> tuple[list[dict], str]:
-    """Evaluate findings with Gemini under strict prompt hygiene."""
-    key = api_key or find_api_key()
-    if not key:
-        raise ValueError("Gemini API key not found in environment or .env file.")
-
-    model = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
+    """Evaluate findings with Ollama (or Gemini fallback) under strict prompt hygiene."""
     user_prompt = f"""Goal: {state.get('goal')}
 Domain: {state.get('domain')}
 
@@ -93,41 +88,61 @@ Research Findings to Evaluate:
 Evaluate every research finding against the applicant profile. Return only the JSON array adhering to the schema.
 """
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {"text": f"System Instructions:\n{COMPLIANCE_SYSTEM_PROMPT}\n\n{user_prompt}"}
-                ]
-            }
-        ],
-        "generationConfig": {
-            "responseMimeType": "application/json",
-            "temperature": 0.1,
-        },
-    }
-
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-
+    # 1. Primary: Local Ollama
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            candidates = data.get("candidates", [])
-            if candidates:
-                content_text = candidates[0]["content"]["parts"][0]["text"]
-                evaluated = json.loads(content_text)
-                if isinstance(evaluated, list):
-                    return evaluated, "gemini_evaluated"
-                if isinstance(evaluated, dict) and "items" in evaluated:
-                    return evaluated["items"], "gemini_evaluated"
+        from ollama_client import call_ollama
+        res = call_ollama(
+            prompt=user_prompt,
+            system_prompt=COMPLIANCE_SYSTEM_PROMPT,
+            json_mode=True,
+            temperature=0.1
+        )
+        if res.get("success") and res.get("json"):
+            evaluated = res["json"]
+            if isinstance(evaluated, dict) and "items" in evaluated:
+                evaluated = evaluated["items"]
+            if isinstance(evaluated, list) and len(evaluated) > 0:
+                return evaluated, f"ollama_{res['model']}"
     except Exception as e:
-        print(f"Notice: Gemini compliance evaluation unavailable ({e}); activating deterministic statutory rule engine.", file=sys.stderr)
+        print(f"[Compliance] Ollama evaluation error: {e}", file=sys.stderr)
+
+    # 2. Secondary fallback: Gemini API if key exists
+    key = api_key or find_api_key()
+    if key:
+        try:
+            model = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+            payload = {
+                "contents": [
+                    {
+                        "parts": [
+                            {"text": f"System Instructions:\n{COMPLIANCE_SYSTEM_PROMPT}\n\n{user_prompt}"}
+                        ]
+                    }
+                ],
+                "generationConfig": {
+                    "responseMimeType": "application/json",
+                    "temperature": 0.1,
+                },
+            }
+            req = urllib.request.Request(
+                url,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                candidates = data.get("candidates", [])
+                if candidates:
+                    content_text = candidates[0]["content"]["parts"][0]["text"]
+                    evaluated = json.loads(content_text)
+                    if isinstance(evaluated, list):
+                        return evaluated, "gemini_evaluated"
+                    if isinstance(evaluated, dict) and "items" in evaluated:
+                        return evaluated["items"], "gemini_evaluated"
+        except Exception as e:
+            print(f"Notice: Gemini compliance evaluation unavailable ({e}); activating deterministic engine.", file=sys.stderr)
 
     return evaluate_deterministic(state)
 

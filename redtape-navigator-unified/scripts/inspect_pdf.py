@@ -12,15 +12,19 @@ sys.path.insert(0, os.path.dirname(__file__))
 from _common import need
 
 try:
-    import fitz
+    import pymupdf as fitz
     BACKEND = "pymupdf"
 except ImportError:
-    fitz = None
     try:
-        import pypdf
-        BACKEND = "pypdf"
+        import fitz
+        BACKEND = "pymupdf"
     except ImportError:
-        need("pymupdf or pypdf", "pymupdf pypdf")
+        fitz = None
+        try:
+            import pypdf
+            BACKEND = "pypdf"
+        except ImportError:
+            need("pymupdf or pypdf", "pymupdf pypdf")
 
 
 def inspect(path):

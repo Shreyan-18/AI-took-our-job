@@ -11,8 +11,8 @@
       "source": "applicant_profile.entity_name"
     },
     {
-      "field": "annual_turnover_words",
-      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr"
+      "field": "premises_address",
+      "source": "applicant_profile.location.address"
     },
     {
       "field": "mobile_number",
@@ -25,8 +25,8 @@
   ],
   "pending": [
     {
-      "field": "premises_address",
-      "source": "applicant_profile.location.address",
+      "field": "annual_turnover_words",
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
       "mandatory": true
     },
     {
@@ -43,7 +43,7 @@
   "unmapped": [],
   "completion_percentage": 62,
   "missing_fields": [
-    "applicant_profile.location.address",
+    "applicant_profile.domain_attributes.expected_annual_turnover_inr",
     "applicant_profile.applicant.pan"
   ],
   "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/demo_bakery_kolkata/draft_FSSAI_Registration_Form_A.pdf"

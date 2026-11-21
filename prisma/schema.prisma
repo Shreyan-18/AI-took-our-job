@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// BETTER AUTH CORE TABLES
+// ==========================================
+
+model User {
+  id                  String                 @id @default(uuid())
+  name                String                 @db.VarChar(128)
+  email               String                 @unique @db.VarChar(255)
+  emailVerified       Boolean                @default(false) @map("email_verified")
+  image               String?
+  phoneNumber         String?                @unique @map("phone_number") @db.VarChar(20)
+  phoneNumberVerified Boolean?               @default(false) @map("phone_number_verified")
+  role                String?                @default("citizen") @db.VarChar(32)
+  createdAt           DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime               @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  sessions            Session[]
+  accounts            Account[]
+  citizenProfile      CitizenProfile?
+  redtapeSessions     RedTapeSession[]
+  memoryVectors       CitizenMemoryVector[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(6)
+  ipAddress String?  @map("ip_address") @db.VarChar(45)
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_session_user")
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  userId                String    @map("user_id")
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at") @db.Timestamptz(6)
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at") @db.Timestamptz(6)
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt             DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@index([userId], map: "idx_account_user")
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(uuid())
+  identifier String    @db.VarChar(255)
+  value      String
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(6)
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([identifier], map: "idx_verification_identifier")
+  @@map("verification")
+}
+
+// ==========================================
+// CITIZEN IDENTITY & BUSINESS ENTITY
+// ==========================================
+
+model CitizenProfile {
+  id                  String            @id @default(uuid())
+  userId              String            @unique @map("user_id")
+  legalName           String            @map("legal_name") @db.VarChar(128)
+  panNumber           String?           @map("pan_number") @db.VarChar(16)
+  aadhaarLast4        String?           @map("aadhaar_last4") @db.VarChar(4)
+  primaryMobile       String            @map("primary_mobile") @db.VarChar(20)
+  primaryEmail        String            @map("primary_email") @db.VarChar(128)
+  residentialAddress  String?           @map("residential_address")
+  district            String?           @db.VarChar(64)
+  state               String?           @default("West Bengal") @db.VarChar(64)
+  pincode             String?           @db.VarChar(10)
+  createdAt           DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  businessEntities    BusinessEntity[]
+  sessions            RedTapeSession[]
+
+  @@map("citizen_profiles")
+}
+
+model BusinessEntity {
+  id                    String            @id @default(uuid())
+  citizenProfileId      String            @map("citizen_profile_id")
+  tradeName             String            @map("trade_name") @db.VarChar(128)
+  entityType            String            @default("Proprietorship") @map("entity_type") @db.VarChar(64)
+  registeredAddress     String            @map("registered_address")
+  premisesType          String            @default("Rented") @map("premises_type") @db.VarChar(32)
+  carpetAreaSqft        Int?              @default(250) @map("carpet_area_sqft")
+  electricityConsumerNo String?           @map("electricity_consumer_no") @db.VarChar(64)
+  nicCode               String?           @map("nic_code") @db.VarChar(16)
+  turnoverBracket       String?           @default("under_5L") @map("turnover_bracket") @db.VarChar(64)
+  createdAt             DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt             DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  citizenProfile        CitizenProfile    @relation(fields: [citizenProfileId], references: [id], onDelete: Cascade)
+  sessions              RedTapeSession[]
+
+  @@map("business_entities")
+}
+
+// ==========================================
+// REDTAPE STATUTORY SESSIONS & ARTIFACTS
+// ==========================================
+
+model RedTapeSession {
+  id                String                 @id @db.VarChar(64)
+  userId            String?                @map("user_id")
+  citizenProfileId  String?                @map("citizen_profile_id")
+  businessEntityId  String?                @map("business_entity_id")
+  title             String                 @db.VarChar(255)
+  goal              String
+  businessType      String?                @map("business_type") @db.VarChar(128)
+  tradeCategory     String?                @map("trade_category") @db.VarChar(128)
+  locationDistrict  String?                @map("location_district") @db.VarChar(128)
+  municipalityBlock String?                @map("municipality_block") @db.VarChar(128)
+  state             String?                @default("West Bengal") @db.VarChar(64)
+  applicantProfile  Json                   @default("{}") @map("applicant_profile")
+  complianceMatrix  Json                   @default("[]") @map("compliance_matrix")
+  status            String?                @default("active") @db.VarChar(32)
+  createdAt         DateTime?              @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime?              @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user              User?                  @relation(fields: [userId], references: [id], onDelete: SetNull)
+  citizenProfile    CitizenProfile?        @relation(fields: [citizenProfileId], references: [id], onDelete: SetNull)
+  businessEntity    BusinessEntity?        @relation(fields: [businessEntityId], references: [id], onDelete: SetNull)
+  artifacts         RedTapeArtifact[]
+  messages          RedTapeMessage[]
+  memoryVectors     CitizenMemoryVector[]
+
+  @@index([updatedAt(sort: Desc)], map: "idx_redtape_sessions_updated")
+  @@map("redtape_sessions")
+}
+
+model RedTapeMessage {
+  id              Int             @id @default(autoincrement())
+  sessionId       String?         @map("session_id") @db.VarChar(64)
+  role            String          @db.VarChar(32)
+  content         String
+  thoughtProcess  Json?           @map("thought_process")
+  interviewTurn   Json?           @map("interview_turn")
+  thinkingSummary String?         @map("thinking_summary")
+  durationSeconds Decimal?        @map("duration_seconds") @db.Decimal(5, 2)
+  hasArtifacts    Boolean?        @default(false) @map("has_artifacts")
+  createdAt       DateTime?       @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  session         RedTapeSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([sessionId], map: "idx_redtape_messages_session")
+  @@map("redtape_messages")
+}
+
+model RedTapeArtifact {
+  id                   Int             @id @default(autoincrement())
+  sessionId            String?         @map("session_id") @db.VarChar(64)
+  formName             String          @map("form_name") @db.VarChar(128)
+  filePath             String          @map("file_path")
+  completionPercentage Int?            @default(0) @map("completion_percentage")
+  artifactType         String?         @default("pdf") @map("artifact_type") @db.VarChar(32)
+  metadata             Json?
+  createdAt            DateTime?       @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  session              RedTapeSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([sessionId], map: "idx_redtape_artifacts_session")
+  @@map("redtape_artifacts")
+}
+
+// ==========================================
+// PGVECTOR PERSISTENT CITIZEN MEMORY
+// ==========================================
+
+model CitizenMemoryVector {
+  id           String                   @id @default(uuid())
+  userId       String                   @map("user_id")
+  sessionId    String?                  @map("session_id") @db.VarChar(64)
+  vectorType   String                   @map("vector_type") @db.VarChar(32) // profile_fact, business_context, statutory_query, compliance_precedent
+  contentChunk String                   @map("content_chunk")
+  embedding    Unsupported("vector(768)")?
+  metadata     Json?                    @default("{}")
+  createdAt    DateTime                 @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user         User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session      RedTapeSession?          @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_memory_vectors_user")
+  @@map("citizen_memory_vectors")
+}

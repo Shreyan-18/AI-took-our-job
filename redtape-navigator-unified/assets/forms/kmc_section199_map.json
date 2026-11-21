@@ -1,0 +1,75 @@
+{
+  "form": "KMC_Section199_Trade_Enlistment.pdf",
+  "licence_id": "lic_kmc_ce",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "acroform": "business_name"
+      },
+      "source": "applicant_profile.entity_name",
+      "mandatory": true,
+      "transform": "upper"
+    },
+    {
+      "target": {
+        "acroform": "proprietor_name"
+      },
+      "source": "applicant_profile.applicant.name",
+      "mandatory": true,
+      "transform": "title"
+    },
+    {
+      "target": {
+        "acroform": "nature_of_trade"
+      },
+      "source": "applicant_profile.activity_type",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "premises_address"
+      },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "ward_borough"
+      },
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "premises_type"
+      },
+      "source": "applicant_profile.location.premises_type",
+      "mandatory": true,
+      "transform": "title"
+    },
+    {
+      "target": {
+        "acroform": "workers_count"
+      },
+      "source": "applicant_profile.domain_attributes.workers_on_site",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "contact_mobile"
+      },
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true,
+      "transform": "phone_10digit"
+    },
+    {
+      "target": {
+        "acroform": "applicant_pan"
+      },
+      "source": "applicant_profile.applicant.pan",
+      "mandatory": true,
+      "transform": "pan"
+    }
+  ]
+}

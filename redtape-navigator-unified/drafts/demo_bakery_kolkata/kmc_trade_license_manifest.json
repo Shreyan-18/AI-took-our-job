@@ -15,7 +15,7 @@
       "selector": "#wardArea",
       "source": "applicant_profile.location.municipal_ward_or_block",
       "value_masked": false,
-      "value": "Ward 65, KMC"
+      "value": "Ward 64, Kolkata Municipal Corporation"
     },
     {
       "action": "fill",
@@ -23,7 +23,15 @@
       "selector": "#cityName",
       "source": "applicant_profile.location.city_or_village",
       "value_masked": false,
-      "value": "Kolkata"
+      "value": "Park Circus, Kolkata"
+    },
+    {
+      "action": "fill",
+      "label": "Premises / Street Address",
+      "selector": "#premisesAddress",
+      "source": "applicant_profile.location.address",
+      "value_masked": false,
+      "value": "24/1 Park Circus Seven Point, Kolkata - 700017"
     },
     {
       "action": "fill",
@@ -39,7 +47,7 @@
       "selector": "#businessName",
       "source": "applicant_profile.entity_name",
       "value_masked": false,
-      "value": "SUNRISE BAKERY"
+      "value": "PARK CIRCUS ARTISAN BAKERY"
     },
     {
       "action": "fill",
@@ -74,8 +82,6 @@
       "value": "9830012345"
     }
   ],
-  "missing_fields": [
-    "applicant_profile.location.address"
-  ],
-  "completion_percentage": 89
+  "missing_fields": [],
+  "completion_percentage": 100
 }

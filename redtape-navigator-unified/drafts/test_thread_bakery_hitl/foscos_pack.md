@@ -7,10 +7,10 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Name of Applicant / Company | [PENDING_USER_INPUT] | PENDING (Required) |
+| Name of Applicant / Company | `SMALL BAKERY` | Ready |
 | Authorized Signatory Name | [PENDING_USER_INPUT] | PENDING (Required) |
 | Premises Address | [PENDING_USER_INPUT] | PENDING (Required) |
-| City / Village | `Kolkata` | Ready |
+| City / Village | `Park Circus` | Ready |
 | PIN Code | [PENDING_USER_INPUT] | PENDING (Required) |
 | Mobile Number | [PENDING_USER_INPUT] | PENDING (Required) |
 | PAN Number | [PENDING_USER_INPUT] | PENDING (Required) |
@@ -19,7 +19,7 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Nature of Business | `Bakery` | Ready |
+| Nature of Business | `Opening` | Ready |
 | Expected Annual Turnover (INR) | `800000` | Ready |
 
 ## Required Portal Uploads

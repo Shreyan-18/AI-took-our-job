@@ -1,0 +1,59 @@
+{
+  "form": "KMC_Section199_Trade_Enlistment.pdf",
+  "backend": "pymupdf",
+  "filled": [
+    {
+      "field": "business_name",
+      "source": "applicant_profile.entity_name"
+    },
+    {
+      "field": "nature_of_trade",
+      "source": "applicant_profile.activity_type"
+    },
+    {
+      "field": "premises_type",
+      "source": "applicant_profile.location.premises_type"
+    },
+    {
+      "field": "workers_count",
+      "source": "applicant_profile.domain_attributes.workers_on_site"
+    }
+  ],
+  "pending": [
+    {
+      "field": "proprietor_name",
+      "source": "applicant_profile.applicant.name",
+      "mandatory": true
+    },
+    {
+      "field": "premises_address",
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "field": "ward_borough",
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "mandatory": true
+    },
+    {
+      "field": "contact_mobile",
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true
+    },
+    {
+      "field": "applicant_pan",
+      "source": "applicant_profile.applicant.pan",
+      "mandatory": true
+    }
+  ],
+  "unmapped": [],
+  "completion_percentage": 44,
+  "missing_fields": [
+    "applicant_profile.applicant.name",
+    "applicant_profile.location.address",
+    "applicant_profile.location.municipal_ward_or_block",
+    "applicant_profile.applicant.phone",
+    "applicant_profile.applicant.pan"
+  ],
+  "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/test_thread_bakery_hitl/draft_KMC_Section199_Trade_Enlistment.pdf"
+}

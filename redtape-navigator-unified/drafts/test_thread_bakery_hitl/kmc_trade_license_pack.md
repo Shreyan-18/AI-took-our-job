@@ -7,17 +7,17 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Municipal Ward / Area | `Park Circus` | Ready |
-| City | `Kolkata` | Ready |
+| Municipal Ward / Area | [PENDING_USER_INPUT] | PENDING (Required) |
+| City | `Park Circus` | Ready |
 | Premises / Street Address | [PENDING_USER_INPUT] | PENDING (Required) |
-| Premises Tenancy Type | [PENDING_USER_INPUT] | PENDING (Required) |
+| Premises Tenancy Type | `Owned` | Ready |
 
 ## Step 2: Business & Applicant Profile
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Name of Enterprise / Trade | [PENDING_USER_INPUT] | PENDING (Required) |
-| Nature of Trade / Activity | `Bakery` | Ready |
+| Name of Enterprise / Trade | `SMALL BAKERY` | Ready |
+| Nature of Trade / Activity | `Opening` | Ready |
 | Customer Seating Count | `5` | Ready |
 | Applicant Full Name | [PENDING_USER_INPUT] | PENDING (Required) |
 | Contact Mobile | [PENDING_USER_INPUT] | PENDING (Required) |

@@ -1,0 +1,53 @@
+{
+  "form": "FSSAI_Registration_Form_A.pdf",
+  "backend": "pymupdf",
+  "filled": [
+    {
+      "field": "applicant_name",
+      "source": "applicant_profile.applicant.name"
+    },
+    {
+      "field": "business_name",
+      "source": "applicant_profile.entity_name"
+    },
+    {
+      "field": "premises_address",
+      "source": "applicant_profile.location.address"
+    }
+  ],
+  "pending": [
+    {
+      "field": "annual_turnover_words",
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+      "mandatory": true
+    },
+    {
+      "field": "mobile_number",
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true
+    },
+    {
+      "field": "applicant_pan",
+      "source": "applicant_profile.applicant.pan",
+      "mandatory": true
+    },
+    {
+      "field": "owns_premises",
+      "source": "applicant_profile.location.premises_type",
+      "mandatory": false
+    },
+    {
+      "field": "p0@(65,465)",
+      "source": "applicant_profile.applicant.dob",
+      "mandatory": false
+    }
+  ],
+  "unmapped": [],
+  "completion_percentage": 38,
+  "missing_fields": [
+    "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+    "applicant_profile.applicant.phone",
+    "applicant_profile.applicant.pan"
+  ],
+  "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/benchmark_test/draft_FSSAI_Registration_Form_A.pdf"
+}

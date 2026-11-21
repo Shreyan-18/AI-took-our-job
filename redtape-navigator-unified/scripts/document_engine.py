@@ -127,12 +127,28 @@ def precheck_supporting_documents(state: dict, draft_dir: Path) -> list[dict]:
 
 def resolve_permit_target(lic_id: str, name: str) -> str:
     combined = f"{lic_id} {name}".lower()
+    if lic_id == "lic_fssai_state" or "state food license" in combined or "form b" in combined and "fssai" in combined:
+        return "lic_fssai_state"
     if "fssai" in combined or "food" in combined:
         return "lic_fssai_basic_registration"
-    if "enlistment" in combined or "trade license" in combined or "trade licence" in combined or "kmc" in combined:
-        return "lic_kmc_certificate_of_enlistment"
+    if lic_id == "lic_kmc_ce" or "kmc" in combined:
+        return "lic_kmc_ce"
+    if lic_id in ("lic_panihati_ce", "lic_barrackpore_ce", "lic_municipal_form_j") or "form j" in combined or "enlistment" in combined or "trade license" in combined:
+        return "lic_municipal_form_j"
     if "shop" in combined or "establishment" in combined or "silpasathi" in combined:
         return "lic_wb_shops_and_establishments"
+    if lic_id == "lic_wb_ptax" or "professional tax" in combined or "form ii" in combined:
+        return "lic_wb_ptax"
+    if lic_id == "lic_gst_reg" or "gst" in combined:
+        return "lic_gst_reg"
+    if lic_id == "lic_udyam_msme" or "udyam" in combined or "msme" in combined:
+        return "lic_udyam_msme"
+    if lic_id == "lic_wb_fire_advisory" or "textile" in combined and "fire" in combined:
+        return "lic_wb_fire_advisory"
+    if lic_id == "lic_wb_fire" or "fire" in combined:
+        return "lic_wb_fire"
+    if lic_id == "lic_wb_signage" or "signboard" in combined or "fascia" in combined:
+        return "lic_wb_signage"
     if "building" in combined or "sanction" in combined or "zoning" in combined or "floor" in combined or "bmc" in combined:
         return "lic_municipal_building_sanction"
     if "pmksy" in combined or "drip" in combined or "micro_irrigation" in combined or "micro irrigation" in combined:
@@ -152,16 +168,26 @@ def generate_documents(state: dict, output_dir: str = None) -> dict:
     # Evaluate permits marked Required or Conditional
     active_permits = [r for r in matrix if r.get("status") in ("Required", "Conditional")]
 
-    # Catalog existing maps
+    # Catalog existing + sector-specific official AcroForm maps
     form_maps = {
+        "lic_kmc_ce": FORMS_DIR / "kmc_section199_map.json",
+        "lic_municipal_form_j": FORMS_DIR / "wb_municipal_form_j_map.json",
         "lic_fssai_basic_registration": FORMS_DIR / "fssai_form_a_map.json",
+        "lic_fssai_state": FORMS_DIR / "fssai_form_b_map.json",
         "lic_wb_shops_and_establishments": FORMS_DIR / "wb_shops_form_b_map.json",
+        "lic_wb_ptax": FORMS_DIR / "wb_ptax_form_ii_map.json",
+        "lic_gst_reg": FORMS_DIR / "gst_reg_01_map.json",
+        "lic_udyam_msme": FORMS_DIR / "udyam_msme_map.json",
+        "lic_wb_fire": FORMS_DIR / "wb_fire_noc_map.json",
+        "lic_wb_fire_advisory": FORMS_DIR / "wb_textile_fire_map.json",
+        "lic_wb_signage": FORMS_DIR / "panihati_signboard_map.json",
         "lic_municipal_building_sanction": FORMS_DIR / "building_plan_form_map.json",
         "grant_pmksy_micro_irrigation": FORMS_DIR / "pmksy_grant_form_map.json",
     }
     portal_maps = {
         "lic_fssai_basic_registration": PORTALS_DIR / "foscos_portal_map.json",
-        "lic_kmc_certificate_of_enlistment": PORTALS_DIR / "kmc_trade_license_portal_map.json",
+        "lic_fssai_state": PORTALS_DIR / "foscos_portal_map.json",
+        "lic_kmc_ce": PORTALS_DIR / "kmc_trade_license_portal_map.json",
         "lic_wb_shops_and_establishments": PORTALS_DIR / "silpasathi_portal_map.json",
         "lic_municipal_building_sanction": PORTALS_DIR / "bmc_building_plan_portal_map.json",
         "grant_pmksy_micro_irrigation": PORTALS_DIR / "banglar_krishi_portal_map.json",

@@ -11,11 +11,19 @@
   "actions": [
     {
       "action": "fill",
+      "label": "Name of Applicant / Company",
+      "selector": "#applicantName",
+      "source": "applicant_profile.entity_name",
+      "value_masked": false,
+      "value": "SMALL BAKERY"
+    },
+    {
+      "action": "fill",
       "label": "City / Village",
       "selector": "#cityVillage",
       "source": "applicant_profile.location.city_or_village",
       "value_masked": false,
-      "value": "Kolkata"
+      "value": "Park Circus"
     },
     {
       "action": "fill",
@@ -23,7 +31,7 @@
       "selector": "#kindOfBusiness",
       "source": "applicant_profile.activity_type",
       "value_masked": false,
-      "value": "Bakery"
+      "value": "Opening"
     },
     {
       "action": "fill",
@@ -35,12 +43,11 @@
     }
   ],
   "missing_fields": [
-    "applicant_profile.entity_name",
     "applicant_profile.applicant.name",
     "applicant_profile.location.address",
     "applicant_profile.location.pin",
     "applicant_profile.applicant.phone",
     "applicant_profile.applicant.pan"
   ],
-  "completion_percentage": 33
+  "completion_percentage": 44
 }

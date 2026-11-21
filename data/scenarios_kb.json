@@ -1,0 +1,419 @@
+{
+  "version": "3.0.0",
+  "verified_date": "2026-11-21",
+  "scenarios": {
+    "bakery_kolkata": {
+      "key": "bakery_kolkata",
+      "short_title": "Bakery in Park Circus, Kolkata",
+      "display_title": "Bakery Shop — Park Circus, Kolkata",
+      "domain": "business",
+      "activity_type": "Bakery & Confectionery Retail",
+      "nic_code": "10712 (Manufacture & Retail of Bakery Products)",
+      "keywords_primary": ["bakery", "baker", "park circus", "cake", "pastry", "patisserie", "confectionery"],
+      "keywords_secondary": ["kolkata", "bread", "bakehouse", "food", "oven", "cafe"],
+      "default_location": {
+        "city_or_village": "Park Circus, Kolkata",
+        "state": "West Bengal",
+        "district": "Kolkata",
+        "municipal_ward_or_block": "Ward 64, Kolkata Municipal Corporation (KMC)",
+        "address": "24/1 Park Circus Seven Point, Kolkata - 700017",
+        "premises_type": null
+      },
+      "research_steps": [
+        {
+          "agent": "orchestrator_agent",
+          "tool": "parse_citizen_goal",
+          "label": "Classified food business & KMC Ward 64 jurisdiction",
+          "detail": "Identified commercial bakery (NIC 10712) under Kolkata Municipal Corporation (KMC), Park Circus."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked KMC Licence Department (Section 199)",
+          "url": "https://www.kmcgov.in/KMCPortal/jsp/KMCCEHome.jsp",
+          "detail": "KMC issues Certificate of Enlistment on kmcgov.in (outside SilpaSathi); 2026-27 enlistment fee capped at ₹2,500/yr."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked FSSAI FoSCoS 2026 Eligibility Schedule",
+          "url": "https://foscos.fssai.gov.in/assets/docs/Revised_31thMarch2026KindofBusinessEligibility.pdf",
+          "detail": "Effective 1 April 2026: Basic Registration (Form A, ₹100/yr) up to ₹1.5 Cr; State License (Form B, ₹5,000/yr) for ₹1.5 Cr–₹50 Cr."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked SilpaSathi, WB P-Tax (Form II), GST & WBFES",
+          "url": "https://silpasathi.wb.gov.in/",
+          "detail": "Mapped WB Shops & Establishments Form B, WB Professional Tax Form II (>₹5L turnover), Udyam MSME, GST REG-01 (>₹40L), and Fire NOC triggers."
+        }
+      ],
+      "research_findings": [
+        {
+          "id": "lic_kmc_ce",
+          "name": "KMC Certificate of Enlistment (Trade License)",
+          "authority": "Kolkata Municipal Corporation (Licence Dept)",
+          "tier": "municipal",
+          "statutory_fee": "₹1,500 – ₹2,500 / yr",
+          "official_source_url": "https://www.kmcgov.in/KMCPortal/jsp/KMCCEHome.jsp"
+        },
+        {
+          "id": "lic_fssai_basic",
+          "name": "FSSAI Food Safety Registration (Form A / Form B)",
+          "authority": "Food Safety and Standards Authority of India",
+          "tier": "central",
+          "statutory_fee": "₹100/yr (Basic <= ₹1.5 Cr) or ₹5,000/yr (State)",
+          "official_source_url": "https://foscos.fssai.gov.in/assets/docs/Revised_31thMarch2026KindofBusinessEligibility.pdf"
+        },
+        {
+          "id": "lic_wb_shops",
+          "name": "WB Shops & Establishments Registration (Form B)",
+          "authority": "Labour Commissionerate, Govt of WB (SilpaSathi)",
+          "tier": "state",
+          "statutory_fee": "₹300 – ₹500",
+          "official_source_url": "https://silpasathi.wb.gov.in/"
+        },
+        {
+          "id": "lic_wb_ptax",
+          "name": "West Bengal Professional Tax Enrolment (Form II)",
+          "authority": "Directorate of Commercial Taxes, WB",
+          "tier": "state",
+          "statutory_fee": "Slab-based (up to ₹2,500 / yr)",
+          "official_source_url": "https://egov.wbcomtax.gov.in/PT_Admin"
+        },
+        {
+          "id": "lic_udyam_msme",
+          "name": "Udyam MSME Registration",
+          "authority": "Ministry of MSME, Govt of India",
+          "tier": "central",
+          "statutory_fee": "₹0 (Free)",
+          "official_source_url": "https://udyamregistration.gov.in/"
+        }
+      ],
+      "interview_questions": [
+        {
+          "id": "q_identity",
+          "step": 1,
+          "question": "Who is the proprietor and what is your bakery's name & Park Circus address?",
+          "options": [
+            "Aarav Sen — Park Circus Bakehouse, 24/1 Park Circus Seven Point, Kolkata 700017",
+            "Riya Chatterjee — Oven Story Park Circus, 18 Syed Amir Ali Ave, Kolkata 700017",
+            "Imran Siddiqui — Crescent Artisan Bakes, 9 Park Circus Connector, Kolkata 700017"
+          ],
+          "custom_placeholder": "Type your name, bakery name, and Park Circus address..."
+        },
+        {
+          "id": "q_scale_fssai",
+          "step": 2,
+          "question": "What is your expected annual turnover and kitchen/seating setup?",
+          "options": [
+            "Under ₹18 Lakhs · Counter takeaway + 6 seats · Electric ovens (FSSAI Form A)",
+            "Around ₹50 Lakhs · 15 seats · Electric ovens (FSSAI Form A + GST REG-01)",
+            "Around ₹2.2 Crore · 55 seats · Bulk commercial LPG (FSSAI Form B + Fire NOC + GST)",
+            "Under ₹4.5 Lakhs · Small neighbourhood counter (P-Tax & GST exempt)"
+          ],
+          "custom_placeholder": "Something else (e.g. ₹25 Lakhs, 10 seats, electric ovens)..."
+        },
+        {
+          "id": "q_staff_premises",
+          "step": 3,
+          "question": "How many bakers/staff will work on site, and is the shop rented or owned?",
+          "options": [
+            "4 staff members · Rented shop premises (stages Landlord NOC)",
+            "2 staff members · Owned commercial premises",
+            "8 bakers & counter staff · Rented shop premises",
+            "Solo proprietor (1 person) · Rented shop"
+          ],
+          "custom_placeholder": "Something else (e.g. 5 workers, rented)..."
+        },
+        {
+          "id": "q_contact_id",
+          "step": 4,
+          "question": "Share your mobile number and PAN to populate the AcroForm PDFs:",
+          "options": [
+            "9830012345 · Defer PAN (stamp [PENDING_USER_INPUT] for privacy)",
+            "9830012345 · PAN: ABCDE1234F (full 100% auto-fill)"
+          ],
+          "custom_placeholder": "Type your 10-digit mobile and PAN (or say skip PAN)..."
+        }
+      ]
+    },
+    "stationery_sodpur": {
+      "key": "stationery_sodpur",
+      "short_title": "Stationery & Book Stall in Sodpur",
+      "display_title": "Stationery & Book Stall — Sodpur (Panihati)",
+      "domain": "business",
+      "activity_type": "Stationery, Textbooks & Office Supplies Retail",
+      "nic_code": "47611 (Retail Sale of Books, Newspapers & Stationery)",
+      "keywords_primary": ["stationary", "stationery", "book", "books", "bookstore", "sodpur", "sodepur", "panihati"],
+      "keywords_secondary": ["stall", "notebook", "textbook", "pen", "paper", "periodical"],
+      "default_location": {
+        "city_or_village": "Sodpur, Panihati",
+        "state": "West Bengal",
+        "district": "North 24 Parganas",
+        "municipal_ward_or_block": "Ward 14, Panihati Municipality",
+        "address": "12 Station Road, Near Sodpur Railway Station, Kolkata - 700110",
+        "premises_type": null
+      },
+      "research_steps": [
+        {
+          "agent": "orchestrator_agent",
+          "tool": "parse_citizen_goal",
+          "label": "Classified non-food micro-retail & Panihati Municipality jurisdiction",
+          "detail": "Identified Stationery & Book Stall (NIC 47611) in Sodpur under Panihati Municipality, North 24 Parganas."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked Panihati Municipality & WB e-District (Form J / Sec 118)",
+          "url": "https://panihatimunicipality.org/",
+          "detail": "New municipal Certificates of Enlistment (Form J -> Form 24) are filed via WB e-District; renewals via SilpaSathi. Micro-stalls <= 200 sq ft pay ₹800/yr."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked SilpaSathi (WB Shops Form B) & Signboard Rules",
+          "url": "https://silpasathi.wb.gov.in/",
+          "detail": "Verified WB Shops & Establishments Form B (within 30 days) and Panihati Municipal Commercial Signboard Clearance."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked WB Professional Tax (Form II) & Udyam MSME",
+          "url": "https://egov.wbcomtax.gov.in/PT_Admin",
+          "detail": "Verified WB P-Tax Enrolment Form II (for turnover > ₹5 Lakh), free Udyam MSME registration (NIC 47611), and GST exemption below ₹40 Lakh."
+        }
+      ],
+      "research_findings": [
+        {
+          "id": "lic_panihati_ce",
+          "name": "Panihati Municipality Certificate of Enlistment (Form J)",
+          "authority": "Panihati Municipality (via WB e-District)",
+          "tier": "municipal",
+          "statutory_fee": "₹800/yr (<= 200 sq ft) or ₹1,200/yr (> 200 sq ft)",
+          "official_source_url": "https://panihatimunicipality.org/"
+        },
+        {
+          "id": "lic_wb_shops",
+          "name": "WB Shops & Establishments Registration (Form B)",
+          "authority": "Labour Commissionerate, Govt of WB (SilpaSathi)",
+          "tier": "state",
+          "statutory_fee": "₹300",
+          "official_source_url": "https://silpasathi.wb.gov.in/"
+        },
+        {
+          "id": "lic_wb_signage",
+          "name": "Panihati Municipal Signboard & Fascia Display Clearance",
+          "authority": "Panihati Municipality (Revenue Dept)",
+          "tier": "municipal",
+          "statutory_fee": "₹250 / yr",
+          "official_source_url": "https://panihatimunicipality.org/"
+        },
+        {
+          "id": "lic_wb_ptax",
+          "name": "West Bengal Professional Tax Enrolment (Form II)",
+          "authority": "Directorate of Commercial Taxes, WB",
+          "tier": "state",
+          "statutory_fee": "Slab-based (if turnover > ₹5 Lakh)",
+          "official_source_url": "https://egov.wbcomtax.gov.in/PT_Admin"
+        },
+        {
+          "id": "lic_udyam_msme",
+          "name": "Udyam MSME Registration",
+          "authority": "Ministry of MSME, Govt of India",
+          "tier": "central",
+          "statutory_fee": "₹0 (Free)",
+          "official_source_url": "https://udyamregistration.gov.in/"
+        }
+      ],
+      "interview_questions": [
+        {
+          "id": "q_identity",
+          "step": 1,
+          "question": "Who is the proprietor and what is your book stall's name & Sodpur address?",
+          "options": [
+            "Subhashish Mukherjee — Vidyasagar Book Stall, 12 Station Road, Sodpur, Kolkata 700110",
+            "Anindita Roy — Sodpur Pustak Ghar, 45 BT Road, Sodpur, Kolkata 700110",
+            "Dipankar Saha — Nabodaya Stationery Mart, 8 H.B. Town, Sodpur, Kolkata 700110"
+          ],
+          "custom_placeholder": "Type your name, book stall name, and Sodpur address..."
+        },
+        {
+          "id": "q_area_premises",
+          "step": 2,
+          "question": "What is the stall's carpet area and premises ownership?",
+          "options": [
+            "160 sq ft · Rented stall (Micro-Enterprise ₹800/yr tariff)",
+            "260 sq ft · Rented shop (Standard Retail ₹1,200/yr tariff)",
+            "180 sq ft · Owned premises (Micro-Enterprise ₹800/yr tariff)",
+            "350 sq ft · Owned storefront (Standard Retail ₹1,200/yr tariff)"
+          ],
+          "custom_placeholder": "Something else (e.g. 140 sq ft, rented)..."
+        },
+        {
+          "id": "q_staff_turnover",
+          "step": 3,
+          "question": "How many staff will work at the stall, and what is your expected annual turnover?",
+          "options": [
+            "2 staff members · Around ₹8 Lakhs turnover (Triggers WB P-Tax Form II)",
+            "1 helper · Around ₹4.2 Lakhs turnover (Below P-Tax & GST thresholds)",
+            "4 staff members · Around ₹45 Lakhs wholesale + retail (Triggers GST REG-01)"
+          ],
+          "custom_placeholder": "Something else (e.g. 2 helpers, ₹10 Lakhs turnover)..."
+        },
+        {
+          "id": "q_contact_id",
+          "step": 4,
+          "question": "Share your mobile number and PAN to populate all Panihati & WB forms:",
+          "options": [
+            "9831123456 · Defer PAN (stamp [PENDING_USER_INPUT] for privacy)",
+            "9831123456 · PAN: BDFPM4412K (full 100% auto-fill)"
+          ],
+          "custom_placeholder": "Type your 10-digit mobile and PAN (or say skip PAN)..."
+        }
+      ]
+    },
+    "clothes_barrackpore": {
+      "key": "clothes_barrackpore",
+      "short_title": "Clothes Shop in Barrackpore",
+      "display_title": "Clothes & Apparel Shop — Barrackpore",
+      "domain": "business",
+      "activity_type": "Readymade Garments & Apparel Retail",
+      "nic_code": "47711 (Retail Sale of Readymade Garments & Textiles)",
+      "keywords_primary": ["cloth", "clothes", "clothing", "garment", "garments", "apparel", "barrackpore", "barackpore", "barrackpur"],
+      "keywords_secondary": ["boutique", "fashion", "saree", "textile", "dress", "wear", "showroom"],
+      "default_location": {
+        "city_or_village": "Barrackpore",
+        "state": "West Bengal",
+        "district": "North 24 Parganas",
+        "municipal_ward_or_block": "Ward 8, Barrackpore Municipality",
+        "address": "84 SN Banerjee Road, Anandapuri, Barrackpore - 700120",
+        "premises_type": null
+      },
+      "research_steps": [
+        {
+          "agent": "orchestrator_agent",
+          "tool": "parse_citizen_goal",
+          "label": "Classified apparel retail & Barrackpore Municipality jurisdiction",
+          "detail": "Identified Readymade Garments & Apparel Retail (NIC 47711) under Barrackpore Municipality, North 24 Parganas."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked Barrackpore Municipality & WB e-District (Form J / Sec 118)",
+          "url": "https://sudawb.org/wbdma_oldversion_old/HTM/DIS/MUNI_ULB_Barrackpore.htm",
+          "detail": "Verified Form J application for Permanent Certificate of Enlistment (Form 24) via WB e-District; renewals via SilpaSathi."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked SilpaSathi (Form B) & WB Fire Services Act, 1950",
+          "url": "https://silpasathi.wb.gov.in/",
+          "detail": "Mapped WB Shops & Establishments Form B and combustible textile storage fire compliance (IS 2190 extinguishers; full Fire NOC if >= 5,000 sq ft)."
+        },
+        {
+          "agent": "statutory_research_engine",
+          "tool": "scrape_portal",
+          "label": "Checked GST REG-01 (₹40L Goods Threshold), WB P-Tax & Udyam",
+          "url": "https://gstcouncil.gov.in/sites/default/files/e-version-gst-flyers/Registration_under_GST_Law_new.pdf",
+          "detail": "Verified GST Form REG-01 trigger (>₹40 Lakh goods turnover), WB P-Tax Form II (>₹5 Lakh), and free Udyam MSME (NIC 47711)."
+        }
+      ],
+      "research_findings": [
+        {
+          "id": "lic_barrackpore_ce",
+          "name": "Barrackpore Municipality Certificate of Enlistment (Form J)",
+          "authority": "Barrackpore Municipality (via WB e-District)",
+          "tier": "municipal",
+          "statutory_fee": "₹1,200 – ₹2,000 / yr",
+          "official_source_url": "https://sudawb.org/wbdma_oldversion_old/HTM/DIS/MUNI_ULB_Barrackpore.htm"
+        },
+        {
+          "id": "lic_wb_shops",
+          "name": "WB Shops & Establishments Registration (Form B)",
+          "authority": "Labour Commissionerate, Govt of WB (SilpaSathi)",
+          "tier": "state",
+          "statutory_fee": "₹300",
+          "official_source_url": "https://silpasathi.wb.gov.in/"
+        },
+        {
+          "id": "lic_wb_fire_advisory",
+          "name": "Textile Combustible Storage & Fire Safety Declaration",
+          "authority": "West Bengal Fire & Emergency Services",
+          "tier": "state",
+          "statutory_fee": "₹0 (Self-Compliance) / ₹5,000 (Full NOC >= 5,000 sq ft)",
+          "official_source_url": "https://nafoindia.org/pdfs/west_bengal_fire_service_act.pdf"
+        },
+        {
+          "id": "lic_wb_ptax",
+          "name": "West Bengal Professional Tax Enrolment (Form II)",
+          "authority": "Directorate of Commercial Taxes, WB",
+          "tier": "state",
+          "statutory_fee": "Slab-based (up to ₹2,500 / yr)",
+          "official_source_url": "https://egov.wbcomtax.gov.in/PT_Admin"
+        },
+        {
+          "id": "lic_gst_reg",
+          "name": "GST Registration (Form GST REG-01)",
+          "authority": "GSTN / WB Commercial Taxes",
+          "tier": "central",
+          "statutory_fee": "₹0 (Mandatory if turnover > ₹40 Lakhs)",
+          "official_source_url": "https://taxindiaonline.com/RC2/pdfnoti/gst/gst_forms/2017/GST%20REG-01.pdf"
+        },
+        {
+          "id": "lic_udyam_msme",
+          "name": "Udyam MSME Registration",
+          "authority": "Ministry of MSME, Govt of India",
+          "tier": "central",
+          "statutory_fee": "₹0 (Free)",
+          "official_source_url": "https://udyamregistration.gov.in/"
+        }
+      ],
+      "interview_questions": [
+        {
+          "id": "q_identity",
+          "step": 1,
+          "question": "Who is the proprietor and what is your clothes shop's name & Barrackpore address?",
+          "options": [
+            "Debolina Ghosh — Ananya Fashion & Garments, 84 SN Banerjee Road, Anandapuri, Barrackpore 700120",
+            "Sourav Das — Barrackpore Style Studio, 15 Chiriamore, Barrackpore 700120",
+            "Priyanka Bose — Tant & Loom Boutique, 22 Ghoshpara Road, Barrackpore 700120"
+          ],
+          "custom_placeholder": "Type your name, clothes shop name, and Barrackpore address..."
+        },
+        {
+          "id": "q_staff_premises",
+          "step": 2,
+          "question": "How many sales staff will work in the showroom, and is it rented or owned?",
+          "options": [
+            "4 sales staff · Rented showroom (stages Landlord NOC)",
+            "2 sales assistants · Owned property",
+            "8 showroom staff · Rented multi-room space"
+          ],
+          "custom_placeholder": "Something else (e.g. 5 sales staff, rented)..."
+        },
+        {
+          "id": "q_area_fire",
+          "step": 3,
+          "question": "What is your showroom carpet area and expected annual turnover?",
+          "options": [
+            "350 sq ft · Around ₹18 Lakhs turnover (Textile Fire Declaration + WB P-Tax)",
+            "650 sq ft · Around ₹48 Lakhs turnover (Triggers GST REG-01 + WB P-Tax)",
+            "5,500 sq ft multi-floor showroom · ₹1.2 Crore turnover (Full Fire NOC + GST REG-01)"
+          ],
+          "custom_placeholder": "Something else (e.g. 400 sq ft, ₹30 Lakhs turnover)..."
+        },
+        {
+          "id": "q_contact_id",
+          "step": 4,
+          "question": "Share your mobile number and PAN to auto-fill all Barrackpore & WB forms:",
+          "options": [
+            "9832234567 · Defer PAN (stamp [PENDING_USER_INPUT] for privacy)",
+            "9832234567 · PAN: ABCDE5678G (full 100% auto-fill)"
+          ],
+          "custom_placeholder": "Type your 10-digit mobile and PAN (or say skip PAN)..."
+        }
+      ]
+    }
+  }
+}

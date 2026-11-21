@@ -105,56 +105,86 @@ Return a clean JSON object with this exact structure:
 
 
 def parse_intent(goal_text: str, api_key: str = None) -> dict:
-    """Invoke Gemini with retries to parse goal text into domain, profile attributes, and provenance."""
-    key = api_key or find_api_key()
-    if not key:
-        raise ValueError("Gemini API key not found in environment or .env file.")
-
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {"text": f"System Instructions:\n{SYSTEM_PROMPT}\n\nUser Goal:\n{goal_text}"}
-                ]
-            }
-        ],
-        "generationConfig": {
-            "responseMimeType": "application/json",
-            "temperature": 0.1,
-        },
-    }
-
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-
+    """Invoke Ollama (with Gemini / heuristic fallbacks) to parse goal text into domain, profile attributes, and provenance."""
+    # 1. Primary: Local Ollama (unlimited local inference)
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            candidates = data.get("candidates", [])
-            if candidates:
-                content_text = candidates[0]["content"]["parts"][0]["text"]
-                result = json.loads(content_text)
-                dom = result.get("domain", "general")
-                if dom not in DOMAIN_DEFAULTS:
-                    dom = "general"
-                result["domain"] = dom
-                if "applicant_profile" not in result:
-                    result["applicant_profile"] = {
-                        "entity_name": result.get("entity_name"),
-                        "activity_type": result.get("activity_type"),
-                        "applicant": result.get("applicant", {}),
-                        "location": result.get("location", {}),
-                        "domain_attributes": result.get("domain_attributes", {}),
-                    }
-                return result
+        from ollama_client import call_ollama
+        res = call_ollama(
+            prompt=f"User Goal:\n{goal_text}",
+            system_prompt=SYSTEM_PROMPT,
+            json_mode=True,
+            temperature=0.1
+        )
+        if res.get("success") and res.get("json"):
+            result = res["json"]
+            dom = result.get("domain", "general")
+            if dom not in DOMAIN_DEFAULTS:
+                dom = "general"
+            result["domain"] = dom
+            if "applicant_profile" not in result:
+                result["applicant_profile"] = {
+                    "entity_name": result.get("entity_name"),
+                    "activity_type": result.get("activity_type"),
+                    "applicant": result.get("applicant", {}),
+                    "location": result.get("location", {}),
+                    "domain_attributes": result.get("domain_attributes", {}),
+                }
+            result["llm_meta"] = {
+                "engine": "ollama",
+                "model": res.get("model"),
+                "duration_seconds": res.get("duration_seconds"),
+                "tokens_per_sec": res.get("tokens_per_sec")
+            }
+            return result
     except Exception as e:
-        print(f"Notice: Gemini orchestrator unavailable ({e}); falling back to heuristic goal parser.", file=sys.stderr)
+        print(f"[Orchestrator] Ollama call error: {e}", file=sys.stderr)
+
+    # 2. Secondary fallback: Gemini API if key exists
+    key = api_key or find_api_key()
+    if key:
+        try:
+            model = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+            payload = {
+                "contents": [
+                    {
+                        "parts": [
+                            {"text": f"System Instructions:\n{SYSTEM_PROMPT}\n\nUser Goal:\n{goal_text}"}
+                        ]
+                    }
+                ],
+                "generationConfig": {
+                    "responseMimeType": "application/json",
+                    "temperature": 0.1,
+                },
+            }
+            req = urllib.request.Request(
+                url,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                candidates = data.get("candidates", [])
+                if candidates:
+                    content_text = candidates[0]["content"]["parts"][0]["text"]
+                    result = json.loads(content_text)
+                    dom = result.get("domain", "general")
+                    if dom not in DOMAIN_DEFAULTS:
+                        dom = "general"
+                    result["domain"] = dom
+                    if "applicant_profile" not in result:
+                        result["applicant_profile"] = {
+                            "entity_name": result.get("entity_name"),
+                            "activity_type": result.get("activity_type"),
+                            "applicant": result.get("applicant", {}),
+                            "location": result.get("location", {}),
+                            "domain_attributes": result.get("domain_attributes", {}),
+                        }
+                    return result
+        except Exception as e:
+            print(f"Notice: Gemini orchestrator unavailable ({e}); falling back to heuristics.", file=sys.stderr)
 
     # Heuristic fallback for zero-downtime demo protection
     dom = "general"

@@ -1,0 +1,43 @@
+{
+  "form": "WB_Municipal_Trade_License_Application.pdf",
+  "backend": "pymupdf",
+  "filled": [
+    {
+      "field": "enterprise_name",
+      "source": "applicant_profile.entity_name"
+    },
+    {
+      "field": "applicant_name",
+      "source": "applicant_profile.applicant.name"
+    },
+    {
+      "field": "trade_category",
+      "source": "applicant_profile.activity_type"
+    },
+    {
+      "field": "premises_address",
+      "source": "applicant_profile.location.address"
+    },
+    {
+      "field": "municipality_name",
+      "source": "applicant_profile.location.municipal_ward_or_block"
+    },
+    {
+      "field": "workers_count",
+      "source": "applicant_profile.domain_attributes.workers_on_site"
+    },
+    {
+      "field": "contact_phone",
+      "source": "applicant_profile.applicant.phone"
+    },
+    {
+      "field": "annual_valuation",
+      "source": "applicant_profile.domain_attributes.annual_valuation"
+    }
+  ],
+  "pending": [],
+  "unmapped": [],
+  "completion_percentage": 100,
+  "missing_fields": [],
+  "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/demo_stationery_sodpur/draft_WB_Municipal_Trade_License_Application.pdf"
+}

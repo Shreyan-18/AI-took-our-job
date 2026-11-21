@@ -3,6 +3,10 @@
   "backend": "pymupdf",
   "filled": [
     {
+      "field": "establishment_name",
+      "source": "applicant_profile.entity_name"
+    },
+    {
       "field": "category_of_establishment",
       "source": "applicant_profile.activity_type"
     },
@@ -12,11 +16,6 @@
     }
   ],
   "pending": [
-    {
-      "field": "establishment_name",
-      "source": "applicant_profile.entity_name",
-      "mandatory": true
-    },
     {
       "field": "premises_address",
       "source": "applicant_profile.location.address",
@@ -34,9 +33,8 @@
     }
   ],
   "unmapped": [],
-  "completion_percentage": 33,
+  "completion_percentage": 50,
   "missing_fields": [
-    "applicant_profile.entity_name",
     "applicant_profile.location.address",
     "applicant_profile.applicant.name",
     "applicant_profile.applicant.phone"

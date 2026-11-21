@@ -7,10 +7,10 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Name of Applicant / Company | `SUNRISE BAKERY` | Ready |
+| Name of Applicant / Company | `PARK CIRCUS ARTISAN BAKERY` | Ready |
 | Authorized Signatory Name | `Aarav Sen` | Ready |
-| Premises Address | [PENDING_USER_INPUT] | PENDING (Required) |
-| City / Village | `Kolkata` | Ready |
+| Premises Address | `24/1 Park Circus Seven Point, Kolkata - 700017` | Ready |
+| City / Village | `Park Circus, Kolkata` | Ready |
 | PIN Code | [PENDING_USER_INPUT] | PENDING (Required) |
 | Mobile Number | `9830012345` | Ready |
 | PAN Number | [PENDING_USER_INPUT] | PENDING (Required) |
@@ -20,7 +20,7 @@
 | Portal Field | Value to Enter | Status |
 |---|---|---|
 | Nature of Business | `Bakery` | Ready |
-| Expected Annual Turnover (INR) | `800000` | Ready |
+| Expected Annual Turnover (INR) | [PENDING_USER_INPUT] | PENDING (Required) |
 
 ## Required Portal Uploads
 

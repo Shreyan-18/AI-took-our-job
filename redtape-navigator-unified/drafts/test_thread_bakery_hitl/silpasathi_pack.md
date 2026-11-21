@@ -7,10 +7,10 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Name of Establishment | [PENDING_USER_INPUT] | PENDING (Required) |
-| Category of Establishment | `Bakery` | Ready |
+| Name of Establishment | `SMALL BAKERY` | Ready |
+| Category of Establishment | `Opening` | Ready |
 | Premises Address | [PENDING_USER_INPUT] | PENDING (Required) |
-| District / Municipality | `Kolkata` | Ready |
+| District / Municipality | `Park Circus` | Ready |
 
 ## Step 2: Employment & Employer
 

@@ -1,0 +1,39 @@
+{
+  "form": "WB_Shops_Establishment_Form_B.pdf",
+  "backend": "pymupdf",
+  "filled": [
+    {
+      "field": "establishment_name",
+      "source": "applicant_profile.entity_name"
+    },
+    {
+      "field": "category_of_establishment",
+      "source": "applicant_profile.activity_type"
+    },
+    {
+      "field": "premises_address",
+      "source": "applicant_profile.location.address"
+    },
+    {
+      "field": "employer_name",
+      "source": "applicant_profile.applicant.name"
+    },
+    {
+      "field": "employer_phone",
+      "source": "applicant_profile.applicant.phone"
+    }
+  ],
+  "pending": [
+    {
+      "field": "workers_count",
+      "source": "applicant_profile.domain_attributes.workers_on_site",
+      "mandatory": true
+    }
+  ],
+  "unmapped": [],
+  "completion_percentage": 83,
+  "missing_fields": [
+    "applicant_profile.domain_attributes.workers_on_site"
+  ],
+  "file_path": "/Users/tamajitghosh/Desktop/red-tape/redtape-navigator-unified/drafts/demo_clothes_barrackpore/draft_WB_Shops_Establishment_Form_B.pdf"
+}

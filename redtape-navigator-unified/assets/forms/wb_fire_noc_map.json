@@ -1,0 +1,59 @@
+{
+  "form": "WB_Fire_Safety_NOC_Form.pdf",
+  "licence_id": "lic_wb_fire",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "acroform": "applicant_name"
+      },
+      "source": "applicant_profile.applicant.name",
+      "mandatory": true,
+      "transform": "title"
+    },
+    {
+      "target": {
+        "acroform": "establishment_name"
+      },
+      "source": "applicant_profile.entity_name",
+      "mandatory": true,
+      "transform": "upper"
+    },
+    {
+      "target": {
+        "acroform": "premises_address"
+      },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "occupancy_type"
+      },
+      "source": "applicant_profile.activity_type",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "seating_or_area"
+      },
+      "source": "applicant_profile.domain_attributes.customer_seating",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "floor_area"
+      },
+      "source": "applicant_profile.domain_attributes.floor_area_sqft",
+      "mandatory": false
+    },
+    {
+      "target": {
+        "acroform": "mobile_number"
+      },
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true,
+      "transform": "phone_10digit"
+    }
+  ]
+}

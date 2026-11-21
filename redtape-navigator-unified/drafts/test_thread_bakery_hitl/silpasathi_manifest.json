@@ -10,11 +10,19 @@
   "actions": [
     {
       "action": "fill",
+      "label": "Name of Establishment",
+      "selector": "#estName",
+      "source": "applicant_profile.entity_name",
+      "value_masked": false,
+      "value": "SMALL BAKERY"
+    },
+    {
+      "action": "fill",
       "label": "Category of Establishment",
       "selector": "#estCategory",
       "source": "applicant_profile.activity_type",
       "value_masked": false,
-      "value": "Bakery"
+      "value": "Opening"
     },
     {
       "action": "fill",
@@ -22,7 +30,7 @@
       "selector": "#estDistrict",
       "source": "applicant_profile.location.city_or_village",
       "value_masked": false,
-      "value": "Kolkata"
+      "value": "Park Circus"
     },
     {
       "action": "fill",
@@ -34,10 +42,9 @@
     }
   ],
   "missing_fields": [
-    "applicant_profile.entity_name",
     "applicant_profile.location.address",
     "applicant_profile.applicant.name",
     "applicant_profile.applicant.phone"
   ],
-  "completion_percentage": 43
+  "completion_percentage": 57
 }

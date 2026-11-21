@@ -7,16 +7,16 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Municipal Ward / Area | `Ward 65, KMC` | Ready |
-| City | `Kolkata` | Ready |
-| Premises / Street Address | [PENDING_USER_INPUT] | PENDING (Required) |
+| Municipal Ward / Area | `Ward 64, Kolkata Municipal Corporation` | Ready |
+| City | `Park Circus, Kolkata` | Ready |
+| Premises / Street Address | `24/1 Park Circus Seven Point, Kolkata - 700017` | Ready |
 | Premises Tenancy Type | `Rented` | Ready |
 
 ## Step 2: Business & Applicant Profile
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Name of Enterprise / Trade | `SUNRISE BAKERY` | Ready |
+| Name of Enterprise / Trade | `PARK CIRCUS ARTISAN BAKERY` | Ready |
 | Nature of Trade / Activity | `Bakery` | Ready |
 | Customer Seating Count | `5` | Ready |
 | Applicant Full Name | `Aarav Sen` | Ready |

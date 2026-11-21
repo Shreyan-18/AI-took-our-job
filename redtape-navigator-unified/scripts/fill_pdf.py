@@ -13,15 +13,19 @@ sys.path.insert(0, os.path.dirname(__file__))
 from _common import PENDING, apply_transform, effective_value, is_blank, load_json, need, save_json
 
 try:
-    import fitz
+    import pymupdf as fitz
     BACKEND = "pymupdf"
 except ImportError:
-    fitz = None
     try:
-        import pypdf
-        BACKEND = "pypdf"
+        import fitz
+        BACKEND = "pymupdf"
     except ImportError:
-        need("pymupdf or pypdf", "pymupdf pypdf")
+        fitz = None
+        try:
+            import pypdf
+            BACKEND = "pypdf"
+        except ImportError:
+            need("pymupdf or pypdf", "pymupdf pypdf")
 
 
 def _fill_pymupdf(pdf_path, field_map, state, out_path, stamp_pending):

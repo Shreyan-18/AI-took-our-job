@@ -129,38 +129,49 @@ def rank_open_questions(state: dict) -> list[str]:
 
 
 def call_gemini_interview(prompt_text: str, api_key: str = None, json_mode: bool = False):
-    """Invoke Gemini for interview generation or parsing."""
-    key = api_key or find_api_key()
-    if not key:
-        raise ValueError("Gemini API key not found in environment or .env file.")
-
-    model = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
-    config = {"temperature": 0.2}
-    if json_mode:
-        config["responseMimeType"] = "application/json"
-
-    payload = {
-        "contents": [{"parts": [{"text": prompt_text}]}],
-        "generationConfig": config,
-    }
-
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-
+    """Invoke Ollama (with Gemini fallback) for interview generation or parsing."""
+    # 1. Primary: Local Ollama
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            cand = data.get("candidates", [])
-            if cand:
-                txt = cand[0]["content"]["parts"][0]["text"].strip()
-                return json.loads(txt) if json_mode else txt
+        from ollama_client import call_ollama
+        res = call_ollama(
+            prompt=prompt_text,
+            json_mode=json_mode,
+            temperature=0.2
+        )
+        if res.get("success"):
+            return res.get("json") if json_mode else res.get("text")
     except Exception as e:
-        print(f"Notice: Gemini interview call unavailable ({e}); activating fallback.", file=sys.stderr)
+        print(f"[Interview] Ollama call error: {e}", file=sys.stderr)
+
+    # 2. Secondary fallback: Gemini API if key exists
+    key = api_key or find_api_key()
+    if key:
+        try:
+            model = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+            config = {"temperature": 0.2}
+            if json_mode:
+                config["responseMimeType"] = "application/json"
+
+            payload = {
+                "contents": [{"parts": [{"text": prompt_text}]}],
+                "generationConfig": config,
+            }
+
+            req = urllib.request.Request(
+                url,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                cand = data.get("candidates", [])
+                if cand:
+                    txt = cand[0]["content"]["parts"][0]["text"].strip()
+                    return json.loads(txt) if json_mode else txt
+        except Exception as e:
+            print(f"Notice: Gemini interview call unavailable ({e}); activating fallback.", file=sys.stderr)
 
     return None
 

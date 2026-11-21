@@ -874,7 +874,7 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `properties` connect `properties` to `overrides`, `properties`, `properties`, `$ref`, `properties`, `type`, `project_state.json`, `provenance`, `created_at`, `domain`?",
+      "question": "Why does `properties` connect `Project Configuration Schema` to `Override Schema`, `Applicant Profile Schema`, `Workflow State Flags`, `Schema References`, `Validation Results Schema`, `Research and Findings`, `Project State Schema`, `Data Provenance Schema`, `Metadata Fields`, `Domain Enumerations`?",
       "why": "High betweenness centrality (0.037) - this node is a cross-community bridge."
     },
     {
@@ -884,27 +884,27 @@
     },
     {
       "type": "low_cohesion",
-      "question": "Should `research_engine.py` be split into smaller, more focused modules?",
+      "question": "Should `Live Demo Server` be split into smaller, more focused modules?",
       "why": "Cohesion score 0.05517503805175038 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `applicant_profile` connect `properties` to `properties`?",
+      "question": "Why does `applicant_profile` connect `Applicant Profile Schema` to `Project Configuration Schema`?",
       "why": "High betweenness centrality (0.021) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `_common.py` be split into smaller, more focused modules?",
+      "question": "Should `Document Generation Utilities` be split into smaller, more focused modules?",
       "why": "Cohesion score 0.08853118712273642 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `properties` be split into smaller, more focused modules?",
+      "question": "Should `Applicant Profile Schema` be split into smaller, more focused modules?",
       "why": "Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `properties` be split into smaller, more focused modules?",
+      "question": "Should `Compliance Matrix Schema` be split into smaller, more focused modules?",
       "why": "Cohesion score 0.048625792811839326 - nodes in this community are weakly interconnected."
     }
   ]

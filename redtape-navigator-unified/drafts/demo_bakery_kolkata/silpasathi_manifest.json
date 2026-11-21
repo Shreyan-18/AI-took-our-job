@@ -14,7 +14,7 @@
       "selector": "#estName",
       "source": "applicant_profile.entity_name",
       "value_masked": false,
-      "value": "SUNRISE BAKERY"
+      "value": "PARK CIRCUS ARTISAN BAKERY"
     },
     {
       "action": "fill",
@@ -26,11 +26,19 @@
     },
     {
       "action": "fill",
+      "label": "Premises Address",
+      "selector": "#estAddress",
+      "source": "applicant_profile.location.address",
+      "value_masked": false,
+      "value": "24/1 Park Circus Seven Point, Kolkata - 700017"
+    },
+    {
+      "action": "fill",
       "label": "District / Municipality",
       "selector": "#estDistrict",
       "source": "applicant_profile.location.city_or_village",
       "value_masked": false,
-      "value": "Kolkata"
+      "value": "Park Circus, Kolkata"
     },
     {
       "action": "fill",
@@ -57,8 +65,6 @@
       "value": "9830012345"
     }
   ],
-  "missing_fields": [
-    "applicant_profile.location.address"
-  ],
-  "completion_percentage": 86
+  "missing_fields": [],
+  "completion_percentage": 100
 }

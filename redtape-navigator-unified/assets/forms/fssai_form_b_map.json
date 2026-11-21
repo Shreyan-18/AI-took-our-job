@@ -1,0 +1,61 @@
+{
+  "form": "FSSAI_State_License_Form_B.pdf",
+  "licence_id": "lic_fssai_state",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "acroform": "applicant_name"
+      },
+      "source": "applicant_profile.applicant.name",
+      "mandatory": true,
+      "transform": "upper"
+    },
+    {
+      "target": {
+        "acroform": "business_name"
+      },
+      "source": "applicant_profile.entity_name",
+      "mandatory": true,
+      "transform": "upper"
+    },
+    {
+      "target": {
+        "acroform": "premises_address"
+      },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "kind_of_business"
+      },
+      "source": "applicant_profile.activity_type",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "annual_turnover"
+      },
+      "source": "applicant_profile.domain_attributes.expected_annual_turnover_inr",
+      "mandatory": true,
+      "transform": "inr_words"
+    },
+    {
+      "target": {
+        "acroform": "mobile_number"
+      },
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true,
+      "transform": "phone_10digit"
+    },
+    {
+      "target": {
+        "acroform": "applicant_pan"
+      },
+      "source": "applicant_profile.applicant.pan",
+      "mandatory": true,
+      "transform": "pan"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "form": "WB_Textile_Fire_Safety_Declaration.pdf",
+  "licence_id": "lic_wb_fire_advisory",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "acroform": "proprietor_name"
+      },
+      "source": "applicant_profile.applicant.name",
+      "mandatory": true,
+      "transform": "title"
+    },
+    {
+      "target": {
+        "acroform": "showroom_name"
+      },
+      "source": "applicant_profile.entity_name",
+      "mandatory": true,
+      "transform": "upper"
+    },
+    {
+      "target": {
+        "acroform": "premises_address"
+      },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "floor_area"
+      },
+      "source": "applicant_profile.domain_attributes.floor_area_sqft",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "workers_count"
+      },
+      "source": "applicant_profile.domain_attributes.workers_on_site",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "mobile_number"
+      },
+      "source": "applicant_profile.applicant.phone",
+      "mandatory": true,
+      "transform": "phone_10digit"
+    }
+  ]
+}

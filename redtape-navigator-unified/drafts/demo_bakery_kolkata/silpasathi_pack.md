@@ -7,10 +7,10 @@
 
 | Portal Field | Value to Enter | Status |
 |---|---|---|
-| Name of Establishment | `SUNRISE BAKERY` | Ready |
+| Name of Establishment | `PARK CIRCUS ARTISAN BAKERY` | Ready |
 | Category of Establishment | `Bakery` | Ready |
-| Premises Address | [PENDING_USER_INPUT] | PENDING (Required) |
-| District / Municipality | `Kolkata` | Ready |
+| Premises Address | `24/1 Park Circus Seven Point, Kolkata - 700017` | Ready |
+| District / Municipality | `Park Circus, Kolkata` | Ready |
 
 ## Step 2: Employment & Employer
 

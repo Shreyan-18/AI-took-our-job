@@ -1,0 +1,67 @@
+{
+  "form": "WB_Municipal_Trade_License_Application.pdf",
+  "licence_id": "lic_municipal_trade_license",
+  "coord_origin": "top-left",
+  "fields": [
+    {
+      "target": {
+        "acroform": "enterprise_name"
+      },
+      "source": "applicant_profile.entity_name",
+      "transform": "upper",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "applicant_name"
+      },
+      "source": "applicant_profile.applicant.name",
+      "transform": "title",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "trade_category"
+      },
+      "source": "applicant_profile.activity_type",
+      "transform": "title",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "premises_address"
+      },
+      "source": "applicant_profile.location.address",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "municipality_name"
+      },
+      "source": "applicant_profile.location.municipal_ward_or_block",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "workers_count"
+      },
+      "source": "applicant_profile.domain_attributes.workers_on_site",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "contact_phone"
+      },
+      "source": "applicant_profile.applicant.phone",
+      "transform": "phone_10digit",
+      "mandatory": true
+    },
+    {
+      "target": {
+        "acroform": "annual_valuation"
+      },
+      "source": "applicant_profile.domain_attributes.annual_valuation",
+      "mandatory": false
+    }
+  ]
+}

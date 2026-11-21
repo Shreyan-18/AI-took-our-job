@@ -12,7 +12,7 @@ am the lawful owner of the commercial premises situated at:
 **Municipal Ward / Assessee No.:** ____________________________________________
 
 I hereby confirm and declare that:
-1. I have rented/leased the aforementioned premises to **Aarav Sen** / **Sunrise Bakery** for carrying on the commercial trade/business of **bakery**.
+1. I have rented/leased the aforementioned premises to **Aarav Sen** / **Park Circus Artisan Bakery** for carrying on the commercial trade/business of **bakery**.
 2. I have NO OBJECTION to the tenant obtaining all requisite statutory registrations, licenses, and permits, including but not limited to:
    - Certificate of Enlistment (Trade License) from the Municipal Corporation;
    - Registration under The West Bengal Shops and Establishments Act, 1963;
