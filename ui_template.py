@@ -428,6 +428,37 @@ def render_ui() -> str:
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
       z-index: 100;
     }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-dialog {
+      background: #1c1c1a;
+      border: 1px solid #383733;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 490px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+      animation: modalFadeIn 0.15s ease-out;
+    }
+    .modal-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid #2b2a26;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
     .model-option {
       padding: 8px 10px;
       border-radius: 8px;
@@ -855,6 +886,10 @@ def render_ui() -> str:
             </button>
           </div>
           <div class="topbar-right">
+            <button id="backend-status-pill" onclick="openBackendModal()" class="model-pill-btn" title="Configure inference backend / tunnel">
+              <span id="backend-status-dot" class="ollama-dot" style="background:#10b981;"></span>
+              <span id="backend-status-text">Backend: Local</span>
+            </button>
             <div class="model-switcher-wrap">
               <button id="model-pill" onclick="toggleModelDropdown(event)" class="model-pill-btn" title="Switch local Ollama model">
                 <span class="ollama-dot"></span>
@@ -971,12 +1006,245 @@ def render_ui() -> str:
     </div>
   </div>
 
+  <!-- BACKEND INFERENCE CONNECTION MODAL -->
+  <div id="backend-modal" class="modal-backdrop hidden" onclick="if(event.target===this)closeBackendModal()">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="ollama-dot" style="background:#10b981; width:9px; height:9px;"></span>
+          <h3 style="font-size:15px; font-weight:600; color:#ececec; margin:0;">Inference Backend Settings</h3>
+        </div>
+        <button onclick="closeBackendModal()" class="icon-btn" style="color:#a8a6a1; font-size:14px;">✕</button>
+      </div>
+      <div class="modal-body" style="padding:16px 20px; font-size:13px; color:#c5c3be; line-height:1.5;">
+        <p style="margin-top:0; margin-bottom:12px; color:#a8a6a1;">
+          RedTape runs local Ollama inference (<code style="background:#262624; padding:2px 6px; border-radius:4px; color:#d97757; font-size:12px;">llama3.1:8b</code>) and fills government PDFs directly on your Mac.
+        </p>
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11.5px; font-weight:600; color:#8e8c86; margin-bottom:6px; letter-spacing:0.4px;">MAC TUNNEL / BACKEND URL:</label>
+          <input id="backend-url-input" type="url" placeholder="https://xxxx-xx.ngrok-free.app or http://localhost:8765" style="width:100%; box-sizing:border-box; background:#161614; border:1px solid #383733; border-radius:6px; color:#f5f4ef; padding:9px 12px; font-size:13px; outline:none;" />
+          <div id="backend-modal-status" style="font-size:12px; margin-top:6px; min-height:18px;"></div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-bottom:16px;">
+          <button id="backend-connect-btn" onclick="testAndSaveBackend()" class="topbar-new-chat-btn" style="background:#d97757; color:#fff; border:none; padding:7px 14px; font-weight:500; cursor:pointer;">
+            Test & Connect
+          </button>
+          <button onclick="resetBackendToLocal()" class="topbar-new-chat-btn" style="background:transparent; border:1px solid #383733; color:#a8a6a1; padding:7px 14px; cursor:pointer;">
+            Reset to Local
+          </button>
+        </div>
+
+        <div style="background:#161614; border:1px solid #2b2a26; border-radius:6px; padding:12px; margin-top:10px;">
+          <div style="font-size:11px; font-weight:600; color:#8e8c86; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">
+            Shareable URL (for Windows / Judges)
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <input id="shareable-link-input" type="text" readonly style="flex:1; background:#0f0f0e; border:1px solid #2e2d29; border-radius:4px; color:#a8a6a1; padding:6px 8px; font-size:11px; font-family:monospace;" />
+            <button onclick="copyShareableLink()" class="pdf-pill" style="white-space:nowrap; cursor:pointer;">Copy</button>
+          </div>
+          <p style="font-size:11px; color:#787671; margin:8px 0 0 0;">
+            Opening this link on another device auto-connects it directly to your Mac tunnel with zero setup.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     let currentUser = null;
     let authMode = 'login';
     let appState = null;
     let isBusy = false;
     let activePdfIndex = 0;
+
+    function getApiBase() {
+      const params = new URLSearchParams(window.location.search);
+      const qBackend = params.get('backend');
+      if (qBackend) {
+        const clean = qBackend.trim().replace(/\/+$/, '');
+        localStorage.setItem('redtape_backend_url', clean);
+        return clean;
+      }
+      const saved = localStorage.getItem('redtape_backend_url');
+      if (saved) return saved.trim().replace(/\/+$/, '');
+      return '';
+    }
+
+    function setApiBase(url) {
+      if (url) {
+        localStorage.setItem('redtape_backend_url', url.trim().replace(/\/+$/, ''));
+      } else {
+        localStorage.removeItem('redtape_backend_url');
+      }
+      updateBackendStatusBadge(true);
+    }
+
+    function getAuthToken() {
+      return localStorage.getItem('redtape_auth_token') || '';
+    }
+
+    function setAuthToken(token) {
+      if (token) localStorage.setItem('redtape_auth_token', token);
+      else localStorage.removeItem('redtape_auth_token');
+    }
+
+    function getFileUrl(path) {
+      if (!path) return '';
+      if (path.startsWith('http://') || path.startsWith('https://')) return path;
+      const base = getApiBase();
+      const cleanPath = path.startsWith('/') ? path : '/' + path;
+      return base ? `${base}${cleanPath}` : cleanPath;
+    }
+
+    async function apiFetch(path, options = {}) {
+      const base = getApiBase();
+      const cleanPath = path.startsWith('/') ? path : '/' + path;
+      const fullUrl = path.startsWith('http') ? path : (base ? `${base}${cleanPath}` : cleanPath);
+      
+      const headers = {
+        'Accept': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+        ...(options.headers || {}),
+      };
+      const token = getAuthToken();
+      if (token && !headers['Authorization']) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      return fetch(fullUrl, {
+        ...options,
+        headers,
+      });
+    }
+
+    function updateBackendStatusBadge(isOnline = true) {
+      const dot = document.getElementById('backend-status-dot');
+      const text = document.getElementById('backend-status-text');
+      const base = getApiBase();
+      if (!dot || !text) return;
+      
+      if (!isOnline) {
+        dot.style.background = '#e63946';
+        dot.style.boxShadow = '0 0 6px rgba(230, 57, 70, 0.6)';
+        text.textContent = 'Backend: Offline';
+        return;
+      }
+      
+      dot.style.background = '#10b981';
+      dot.style.boxShadow = '0 0 6px rgba(16, 185, 129, 0.6)';
+      if (base) {
+        try {
+          const host = new URL(base).hostname;
+          text.textContent = `Tunnel: ${host.replace('.ngrok-free.app', '').replace('.trycloudflare.com', '')}`;
+        } catch (e) {
+          text.textContent = 'Tunnel: Connected';
+        }
+      } else {
+        text.textContent = 'Backend: Local';
+      }
+    }
+
+    function openBackendModal(promptUser = false) {
+      const modal = document.getElementById('backend-modal');
+      const input = document.getElementById('backend-url-input');
+      const status = document.getElementById('backend-modal-status');
+      const shareInput = document.getElementById('shareable-link-input');
+      if (!modal) return;
+      
+      const current = getApiBase();
+      if (input) input.value = current;
+      if (status) {
+        if (promptUser) {
+          status.innerHTML = '<span style="color:#e9c46a;">⚠️ Connect to your Mac inference tunnel to start.</span>';
+        } else {
+          status.innerHTML = current 
+            ? `<span style="color:#52b788;">Active: ${escapeHtml(current)}</span>`
+            : '<span style="color:#8e8c86;">Using relative localhost backend.</span>';
+        }
+      }
+      if (shareInput) {
+        const origin = window.location.origin;
+        shareInput.value = current ? `${origin}/?backend=${encodeURIComponent(current)}` : origin;
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closeBackendModal() {
+      const modal = document.getElementById('backend-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function testAndSaveBackend() {
+      const input = document.getElementById('backend-url-input');
+      const status = document.getElementById('backend-modal-status');
+      const btn = document.getElementById('backend-connect-btn');
+      const raw = (input?.value || '').trim().replace(/\/+$/, '');
+      
+      btn.disabled = true;
+      btn.textContent = 'Testing...';
+      status.innerHTML = '<span style="color:#8e8c86;">Testing connection...</span>';
+      
+      try {
+        const testUrl = raw ? `${raw}/api/model` : '/api/model';
+        const res = await fetch(testUrl, {
+          headers: {
+            'Accept': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+          },
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        
+        setApiBase(raw);
+        status.innerHTML = `<span style="color:#52b788;">✓ Connected! Active: ${escapeHtml(data.active_model || 'llama3.1:8b')}</span>`;
+        updateBackendStatusBadge(true);
+        
+        const shareInput = document.getElementById('shareable-link-input');
+        if (shareInput) {
+          const origin = window.location.origin;
+          shareInput.value = raw ? `${origin}/?backend=${encodeURIComponent(raw)}` : origin;
+        }
+        
+        setTimeout(() => {
+          closeBackendModal();
+          init();
+        }, 800);
+      } catch (err) {
+        status.innerHTML = `<span style="color:#e63946;">✕ Could not connect: ${escapeHtml(err.message || 'Network error')}. Ensure demo_server.py is running.</span>`;
+        updateBackendStatusBadge(false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Test & Connect';
+      }
+    }
+
+    function resetBackendToLocal() {
+      setApiBase('');
+      const input = document.getElementById('backend-url-input');
+      if (input) input.value = '';
+      const status = document.getElementById('backend-modal-status');
+      if (status) status.innerHTML = '<span style="color:#52b788;">Reset to localhost.</span>';
+      updateBackendStatusBadge(true);
+      const shareInput = document.getElementById('shareable-link-input');
+      if (shareInput) shareInput.value = window.location.origin;
+      setTimeout(() => {
+        closeBackendModal();
+        init();
+      }, 500);
+    }
+
+    function copyShareableLink() {
+      const shareInput = document.getElementById('shareable-link-input');
+      if (!shareInput || !shareInput.value) return;
+      navigator.clipboard.writeText(shareInput.value).then(() => {
+        alert('Shareable link copied to clipboard!');
+      }).catch(() => {
+        shareInput.select();
+        document.execCommand('copy');
+        alert('Copied to clipboard!');
+      });
+    }
 
     function pushRoute(path) {
       if (window.location.pathname !== path) {
@@ -1056,7 +1324,7 @@ def render_ui() -> str:
       const body = authMode === 'signup' ? { name, email, password } : { email, password };
 
       try {
-        const res = await fetch(url, {
+        const res = await apiFetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -1066,6 +1334,9 @@ def render_ui() -> str:
           errBox.textContent = data.error || 'Authentication failed. Please check your details.';
           errBox.classList.remove('hidden');
           return;
+        }
+        if (data.token) {
+          setAuthToken(data.token);
         }
         updateUserChrome(data.user);
         showAppShell();
@@ -1081,8 +1352,9 @@ def render_ui() -> str:
 
     async function handleLogout() {
       try {
-        await fetch('/api/auth/logout', { method: 'POST' });
+        await apiFetch('/api/auth/logout', { method: 'POST' });
       } catch (e) {}
+      setAuthToken('');
       currentUser = null;
       appState = null;
       showAuthScreen('login', true);
@@ -1333,7 +1605,7 @@ def render_ui() -> str:
         if (appState && appState.session_id) {
           payload.session_id = appState.session_id;
         }
-        const res = await fetch('/api/chat', {
+        const res = await apiFetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -1534,10 +1806,11 @@ def render_ui() -> str:
         const cur = pdfs[activePdfIndex];
         const rawPath = cur.pdf_path || cur.file_path || '';
         const relUrl = rawPath.includes('drafts/') ? '/drafts/' + rawPath.split('drafts/')[1] : '/' + rawPath;
+        const fullPdfUrl = getFileUrl(relUrl);
         const kindLabel = cur.is_official_pdf ? 'Official Govt PDF' : 'AcroForm Draft';
         document.getElementById('pdf-meta-status').textContent = `${cur.form_name} · ${kindLabel} · ${cur.completion_percentage || 0}% filled`;
-        document.getElementById('pdf-download-link').href = relUrl;
-        document.getElementById('pdf-preview-obj').data = relUrl + '?t=' + Date.now();
+        document.getElementById('pdf-download-link').href = fullPdfUrl;
+        document.getElementById('pdf-preview-obj').data = fullPdfUrl + (fullPdfUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
       } else {
         selBar.innerHTML = '<span style="font-size:12px; color:#787671;">Complete the interview to fill official PDFs.</span>';
       }
@@ -1552,7 +1825,7 @@ def render_ui() -> str:
       } else {
         portals.forEach(pa => {
           const mdRel = pa.copy_sheet_path && pa.copy_sheet_path.includes('drafts/')
-            ? '/drafts/' + pa.copy_sheet_path.split('drafts/')[1]
+            ? getFileUrl('/drafts/' + pa.copy_sheet_path.split('drafts/')[1])
             : '#';
           const card = document.createElement('div');
           card.className = 'portal-card';
@@ -1577,7 +1850,7 @@ def render_ui() -> str:
 
     async function loadSessions() {
       try {
-        const res = await fetch('/api/sessions');
+        const res = await apiFetch('/api/sessions');
         const data = await res.json();
         const list = document.getElementById('sessions-list');
         const sessions = data.sessions || [];
@@ -1611,7 +1884,7 @@ def render_ui() -> str:
 
     async function openSession(id, updateUrl = true) {
       try {
-        const res = await fetch(`/api/session/${encodeURIComponent(id)}`);
+        const res = await apiFetch(`/api/session/${encodeURIComponent(id)}`);
         if (!res.ok) return;
         appState = await res.json();
         activePdfIndex = 0;
@@ -1628,7 +1901,7 @@ def render_ui() -> str:
 
     async function startNewChat(updateUrl = true) {
       try {
-        const res = await fetch('/api/new_chat', { method: 'POST' });
+        const res = await apiFetch('/api/new_chat', { method: 'POST' });
         appState = await res.json();
         activePdfIndex = 0;
         if (updateUrl) pushRoute('/');
@@ -1646,7 +1919,7 @@ def render_ui() -> str:
     async function removeSession(id, ev) {
       if (ev) ev.stopPropagation();
       try {
-        await fetch('/api/session/delete', {
+        await apiFetch('/api/session/delete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id }),
@@ -1699,7 +1972,7 @@ def render_ui() -> str:
 
     async function switchModel(modelName) {
       try {
-        const res = await fetch('/api/model', {
+        const res = await apiFetch('/api/model', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ model: modelName })
@@ -1738,7 +2011,7 @@ def render_ui() -> str:
       setTimeGreeting();
       const chatId = getChatIdFromPath();
       const [mRes] = await Promise.all([
-        fetch('/api/model').catch(() => null),
+        apiFetch('/api/model').catch(() => null),
         loadSessions(),
       ]);
       if (mRes && mRes.ok) {
@@ -1779,10 +2052,13 @@ def render_ui() -> str:
     }
 
     async function init() {
+      updateBackendStatusBadge(true);
       try {
-        const res = await fetch('/api/auth/me');
+        const res = await apiFetch('/api/auth/me');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         const path = window.location.pathname;
+        updateBackendStatusBadge(true);
         if (data && data.authenticated && data.user) {
           updateUserChrome(data.user);
           showAppShell();
@@ -1794,8 +2070,14 @@ def render_ui() -> str:
           showAuthScreen(path === '/signup' ? 'signup' : 'login', path !== '/login' && path !== '/signup');
         }
       } catch (e) {
-        console.error(e);
-        showAuthScreen('login', false);
+        console.error('Inference backend unreachable:', e);
+        updateBackendStatusBadge(false);
+        const isRemoteHost = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        if (isRemoteHost && !getApiBase()) {
+          openBackendModal(true);
+        } else {
+          showAuthScreen('login', false);
+        }
       }
     }
 

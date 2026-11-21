@@ -94,11 +94,38 @@ def get_user_from_cookie(cookie_header: str) -> dict | None:
     return None
 
 
-def logout(cookie_header: str):
-    if not cookie_header:
-        return
-    for part in cookie_header.split(";"):
-        part = part.strip()
-        if part.startswith("redtape_auth="):
-            tok = part.split("=", 1)[1].strip()
-            _SESSIONS.pop(tok, None)
+def get_user_from_auth_header(auth_header: str) -> dict | None:
+    if not auth_header:
+        return None
+    auth_header = auth_header.strip()
+    if auth_header.lower().startswith("bearer "):
+        tok = auth_header[7:].strip()
+        if tok in _SESSIONS:
+            return _SESSIONS[tok]
+    return None
+
+
+def get_user_from_request(headers) -> dict | None:
+    """Extract authenticated user from Authorization Bearer header or Cookie."""
+    if not headers:
+        return None
+    # 1. Bearer header
+    auth_h = headers.get("Authorization") or headers.get("authorization") or ""
+    u = get_user_from_auth_header(auth_h)
+    if u:
+        return u
+    # 2. Cookie header
+    cookie_h = headers.get("Cookie") or headers.get("cookie") or ""
+    return get_user_from_cookie(cookie_h)
+
+
+def logout(cookie_header: str = "", auth_header: str = ""):
+    if auth_header and auth_header.lower().startswith("bearer "):
+        tok = auth_header[7:].strip()
+        _SESSIONS.pop(tok, None)
+    if cookie_header:
+        for part in cookie_header.split(";"):
+            part = part.strip()
+            if part.startswith("redtape_auth="):
+                tok = part.split("=", 1)[1].strip()
+                _SESSIONS.pop(tok, None)

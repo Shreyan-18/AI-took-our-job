@@ -275,9 +275,9 @@
     "semantic_hash": ""
   },
   "redtape-navigator-unified/cache/research_cache.json": {
-    "mtime": 1795242346.5291488,
-    "seen": 1795242754.920489,
-    "ast_hash": "8f9083e18973974485e48898a1cc82bd",
+    "mtime": 1795243390.1718953,
+    "seen": 1795244086.966028,
+    "ast_hash": "739418d2f4ae30fab4643cfb7fc09f6a",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/scripts/compliance_engine.py": {
@@ -935,9 +935,9 @@
     "semantic_hash": ""
   },
   "interview_engine_v2.py": {
-    "mtime": 1795239181.1092117,
-    "seen": 1795241348.343502,
-    "ast_hash": "3d1fb8bd91c7c31842ace82a3f17dd13",
+    "mtime": 1795243929.431918,
+    "seen": 1795244086.965996,
+    "ast_hash": "74b90a07935d83c880bf98be54f28ee8",
     "semantic_hash": ""
   },
   "ollama_client.py": {
@@ -1037,9 +1037,9 @@
     "semantic_hash": ""
   },
   "ui_template.py": {
-    "mtime": 1795242689.4349375,
-    "seen": 1795242754.9205272,
-    "ast_hash": "e63c5de75483c9caf01ef60bec626c8c",
+    "mtime": 1795244037.2126713,
+    "seen": 1795244086.9660711,
+    "ast_hash": "75667e2cef86e38d696f0f949c7b0392",
     "semantic_hash": ""
   },
   "redtape-navigator-unified/drafts/benchmark_test/draft_landlord_noc.md": {

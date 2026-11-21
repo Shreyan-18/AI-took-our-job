@@ -68,8 +68,8 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS, PUT")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, ngrok-skip-browser-warning, X-Requested-With, Accept")
         if set_cookie is not None:
             self.send_header("Set-Cookie", set_cookie)
         self.send_header("Content-Length", str(len(body)))
@@ -79,13 +79,15 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS, PUT")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, ngrok-skip-browser-warning, X-Requested-With, Accept")
+        self.send_header("Access-Control-Max-Age", "86400")
         self.end_headers()
 
     def _serve_file(self, fpath: Path, cache_header: str = None):
         if not fpath.exists() or not fpath.is_file():
             self.send_response(404)
+            self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             return
         ext = fpath.suffix.lower()
@@ -103,6 +105,7 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
         }
         data = fpath.read_bytes()
         self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Type", ctype_map.get(ext, "application/octet-stream"))
         if cache_header:
             self.send_header("Cache-Control", cache_header)
@@ -117,6 +120,9 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+
+    def do_HEAD(self):
+        self.do_GET()
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -139,7 +145,7 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
 
         # Auth state (name + email ONLY — zero PAN/Aadhaar/address)
         if path == "/api/auth/me":
-            user = auth_store.get_user_from_cookie(self.headers.get("Cookie", ""))
+            user = auth_store.get_user_from_request(self.headers)
             if user:
                 self.send_json({"authenticated": True, "user": user})
             else:
@@ -209,7 +215,7 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
                 self.send_json({"authenticated": False, "error": err}, code=401)
             else:
                 cookie = f"redtape_auth={res['token']}; Path=/; HttpOnly; SameSite=Lax"
-                self.send_json({"authenticated": True, "user": res["user"]}, set_cookie=cookie)
+                self.send_json({"authenticated": True, "user": res["user"], "token": res["token"]}, set_cookie=cookie)
             return
 
         if parsed.path == "/api/auth/signup":
@@ -218,16 +224,16 @@ class RedTapeHTTPHandler(BaseHTTPRequestHandler):
                 self.send_json({"authenticated": False, "error": err}, code=400)
             else:
                 cookie = f"redtape_auth={res['token']}; Path=/; HttpOnly; SameSite=Lax"
-                self.send_json({"authenticated": True, "user": res["user"]}, set_cookie=cookie)
+                self.send_json({"authenticated": True, "user": res["user"], "token": res["token"]}, set_cookie=cookie)
             return
 
         if parsed.path == "/api/auth/logout":
-            auth_store.logout(self.headers.get("Cookie", ""))
+            auth_store.logout(self.headers.get("Cookie", ""), self.headers.get("Authorization", ""))
             self.send_json({"authenticated": False}, set_cookie="redtape_auth=; Path=/; Max-Age=0; HttpOnly")
             return
 
         if parsed.path == "/api/chat":
-            user = auth_store.get_user_from_cookie(self.headers.get("Cookie", ""))
+            user = auth_store.get_user_from_request(self.headers)
             sid = payload.get("session_id")
             sess = get_or_create_session(sid, user_id=user["id"] if user else None)
             res = sess.handle_chat(payload.get("message", ""))

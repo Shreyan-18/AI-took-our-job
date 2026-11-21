@@ -1,4 +1,11 @@
 {
+  "name": "redtape-navigator",
+  "version": "1.0.0",
+  "description": "RedTape Navigator — Official AcroForm Compliance Engine & Local Inference",
+  "scripts": {
+    "build": "python3 export_frontend.py || echo 'Using pre-built static bundle'",
+    "export": "python3 export_frontend.py"
+  },
   "dependencies": {
     "@neon/auth": "^0.8.2",
     "@neon/config": "^1.14.6",
